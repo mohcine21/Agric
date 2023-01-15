@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Agric.Models.Notation>
+
+@{
+    ViewBag.Title = "Notations";
+    Layout = "~/Views/Shared/_TechLayout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+<div class="text-center"><h2>Notations </h2></div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<div class="container-fluid" style="width: auto; overflow: auto; scrollbar-base-color: #ffeaff">
+
+    <table class="table table-hover">
+        <thead class="bg-primary text-light">
+            <tr>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.D_N_P)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.D_N_R)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.FNotation)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.D_N_P)
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.D_N_R)
+                    </td>
+
+                    <td style="  text-align:center">
+                        @if (item.FNotation != null)
+                        {
+                            @Html.ActionLink("Télécharger", "DownloadFNotation", new { Id = item.Id })
+                        }
+                    </td>
+                    @if (item.D_N_R == null && item.FNotation == null)
+                    {
+                        <td>
+                            <div class="row">
+                                <div class="col-12 ">
+                                    @Html.ActionLink("Ajouter", "AddNotation", new { id = item.Id, essai_id = item.Essai_Id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
+                                </div>
+                            </div>
+                        </td>
+                    }
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+</div>

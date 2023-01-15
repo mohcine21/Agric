@@ -1,0 +1,190 @@
+﻿@model Agric.Models.Essai
+
+@{
+    ViewBag.Title = "DetailsEssai";
+    Layout = "~/Views/Shared/_TechLayout.cshtml";
+}
+
+<h2>DetailsEssai</h2>
+<form action="Edit" method="post" enctype="multipart/form-data">
+    <div>
+      
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CodeClient)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CodeClient)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TA)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TA)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Formulation)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Formulation)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DP)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DP)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MA)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MA)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DateNotation)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DateNotation)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PE)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PE)
+            </dd>
+
+       
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PR)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PR)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Produit)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Produit)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Culture)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Culture)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Cible)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Cible)
+            </dd>
+
+        
+            <dt>
+                @Html.DisplayNameFor(model => model.Region)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Region)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Code)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Code)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Date_Cloture)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Date_Cloture)
+            </dd>
+
+       
+        
+
+            <dt>
+                @Html.DisplayNameFor(model => model.LaboName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LaboName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TechName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TechName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TE)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TE)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FNNotation)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FNNotation)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FDEFicheEssai)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FDEFicheEssai)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Users.Fullname)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Users.Fullname)
+            </dd>
+
+        </dl>
+    </div>
+   
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class=" btn btn-primary btn-block" > Enregistrer</button>
+        </div>
+    </div>
+    </div>
+</form>
+ 

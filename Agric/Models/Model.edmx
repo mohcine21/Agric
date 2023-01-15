@@ -1,0 +1,570 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AgricModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Devis">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="id_client" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="date_demande" Type="datetime" Nullable="false" />
+          <Property Name="DemandeDevis" Type="bit" />
+          <Property Name="DevisDelete" Type="bit" />
+          <Property Name="DevisAccepter" Type="bit" />
+          <Property Name="NumDevis" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Devis" Type="varchar" MaxLength="100" />
+          <Property Name="DevieEnvoyer" Type="bit" />
+        </EntityType>
+        <EntityType Name="Essai">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CodeClient" Type="nvarchar" MaxLength="50" />
+          <Property Name="TA" Type="nvarchar" MaxLength="50" />
+          <Property Name="Formulation" Type="nvarchar" MaxLength="50" />
+          <Property Name="DP" Type="nvarchar" MaxLength="50" />
+          <Property Name="MA" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateNotation" Type="text" />
+          <Property Name="PE" Type="nvarchar" MaxLength="100" />
+          <Property Name="Usage" Type="nvarchar" MaxLength="100" />
+          <Property Name="PR" Type="nvarchar" MaxLength="50" />
+          <Property Name="Produit" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Culture" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cible" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nb" Type="varchar" MaxLength="100" />
+          <Property Name="Region" Type="nvarchar" MaxLength="100" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date_Cloture" Type="datetime" />
+          <Property Name="Rapport" Type="varchar" MaxLength="100" />
+          <Property Name="RapportRemis" Type="bit" />
+          <Property Name="DateRemisRapport" Type="datetime" />
+          <Property Name="ACB" Type="varchar" MaxLength="100" />
+          <Property Name="FDS" Type="varchar" MaxLength="100" />
+          <Property Name="LaboName" Type="nvarchar" MaxLength="50" />
+          <Property Name="TechName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FNNotation" Type="varchar" MaxLength="100" />
+          <Property Name="FDEFicheEssai" Type="varchar" MaxLength="100" />
+          <Property Name="EssaiDelets" Type="bit" Nullable="false" />
+          <Property Name="DPRéf" Type="nvarchar" MaxLength="50" />
+          <Property Name="FormulationProduitRéf" Type="nvarchar" MaxLength="50" />
+          <Property Name="Devis" Type="varchar" MaxLength="100" />
+          <Property Name="EtatEssai" Type="nvarchar" MaxLength="50" />
+          <Property Name="DevisDemander" Type="bit" Nullable="false" />
+          <Property Name="EtatPaiment" Type="bit" />
+          <Property Name="Paiment_Regler100" Type="bit" />
+          <Property Name="Paiment_Regler50" Type="bit" />
+          <Property Name="Payer" Type="bit" Nullable="false" />
+          <Property Name="NonPayer" Type="bit" Nullable="false" />
+          <Property Name="Payer50" Type="bit" Nullable="false" />
+          <Property Name="Facture" Type="varchar" MaxLength="100" />
+          <Property Name="MARéf" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date_Modife" Type="datetime" />
+          <Property Name="id_devis" Type="uniqueidentifier" />
+          <Property Name="Numdevie" Type="int" Nullable="false" />
+          <Property Name="nbr" Type="int" Nullable="false" />
+          <Property Name="ComportementCulture" Type="varchar" MaxLength="50" />
+          <Property Name="Date_Instalation" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Journal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Operation" Type="varchar" MaxLength="50" />
+          <Property Name="Date_Modification" Type="datetime" Nullable="false" />
+          <Property Name="Id_User" Type="uniqueidentifier" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Id_Essai" Type="uniqueidentifier" />
+          <Property Name="VuAdmin" Type="bit" Nullable="false" />
+          <Property Name="VuClient" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Notation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="D_N_P" Type="datetime" Nullable="false" />
+          <Property Name="D_N_R" Type="datetime" />
+          <Property Name="FNotation" Type="varchar" MaxLength="100" />
+          <Property Name="Essai_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Date_Add" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Fullname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ProfileId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Devis_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Devis" Type="Self.Devis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Devis">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Essai_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Essai" Type="Self.Essai" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Essai">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Journal_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Journal" Type="Self.Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notation_Essai">
+          <End Role="Essai" Type="Self.Essai" Multiplicity="1" />
+          <End Role="Notation" Type="Self.Notation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Essai">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notation">
+              <PropertyRef Name="Essai_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Profile">
+          <End Role="Profile" Type="Self.Profile" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="ProfileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AgricModelStoreContainer">
+          <EntitySet Name="Devis" EntityType="Self.Devis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Essai" EntityType="Self.Essai" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Journal" EntityType="Self.Journal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notation" EntityType="Self.Notation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Devis_Users" Association="Self.FK_Devis_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Devis" EntitySet="Devis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Essai_Users" Association="Self.FK_Essai_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Essai" EntitySet="Essai" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Journal_Users" Association="Self.FK_Journal_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notation_Essai" Association="Self.FK_Notation_Essai">
+            <End Role="Essai" EntitySet="Essai" />
+            <End Role="Notation" EntitySet="Notation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Profile" Association="Self.FK_Users_Profile">
+            <End Role="Profile" EntitySet="Profile" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AgricModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Devis">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="id_client" Type="Guid" Nullable="false" />
+          <Property Name="date_demande" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DemandeDevis" Type="Boolean" />
+          <Property Name="DevisDelete" Type="Boolean" />
+          <Property Name="DevisAccepter" Type="Boolean" />
+          <Property Name="NumDevis" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Devis1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DevieEnvoyer" Type="Boolean" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Devis_Users" FromRole="Devis" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Essai">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="CodeClient" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Formulation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateNotation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Usage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Produit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Culture" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cible" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nb" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Region" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date_Cloture" Type="DateTime" Precision="3" />
+          <Property Name="Rapport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RapportRemis" Type="Boolean" />
+          <Property Name="DateRemisRapport" Type="DateTime" Precision="3" />
+          <Property Name="ACB" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FDS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LaboName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TechName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FNNotation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FDEFicheEssai" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EssaiDelets" Type="Boolean" Nullable="false" />
+          <Property Name="DPRéf" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FormulationProduitRéf" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Devis" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EtatEssai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DevisDemander" Type="Boolean" Nullable="false" />
+          <Property Name="EtatPaiment" Type="Boolean" />
+          <Property Name="Paiment_Regler100" Type="Boolean" />
+          <Property Name="Paiment_Regler50" Type="Boolean" />
+          <Property Name="Payer" Type="Boolean" Nullable="false" />
+          <Property Name="NonPayer" Type="Boolean" Nullable="false" />
+          <Property Name="Payer50" Type="Boolean" Nullable="false" />
+          <Property Name="Facture" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MARéf" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date_Modife" Type="DateTime" Precision="3" />
+          <Property Name="id_devis" Type="Guid" />
+          <Property Name="Numdevie" Type="Int32" Nullable="false" />
+          <Property Name="nbr" Type="Int32" Nullable="false" />
+          <Property Name="ComportementCulture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Date_Instalation" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Essai_Users" FromRole="Essai" ToRole="Users" />
+          <NavigationProperty Name="Notation" Relationship="Self.FK_Notation_Essai" FromRole="Essai" ToRole="Notation" />
+        </EntityType>
+        <EntityType Name="Journal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Operation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Date_Modification" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Id_User" Type="Guid" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Id_Essai" Type="Guid" />
+          <Property Name="VuAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="VuClient" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Journal_Users" FromRole="Journal" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Notation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="D_N_P" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="D_N_R" Type="DateTime" Precision="3" />
+          <Property Name="FNotation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Essai_Id" Type="Guid" Nullable="false" />
+          <Property Name="Date_Add" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Essai" Relationship="Self.FK_Notation_Essai" FromRole="Notation" ToRole="Essai" />
+        </EntityType>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Profile" FromRole="Profile" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Fullname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProfileId" Type="Guid" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Devis" Relationship="Self.FK_Devis_Users" FromRole="Users" ToRole="Devis" />
+          <NavigationProperty Name="Essai" Relationship="Self.FK_Essai_Users" FromRole="Users" ToRole="Essai" />
+          <NavigationProperty Name="Journal" Relationship="Self.FK_Journal_Users" FromRole="Users" ToRole="Journal" />
+          <NavigationProperty Name="Profile" Relationship="Self.FK_Users_Profile" FromRole="Users" ToRole="Profile" />
+        </EntityType>
+        <Association Name="FK_Devis_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Devis" Type="Self.Devis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Devis">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Essai_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Essai" Type="Self.Essai" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Essai">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notation_Essai">
+          <End Role="Essai" Type="Self.Essai" Multiplicity="1" />
+          <End Role="Notation" Type="Self.Notation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Essai">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notation">
+              <PropertyRef Name="Essai_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Journal_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Journal" Type="Self.Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Profile">
+          <End Role="Profile" Type="Self.Profile" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="ProfileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AgricEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Devis" EntityType="Self.Devis" />
+          <EntitySet Name="Essai" EntityType="Self.Essai" />
+          <EntitySet Name="Journal" EntityType="Self.Journal" />
+          <EntitySet Name="Notation" EntityType="Self.Notation" />
+          <EntitySet Name="Profile" EntityType="Self.Profile" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Devis_Users" Association="Self.FK_Devis_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Devis" EntitySet="Devis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Essai_Users" Association="Self.FK_Essai_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Essai" EntitySet="Essai" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notation_Essai" Association="Self.FK_Notation_Essai">
+            <End Role="Essai" EntitySet="Essai" />
+            <End Role="Notation" EntitySet="Notation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Journal_Users" Association="Self.FK_Journal_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Profile" Association="Self.FK_Users_Profile">
+            <End Role="Profile" EntitySet="Profile" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AgricModelStoreContainer" CdmEntityContainer="AgricEntities">
+          <EntitySetMapping Name="Devis">
+            <EntityTypeMapping TypeName="AgricModel.Devis">
+              <MappingFragment StoreEntitySet="Devis">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_client" ColumnName="id_client" />
+                <ScalarProperty Name="date_demande" ColumnName="date_demande" />
+                <ScalarProperty Name="DemandeDevis" ColumnName="DemandeDevis" />
+                <ScalarProperty Name="DevisDelete" ColumnName="DevisDelete" />
+                <ScalarProperty Name="DevisAccepter" ColumnName="DevisAccepter" />
+                <ScalarProperty Name="NumDevis" ColumnName="NumDevis" />
+                <ScalarProperty Name="Devis1" ColumnName="Devis" />
+                <ScalarProperty Name="DevieEnvoyer" ColumnName="DevieEnvoyer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Essai">
+            <EntityTypeMapping TypeName="AgricModel.Essai">
+              <MappingFragment StoreEntitySet="Essai">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CodeClient" ColumnName="CodeClient" />
+                <ScalarProperty Name="TA" ColumnName="TA" />
+                <ScalarProperty Name="Formulation" ColumnName="Formulation" />
+                <ScalarProperty Name="DP" ColumnName="DP" />
+                <ScalarProperty Name="MA" ColumnName="MA" />
+                <ScalarProperty Name="DateNotation" ColumnName="DateNotation" />
+                <ScalarProperty Name="PE" ColumnName="PE" />
+                <ScalarProperty Name="Usage" ColumnName="Usage" />
+                <ScalarProperty Name="PR" ColumnName="PR" />
+                <ScalarProperty Name="Produit" ColumnName="Produit" />
+                <ScalarProperty Name="Culture" ColumnName="Culture" />
+                <ScalarProperty Name="Cible" ColumnName="Cible" />
+                <ScalarProperty Name="Nb" ColumnName="Nb" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Date_Cloture" ColumnName="Date_Cloture" />
+                <ScalarProperty Name="Rapport" ColumnName="Rapport" />
+                <ScalarProperty Name="RapportRemis" ColumnName="RapportRemis" />
+                <ScalarProperty Name="DateRemisRapport" ColumnName="DateRemisRapport" />
+                <ScalarProperty Name="ACB" ColumnName="ACB" />
+                <ScalarProperty Name="FDS" ColumnName="FDS" />
+                <ScalarProperty Name="LaboName" ColumnName="LaboName" />
+                <ScalarProperty Name="TechName" ColumnName="TechName" />
+                <ScalarProperty Name="FNNotation" ColumnName="FNNotation" />
+                <ScalarProperty Name="FDEFicheEssai" ColumnName="FDEFicheEssai" />
+                <ScalarProperty Name="EssaiDelets" ColumnName="EssaiDelets" />
+                <ScalarProperty Name="DPRéf" ColumnName="DPRéf" />
+                <ScalarProperty Name="FormulationProduitRéf" ColumnName="FormulationProduitRéf" />
+                <ScalarProperty Name="Devis" ColumnName="Devis" />
+                <ScalarProperty Name="EtatEssai" ColumnName="EtatEssai" />
+                <ScalarProperty Name="DevisDemander" ColumnName="DevisDemander" />
+                <ScalarProperty Name="EtatPaiment" ColumnName="EtatPaiment" />
+                <ScalarProperty Name="Paiment_Regler100" ColumnName="Paiment_Regler100" />
+                <ScalarProperty Name="Paiment_Regler50" ColumnName="Paiment_Regler50" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="NonPayer" ColumnName="NonPayer" />
+                <ScalarProperty Name="Payer50" ColumnName="Payer50" />
+                <ScalarProperty Name="Facture" ColumnName="Facture" />
+                <ScalarProperty Name="MARéf" ColumnName="MARéf" />
+                <ScalarProperty Name="Date_Modife" ColumnName="Date_Modife" />
+                <ScalarProperty Name="id_devis" ColumnName="id_devis" />
+                <ScalarProperty Name="Numdevie" ColumnName="Numdevie" />
+                <ScalarProperty Name="nbr" ColumnName="nbr" />
+                <ScalarProperty Name="ComportementCulture" ColumnName="ComportementCulture" />
+                <ScalarProperty Name="Date_Instalation" ColumnName="Date_Instalation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Journal">
+            <EntityTypeMapping TypeName="AgricModel.Journal">
+              <MappingFragment StoreEntitySet="Journal">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="Date_Modification" ColumnName="Date_Modification" />
+                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id_Essai" ColumnName="Id_Essai" />
+                <ScalarProperty Name="VuAdmin" ColumnName="VuAdmin" />
+                <ScalarProperty Name="VuClient" ColumnName="VuClient" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notation">
+            <EntityTypeMapping TypeName="AgricModel.Notation">
+              <MappingFragment StoreEntitySet="Notation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="D_N_P" ColumnName="D_N_P" />
+                <ScalarProperty Name="D_N_R" ColumnName="D_N_R" />
+                <ScalarProperty Name="FNotation" ColumnName="FNotation" />
+                <ScalarProperty Name="Essai_Id" ColumnName="Essai_Id" />
+                <ScalarProperty Name="Date_Add" ColumnName="Date_Add" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profile">
+            <EntityTypeMapping TypeName="AgricModel.Profile">
+              <MappingFragment StoreEntitySet="Profile">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="AgricModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

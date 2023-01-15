@@ -1,0 +1,89 @@
+﻿@model Agric.Models.Devis
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Devis</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.date_demande)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_demande)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DemandeDevis)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DemandeDevis)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DevisDelete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DevisDelete)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DevisAccepter)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DevisAccepter)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumDevis)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumDevis)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Devis1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Devis1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DevieEnvoyer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DevieEnvoyer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Users.Fullname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Users.Fullname)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

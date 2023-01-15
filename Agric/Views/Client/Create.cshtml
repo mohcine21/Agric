@@ -1,0 +1,160 @@
+﻿@model Agric.Models.Essai
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+
+<div class="text-center"><h2>CREATION D'UN ESSAI  </h2></div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+<div class="d-xl-flex align-items-center text-md-center">
+
+
+    <a class="nav-link" href="/Client/Create">
+        <i class="fas fa-fw fa-table"></i>
+        <span>  Demande Essai</span>
+    </a>
+
+    <a class="nav-link" href="/Client/Modification">
+        <i class="fas fa-fw fa-table"></i>
+
+        <span>
+            Notification  <span class="badge badge-danger badge-counter">
+
+
+                @ViewBag.nbrnotifclient
+            </span>
+        </span>
+    </a>
+    <a class="nav-link" href="/Client/Devis">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Demande de devis</span>
+    </a>
+
+    <a class="nav-link" href="/Client/Index">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Etat d'avancement</span>
+
+    </a>
+    <a class="nav-link" href="/Client/ListeDevisRecu">
+        <i class="fas fa-fw fa-table"></i>
+        <span>
+            Devis Recu
+            <span class="badge badge-danger badge-counter">
+
+
+                @ViewBag.nbrdevisclient
+            </span>
+        </span>
+
+    </a>
+    <a class="nav-link" href="/Client/ListeDevisDemander">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Devis Envoyer </span>
+
+    </a>
+
+</div>
+
+
+
+
+
+<form action="Create" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Produit, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Produit, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Produit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Culture, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Culture, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Culture, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cible, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Cible, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Cible, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+           &nbsp; Mode d'action <h1 style="color:red" class="small">&nbsp;&nbsp; ( Systémique , de Contact !!!!)</h1>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Devis, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Devis, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+   <p>
+   &nbsp; Epoque d'application <h1 style="color:red" class="small">&nbsp;&nbsp; ( Préventif , Curatif  !!!!)</h1>
+    </p>            <div class="col-md-10">
+                @Html.EditorFor(model => model.ComportementCulture, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ComportementCulture, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FDS, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+
+                <input type="file" name="_FDS" value="">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ACB, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+
+                <input type="file" name="_ACB" value="">
+            </div>
+
+        </div>
+
+
+
+        <div class="form-group">
+            <div>
+                <div class="col-md-offset-2 col-md-10 ">
+                    <button type="submit" class=" btn btn-primary btn-block"> Validé</button>
+
+
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</form>
+
+<div>
+    @Html.ActionLink("Annullé", "Index")
+</div>
+

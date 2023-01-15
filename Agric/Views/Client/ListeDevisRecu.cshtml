@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Agric.Models.Devis>
+
+@{
+    ViewBag.Title = "ListeDevisRecu";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+<div class="text-center"><h2>MES DEVIS RECU </h2></div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<div class="d-xl-flex align-items-center text-md-center">
+
+
+    <a class="nav-link" href="/Client/Create">
+        <i class="fas fa-fw fa-table"></i>
+        <span>  Demande Essai</span>
+    </a>
+
+    <a class="nav-link" href="/Client/Modification">
+        <i class="fas fa-fw fa-table"></i>
+
+        <span>
+            Notification  <span class="badge badge-danger badge-counter">
+
+
+                @ViewBag.nbrnotifclient
+            </span>
+        </span>
+    </a>
+    <a class="nav-link" href="/Client/Devis">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Demande de devis</span>
+    </a>
+
+    <a class="nav-link" href="/Client/Index">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Etat d'avancement</span>
+
+    </a>
+    <a class="nav-link" href="/Client/ListeDevisRecu">
+        <i class="fas fa-fw fa-table"></i>
+        <span>
+            Devis Recu
+            <span class="badge badge-danger badge-counter">
+
+
+                @ViewBag.nbrdevisclient
+            </span>
+        </span>
+
+    </a>
+    <a class="nav-link" href="/Client/ListeDevisDemander">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Devis Envoyer </span>
+
+    </a>
+
+</div>
+<hr />
+<div class="container-fluid" style=" overflow: auto; scrollbar-base-color: #ffeaff ">
+    <table class="table table-hover ">
+        <thead class="bg-primary text-light">
+            <tr>
+                <th style="min-width:130px ; text-align:center;">
+                    @Html.DisplayNameFor(model => model.Users.Fullname)
+                </th>
+
+                <th style="min-width:130px ; text-align:center;">
+                    @Html.DisplayNameFor(model => model.date_demande)
+                </th>
+                <th style="min-width:130px ; text-align:center;">
+                    @Html.DisplayNameFor(model => model.NumDevis)
+                </th>
+                <th style="min-width:130px ; text-align:center;">
+                    @Html.DisplayNameFor(model => model.Devis1)
+                </th>
+                <th></th>
+            </tr>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Users.Fullname)
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.date_demande)
+                    </td>
+
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.NumDevis)
+                    </td>
+                    <td style="  text-align:center">
+                        @if (item.Devis1 != null)
+                        {
+                            @Html.ActionLink("Télécharger", "DownloadDevis", new { Id = item.id })
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+</table>
+
+    </div>

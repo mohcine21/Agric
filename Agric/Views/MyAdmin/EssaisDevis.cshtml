@@ -1,0 +1,110 @@
+﻿@model IEnumerable<Agric.Models.Essai>
+
+@{
+    ViewBag.Title = "EssaisDevis";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="text-center"><h2>DETAILS DE DEVIS </h2></div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+
+<hr />
+
+<div class="container-fluid" style=" overflow: auto; scrollbar-base-color: #ffeaff ">
+    <table class="table table-hover " id="example">
+        <thead class="bg-primary text-light">
+            <tr>
+
+
+                <th style="min-width:130px ; text-align:center;">
+                    Client
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Code)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Produit)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Culture)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Cible)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Region)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.EtatEssai)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Users.Fullname)
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Produit)
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Culture)
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Cible)
+                    </td>
+
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Region)
+                    </td>
+
+
+
+
+
+                    <td style="  text-align:center">
+                        @{ if (item.EtatEssai == "Réalisé")
+                            {
+                    <p> <a style="color:green"> Réalisé </a></p> }
+                else if (item.EtatEssai == "Annulé")
+                {
+                    <p>
+                        <a style="color:red">Annulé</a>
+                    </p> }
+                else if (item.EtatEssai == "Non installer")
+                {
+                    <p>
+                        <a style="color:red">Non installer</a>
+                    </p> }
+                else
+                {<p>
+                        <a style="color:blue"> En cours ...</a>
+                    </p> } }
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+
+
+</div>
+
+
+

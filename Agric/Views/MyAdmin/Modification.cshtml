@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Agric.Models.Journal>
+
+@{
+    ViewBag.Title = "Modification";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="text-center"><h2>MODIFICATION </h2></div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+function myFunction() {
+  confirm("Press a button!");
+}
+</script>
+<div class="container-fluid" style="width: auto; overflow: auto; scrollbar-base-color: #ffeaff">
+
+    <table class="table table-hover">
+        <thead class="bg-primary text-light">
+            <tr>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Operation)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Date_Modification)
+                </th>
+
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Users.Fullname)
+                </th>
+                
+                    <div class="row">
+                        <div class="col-12 ">
+                            @Html.ActionLink("Supprimer", "DeleteJournal", new { @class = "btn btn-danger btn-sm btn-block m-1", onclick = "return confirm('Confirmer ???');" })
+                        </div>
+                    </div>
+                
+            </tr>
+        </thead>
+            @foreach (var item in Model)
+            {
+
+    <tr onclick="location.href = '@(Url.Action("DetailsEssaiJournal", new { id = item.Id_Essai ,   id1 = item.Id })) '">
+
+        <td style="  text-align:center">
+
+            @if (item.VuAdmin == false)
+            {
+                <b>  @Html.DisplayFor(modelItem => item.Operation)</b>
+            }
+            else
+            {@Html.DisplayFor(modelItem => item.Operation)}
+        </td>
+        <td style="  text-align:center">
+            @if (item.VuAdmin == false)
+            {
+                <b>   @Html.DisplayFor(modelItem => item.Date_Modification)</b>
+            }
+            else
+            { @Html.DisplayFor(modelItem => item.Date_Modification)}
+
+        </td>
+
+        <td style="  text-align:center">
+            @if (item.VuAdmin == false)
+            {
+                <b>  @Html.DisplayFor(modelItem => item.Users.Fullname)</b>
+            }
+            else
+            {@Html.DisplayFor(modelItem => item.Users.Fullname)}
+
+        </td>
+
+        <td>
+            <div class="row">
+                <div class="col-12 ">
+       
+                    @Html.ActionLink( "Supprimer", "DeleteJournal", new  { id = item.Id } , new { @class = "btn btn-danger btn-sm btn-block m-1" , onclick = "return confirm('Supprimer ???');" })
+
+
+                </div>
+
+            </div>
+        </td>
+    </tr>
+
+              }
+
+    </table>
+    </div>

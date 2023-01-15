@@ -1,0 +1,151 @@
+﻿@model IEnumerable<Agric.Models.Essai>
+
+@{
+    ViewBag.Title = "Devis";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+<div class="text-center"><h2>DEVIS </h2></div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#checkAll').click(function () {
+
+            if ($(this).is(":checked"))
+                $('.chkCheckBoxId').prop('checked', true)
+            else
+                $('.chkCheckBoxId').prop('checked', false)
+        });
+    });
+</script>
+
+<div class="d-xl-flex align-items-center text-md-center">
+
+
+    <a class="nav-link" href="/Client/Create">
+        <i class="fas fa-fw fa-table"></i>
+        <span>  Demande Essai</span>
+    </a>
+
+    <a class="nav-link" href="/Client/Modification">
+        <i class="fas fa-fw fa-table"></i>
+
+        <span>
+            Notification  
+            <span class="badge badge-danger badge-counter">
+
+
+                @ViewBag.nbrnotifclient
+            </span>
+        </span>
+    </a>
+    <a class="nav-link" href="/Client/Devis">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Demande de devis</span>
+    </a>
+
+    <a class="nav-link" href="/Client/Index">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Etat d'avancement</span>
+
+    </a>
+    <a class="nav-link" href="/Client/ListeDevisRecu">
+        <i class="fas fa-fw fa-table"></i>
+        <span>
+            Devis Recu
+            <span class="badge badge-danger badge-counter">
+
+
+                @ViewBag.nbrdevisclient
+            </span>
+        </span>
+
+    </a>
+    <a class="nav-link" href="/Client/ListeDevisDemander">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Devis Envoyer </span>
+
+    </a>
+
+</div>
+
+
+
+<hr />
+<form action="CreateDevis" method="post" enctype="multipart/form-data">
+
+    <div class="container-fluid" style="width: auto; overflow: auto; scrollbar-base-color: #ffeaff">
+        <table class="table table-hover">
+           
+            <thead class="bg-primary text-light">
+                <tr>
+                    <th> <input type="checkbox" id="checkAll" /></th>
+                    
+                    <th style="min-width:130px ; text-align:center">
+                        @Html.DisplayNameFor(model => model.Produit)
+                    </th>
+                    <th style="min-width:130px ; text-align:center">
+
+                        @Html.DisplayNameFor(model => model.Culture)
+                    </th>
+                    <th style="min-width:130px ; text-align:center">
+                        @Html.DisplayNameFor(model => model.Cible)
+                    </th>
+
+                    <th style="min-width:130px ; text-align:center">
+                        @Html.DisplayNameFor(model => model.Region)
+                    </th>
+
+                    <th style="min-width:130px ; text-align:center">
+                        @Html.DisplayNameFor(model => model.MA)
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.ListEssai)
+                {
+
+
+                <tr>
+                   
+
+                    <td> <input type="checkbox" class="chkCheckBoxId" value="@item.Id" name="essaiId"/></td>
+                    
+                    <td style="  text-align:center">
+                       @item.Produit
+                    </td>
+                    <td style="  text-align:center">
+                       @item.Culture
+                    </td>
+                    <td style="  text-align:center">
+                        @item.Cible
+                    </td>
+
+                    <td style="  text-align:center">
+                        @item.Region
+                    </td>
+
+                    <td style="  text-align:center">
+                        @item.MA
+                    </td>
+
+                    }
+                </tr>
+                }
+            </tbody>
+
+        </table>
+
+        <div class="form-group" style="width: 200px; width: 200px">
+            <div>
+                <div class="col-md-offset-2 col-md-10 ">
+                    <button type="submit" class=" btn btn-success btn-block"> Demandé</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </form>

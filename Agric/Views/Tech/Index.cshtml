@@ -1,0 +1,225 @@
+﻿@model IEnumerable<Agric.Models.Essai>
+@using System.Globalization;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_TechLayout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+<div class="text-center"><h2>ESSAIS A TRAITER </h2></div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<div class="d-xl-flex align-items-center text-md-center">
+
+
+    <a class="nav-link" href="/Tech/DownloadCD">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Calculer une dose </span>
+    </a>
+
+    <a class="nav-link" href="/Tech/EssaiSemaine">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Essais de cette semaine</span>
+    </a>
+    <form action="~/Tech/Datepicker" method="get" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+        <div class="input-group">
+            <input type="date" name="search" class="form-control bg-light border-0 small" style=" min-width:200px;" placeholder="Search for..."
+                   aria-label="search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn " type="submit" value="Search" style="background-color: #779523; color: white">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<br />
+
+<div class="container-fluid" style="width: auto; overflow: auto; scrollbar-base-color: #ffeaff">
+
+    <table class="table table-hover">
+        <thead class="bg-primary text-light">
+            <tr>
+                <th style="min-width:130px ; text-align:center">
+                    <p> Cette Semaine</p>
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.CodeClient)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Code)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Region)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Culture)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Cible)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Produit)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.DP)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Formulation)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.PR)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.DPRéf)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.FormulationProduitRéf)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.TA)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.PE)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Date_Instalation)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.FDEFicheEssai)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Date_Cloture)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.EtatPaiment)
+                </th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.Date_Cloture == null)
+                {
+
+        <tr style="background-color: #b0f7cc">
+            @{ var s = item.Notation.Where(e => e.Essai_Id == item.Id && e.D_N_P != null && e.D_N_R == null && e.FNotation == null && CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(e.D_N_P, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) == CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday)).Count();
+                if (s != 0)
+                {
+                <td style="  text-align:center">
+                    <i class="fa fa-check-circle" style="color:red" aria-hidden="true"></i>
+                </td> }
+                else
+                {
+                <td>
+                </td> } }
+            <td style="  text-align:center">
+                @Html.DisplayFor(modelItem => item.CodeClient)
+            </td>
+            <td style="  text-align:center">
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td style="  text-align:center">
+                @Html.DisplayFor(modelItem => item.Region)
+            </td>
+            <td style="  text-align:center">
+                @Html.DisplayFor(modelItem => item.Culture)
+            </td>
+            <td style="  text-align:center">
+                @Html.DisplayFor(modelItem => item.Cible)
+            </td>
+            <td style="  text-align:center">
+                @Html.DisplayFor(modelItem => item.Produit)
+            </td>
+            <td style="  text-align:center">
+                @Html.DisplayFor(modelItem => item.DP)
+            </td>
+            <td style="  text-align:center">
+                @Html.DisplayFor(modelItem => item.Formulation)
+            </td>
+            <td style="  text-align:center">
+                @Html.DisplayFor(modelItem => item.PR)
+            </td>
+            <td style="  text-align:center">
+                @Html.DisplayFor(modelItem => item.DPRéf)
+            </td>
+            <td style="  text-align:center">
+                @Html.DisplayFor(modelItem => item.FormulationProduitRéf)
+            </td>
+            <td style="  text-align:center">
+                @Html.DisplayFor(modelItem => item.TA)
+            </td>
+            <td style="  text-align:center">
+                @if (item.PE != null)
+                {
+
+        @Html.ActionLink("Télécharger", "DownloadPE", new
+   {
+       Id = item.Id
+   });
+
+                }
+
+            </td>
+            <td style="  text-align:center">
+                @Html.DisplayFor(modelItem => item.Date_Instalation)
+            </td>
+            <td style="  text-align:center">
+                @if (item.FDEFicheEssai != null)
+                {
+        @Html.ActionLink("Télécharger", "DownloadFDEFicheEssai", new { Id = item.Id })                    }
+
+            </td>
+            <td style="  text-align:center">
+                @Html.DisplayFor(modelItem => item.Date_Cloture)
+            </td>
+
+            <td style="  text-align:center">
+
+                <h6 class="text-muted f-w-400">
+                    @{ if (item.EtatPaiment == true)
+                        {
+        <p>
+            <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
+        </p> }
+                        else if (item.EtatPaiment == false)
+                        {
+        <p>
+            <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+        </p> }
+                        else
+                        {
+        <p>
+            <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+        </p> } }
+                </h6>
+
+            </td>
+            <td>
+                <div class="row">
+                    <div class="col-12 ">
+                        @Html.ActionLink("Ajouter", "Edit", new { id = item.Id }, new { @class = "btn btn-success btn-sm btn-block m-1" })
+                        @Html.ActionLink("Notations", "Notations", new { essai_id = item.Id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
+
+                    </div>
+                </div>
+            </td>
+        </tr> }
+                        }
+
+        </tbody>
+    </table>
+</div>
+

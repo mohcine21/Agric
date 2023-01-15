@@ -1,0 +1,46 @@
+﻿@model  Agric.Models.Notation
+
+@{
+    ViewBag.Title = "AddNotation";
+    Layout = "~/Views/Shared/_TechLayout.cshtml";
+}
+
+<div class="text-center"><h2>Création d'éssai </h2></div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+@{
+    var essai_id = ViewBag.id_essai;
+}
+@using (Html.BeginForm("AddNotation", "Tech", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+   
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.D_N_P)
+    @Html.HiddenFor(model => model.Essai_Id)
+    <div class="form-group">
+        @Html.LabelFor(model => model.D_N_R, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.D_N_R, new { htmlAttributes = new { @class = "form-control", Type = "date" } })
+            @Html.ValidationMessageFor(model => model.D_N_R, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FNotation, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="file" name="_FNotation" value="">
+        </div>
+    </div>
+</div>
+    <div class="row">
+        <div class="col-12">
+            <input type="submit" class="btn btn-primary btn-sm btn-block m-1" />
+        </div>
+    </div>
+
+}

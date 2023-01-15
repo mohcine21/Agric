@@ -1,0 +1,117 @@
+﻿@model IEnumerable<Agric.Models.Devis>
+
+@{
+    ViewBag.Title = "ListeDevisEnvoyer";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="text-center"><h2>DEVIS ENVOYER </h2></div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a class="nav-link" href="/MyAdmin/CreateDevis">
+    <i class="fas fa-fw fa-table"></i>
+    <span>Ajouter un Devis</span>
+</a>
+<hr />
+<div class="container-fluid" style=" overflow: auto; scrollbar-base-color: #ffeaff ">
+    <table class="table table-hover " id="example">
+        <thead class="bg-primary text-light">
+            <tr>
+                <th style="min-width:130px ; text-align:center;">
+                    @Html.DisplayNameFor(model => model.Users.Fullname)
+                </th>
+
+                <th style="min-width:130px ; text-align:center;">
+                    @Html.DisplayNameFor(model => model.date_demande)
+                </th>
+                <th style="min-width:130px ; text-align:center;">
+                    @Html.DisplayNameFor(model => model.NumDevis)
+                </th>
+                <th style="min-width:130px ; text-align:center;">
+                    @Html.DisplayNameFor(model => model.Devis1)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Users.Fullname)
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.date_demande)
+                    </td>
+
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.NumDevis)
+                    </td>
+                    <td style="  text-align:center">
+                        @if (item.Devis1 != null)
+                        {
+                            @Html.ActionLink("Télécharger", "DownloadDevis", new { Id = item.id })
+                        }
+                    </td>
+
+
+                    <td>
+                        @Html.ActionLink("Details", "EssaisDevis", new { id = item.id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Page level custom scripts -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+            lengthChange: false,
+            paging: false,
+            buttons: ['excel', 'csv']
+        });
+
+        table.buttons().container()
+            .appendTo('#example_wrapper .col-md-6:eq(0)');
+    });
+</script>
+
+<style>
+    .dataTables_filter {
+        white-space: nowrap;
+    }
+
+        .dataTables_filter label, .dataTables_filter input {
+            display: inline-block;
+            color: dimgrey;
+        }
+
+    .buttons-excel {
+        background-color: green;
+        color: white;
+    }
+
+    .buttons-copy {
+        background-color: blue;
+        color: white;
+    }
+</style>
+
+

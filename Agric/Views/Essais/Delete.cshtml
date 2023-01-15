@@ -1,0 +1,393 @@
+﻿@model Agric.Models.Essai
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Essai</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CodeClient)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodeClient)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Formulation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Formulation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateNotation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateNotation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Produit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Produit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Culture)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Culture)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cible)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cible)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nb)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nb)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Region)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Region)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date_Cloture)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date_Cloture)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rapport)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rapport)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RapportRemis)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RapportRemis)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateRemisRapport)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateRemisRapport)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ACB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ACB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FDS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FDS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LaboName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LaboName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TechName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TechName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FNNotation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FNNotation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FDEFicheEssai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FDEFicheEssai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EssaiDelets)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EssaiDelets)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DPRéf)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DPRéf)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FormulationProduitRéf)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FormulationProduitRéf)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Devis)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Devis)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EtatEssai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EtatEssai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DevisDemander)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DevisDemander)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EtatPaiment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EtatPaiment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Paiment_Regler100)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Paiment_Regler100)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Paiment_Regler50)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Paiment_Regler50)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Payer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Payer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NonPayer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NonPayer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Payer50)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Payer50)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Facture)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Facture)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MARéf)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MARéf)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date_Modife)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date_Modife)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.id_devis)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_devis)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Numdevie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Numdevie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nbr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nbr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ComportementCulture)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ComportementCulture)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date_Instalation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date_Instalation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Users.Fullname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Users.Fullname)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

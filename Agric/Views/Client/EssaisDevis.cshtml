@@ -1,0 +1,151 @@
+﻿@model IEnumerable<Agric.Models.Essai>
+
+@{
+    ViewBag.Title = "EssaisDevis";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+
+<div class="text-center"><h2>MES ESSAIS </h2></div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<div class="d-xl-flex align-items-center text-md-center">
+
+
+    <a class="nav-link" href="/Client/Create">
+        <i class="fas fa-fw fa-table"></i>
+        <span>  Demande Essai</span>
+    </a>
+
+    <a class="nav-link" href="/Client/Modification">
+        <i class="fas fa-fw fa-table"></i>
+
+        <span>
+            Notification  <span class="badge badge-danger badge-counter">
+
+
+                @ViewBag.nbrnotifclient
+            </span>
+        </span>
+    </a>
+    <a class="nav-link" href="/Client/Devis">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Demande de devis</span>
+    </a>
+
+    <a class="nav-link" href="/Client/Index">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Etat d'avancement</span>
+
+    </a>
+    <a class="nav-link" href="/Client/ListeDevisRecu">
+        <i class="fas fa-fw fa-table"></i>
+        <span>
+            Devis Recu
+            <span class="badge badge-danger badge-counter">
+
+
+                @ViewBag.nbrdevisclient
+            </span>
+        </span>
+
+    </a>
+    <a class="nav-link" href="/Client/ListeDevisDemander">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Devis Envoyer </span>
+
+    </a>
+
+</div>
+<hr />
+
+<div class="container-fluid" style=" overflow: auto; scrollbar-base-color: #ffeaff ">
+    <table class="table table-hover " id="example">
+        <thead class="bg-primary text-light">
+            <tr>
+
+
+                <th style="min-width:130px ; text-align:center;">
+                    Client
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Code)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Produit)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Culture)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Cible)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Region)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.EtatEssai)
+                </th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Users.Fullname)
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Produit)
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Culture)
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Cible)
+                    </td>
+
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Region)
+                    </td>
+
+                 
+                  
+                   
+                    
+                    <td style="  text-align:center">
+                        @{ if (item.EtatEssai == true)
+                            {
+                                <p> <a style="color:green"> Réalisé </a></p> }
+                            else if (item.EtatEssai == false)
+                            {
+                                <p>
+                                    <a style="color:red">Annulé</a>
+                                </p> }
+                            else
+                            {<p>
+                                    <a style="color:blue"> En cours ...</a>
+                                </p> } }
+                    </td>
+                   
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+
+
+</div>
+
+

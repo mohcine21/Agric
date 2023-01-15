@@ -1,0 +1,371 @@
+﻿@model  IEnumerable<Agric.Models.Essai>
+
+@{ ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+
+
+<div class="text-center"><h2>MES ESSAIS </h2></div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<div class="d-xl-flex align-items-center text-md-center">
+
+
+    <a class="nav-link" href="/Client/Create">
+        <i class="fas fa-fw fa-table"></i>
+        <span>  Demande Essai</span>
+    </a>
+
+    <a class="nav-link" href="/Client/Modification">
+        <i class="fas fa-fw fa-table"></i>
+
+        <span>
+            Notification  <span class="badge badge-danger badge-counter">
+
+
+                @ViewBag.nbrnotifclient
+            </span>
+        </span>
+    </a>
+    <a class="nav-link" href="/Client/Devis">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Demande de devis</span>
+    </a>
+
+    <a class="nav-link" href="/Client/Index">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Etat d'avancement</span>
+
+    </a>
+    <a class="nav-link" href="/Client/ListeDevisRecu">
+        <i class="fas fa-fw fa-table"></i>
+        <span>
+            Devis Recu
+            <span class="badge badge-danger badge-counter">
+
+
+                @ViewBag.nbrdevisclient
+            </span>
+        </span>
+
+    </a>
+    <a class="nav-link" href="/Client/ListeDevisDemander">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Devis Envoyer </span>
+
+    </a>
+
+</div>
+
+<hr />
+
+<div class="container-fluid" style=" overflow: auto; scrollbar-base-color: #ffeaff ">
+    <table class="table table-hover " id="example">
+        <thead class="bg-primary text-light">
+            <tr>
+
+
+                <th style="min-width:130px ; text-align:center;">
+                    Client
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Code)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Produit)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Culture)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Cible)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Region)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Nb)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Usage)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Date_Instalation)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    Notation
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Date_Cloture)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Rapport)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.RapportRemis)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.DateRemisRapport)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.EtatEssai)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Facture)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Paiment_Regler50)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Users.Fullname)
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Produit)
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Culture)
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Cible)
+                    </td>
+
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Region)
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Nb)
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Usage)
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Date_Instalation)
+                    </td>
+                    <td style="  text-align:center">
+
+                        @{
+
+                            string s = item.Notation.Where(e => e.D_N_R != null  && e.Essai_Id ==item.Id ).Count().ToString();
+                        }
+                        @*   if (!string.IsNullOrEmpty(s))
+                            {
+                                DateTime dDate;
+                                String[] notations = s.Trim().Split(' ');
+                                List<String> res = new List<string>();
+                                for (int i = 0; i < notations.Length; i++)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(notations[i]) && DateTime.TryParse(notations[i], out dDate))
+                                    {
+                                        res.Add(notations[i]);
+                                    }
+                                }
+                                int nbr_Notations = res.Count;
+
+                                <p>
+                                    @nbr_Notations   Notation valide <i class="fa fa-check-circle" style="color:green" aria-hidden="true"></i>
+                                </p> }
+                            else
+                            {
+
+
+                                <p>
+                                    0 Notation valide <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+
+                                </p> } }*@
+
+                        @{
+                            if (s == "0")
+                            {
+                                <p>
+                                    0 Notation valide<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+                                </p>
+                            }
+                            else
+                            {
+                                <p>
+                                    @s   Notation valide <i class="fa fa-check-circle" style="color:green" aria-hidden="true"></i>
+                                </p>
+                            }
+                        }
+
+                      
+
+
+
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.Date_Cloture)
+                    </td>
+                    <td style="  text-align:center">
+                        @if (item.Rapport != null)
+                        {
+                            @Html.ActionLink("Télécharger", "DownloadRapport", new { Id = item.Id })}
+                    </td>
+                    <td style="  text-align:center">
+                        @{ if (item.RapportRemis == true)
+                            {
+                                <p>
+                                    <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
+                                </p> }
+                            else if (item.RapportRemis == false)
+                            {
+                                <p>
+                                    <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+                                </p> }
+                            else
+                            {<p>
+                                    <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+                                </p> } }
+                    </td>
+                    <td style="  text-align:center">
+                        @Html.DisplayFor(modelItem => item.DateRemisRapport)
+                    </td>
+
+                    <td style="  text-align:center">
+                        @{ if (item.EtatEssai == "Réalisé")
+                            {
+                                <p> <a style="color:green"> Réalisé </a></p> }
+                            else if (item.EtatEssai == "Annulé")
+                            {
+                                <p>
+                                    <a style="color:red">Annulé</a>
+                                </p> }
+                            else if (item.EtatEssai == "Non installer")
+                            {<p>
+                                 <a style="color:red">Non installer</a>
+                                </p> }
+                else
+                {
+                    <p>
+                        <a style="color:blue"> En cours ...</a>
+                    </p>
+                }
+                            }
+                    </td>
+                    <td style="  text-align:center">
+                        @if (item.Facture != null)
+                        {
+                            @Html.ActionLink("Télécharger", "DownloadFacture", new { Id = item.Id })}
+                    </td>
+
+
+                    <td style="  text-align:center">
+                        @if (item.Paiment_Regler50 == true)
+                        {
+                            <div class="col-sm-4">
+
+
+                                <p>
+                                    Regler 100% <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
+                                </p>
+
+
+                            </div>
+                        }
+                        else if (item.Paiment_Regler50 == false)
+                        {
+
+
+                            <p>
+
+                                Regler 50%<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+                            </p>
+
+
+
+                        }
+                        else
+                        {
+                            <div class="col-sm-4">
+
+
+                                <p>
+                                    Pas Regler
+                                </p>
+
+
+
+                            </div>
+
+                        }
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+
+
+</div>
+
+
+
+<!-- Page level custom scripts -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+            lengthChange: false,
+            paging: false,
+            buttons: ['excel', 'csv']
+        });
+
+        table.buttons().container()
+            .appendTo('#example_wrapper .col-md-6:eq(0)');
+    });
+</script>
+
+<style>
+    .dataTables_filter {
+        white-space: nowrap;
+    }
+
+        .dataTables_filter label, .dataTables_filter input {
+            display: inline-block;
+            color: dimgrey;
+        }
+
+    .buttons-excel {
+        background-color: green;
+        color: white;
+    }
+
+    .buttons-copy {
+        background-color: blue;
+        color: white;
+    }
+</style>
+

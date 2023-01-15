@@ -1,0 +1,98 @@
+﻿@model IEnumerable<Agric.Models.Users>
+
+@{
+    ViewBag.Title = "ListeLabos";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="text-center"><h2> Liste des membres de Labo </h2></div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<div class="container-fluid" style="width: auto; overflow: auto; scrollbar-base-color: #ffeaff">
+    <table class="table table-hover">
+        <thead class="bg-primary text-light">
+            <tr>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Fullname)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Phone)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.CreatedOn)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Password)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Profile.Name)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                  Actions
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fullname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedOn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Profile.Name)
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-12 ">
+                                @Html.ActionLink("Modifier", "EditUser", new { id = item.Id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
+
+                                @Html.ActionLink("Supprimer", "DeleteUser", new { id = item.Id }, new { @class = "btn btn-danger btn-sm btn-block m-1" })
+
+
+                            </div>
+                        </div>
+                    
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>

@@ -1,0 +1,187 @@
+﻿@model IEnumerable<Agric.Models.Essai>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LaboLayout.cshtml";
+}
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<div class="text-center"><h2>MES ESSAIS </h2></div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+        <div class="d-xl-flex align-items-center text-md-center">
+
+
+            <a class="nav-link" href="/Labo/DownloadCD">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Calculer une dose </span>
+            </a>
+           
+
+        </div>
+
+<br />
+<div class="container-fluid" style="width: auto; overflow: auto; scrollbar-base-color: #ffeaff">
+
+    <table class="table table-hover">
+        <thead class="bg-primary text-light">
+            <tr>
+                
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.CodeClient)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Code)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Region)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Culture)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Cible)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Produit)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.DP)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Formulation)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.PR)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.DPRéf)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.FormulationProduitRéf)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.TA)
+                </th>
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.PE)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Date_Instalation)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.FDEFicheEssai)
+                </th>
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.DateNotation)
+                </th>
+
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.FNNotation)
+                </th>
+
+
+
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Date_Cloture)
+                </th>
+
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.CodeClient)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Region)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Culture)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Cible)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Produit)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.DP)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Formulation)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.PR)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.DPRéf)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.FormulationProduitRéf)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.TA)
+                </td>
+                <td style="  text-align:center">
+                    @if (item.PE != null)
+                    {
+                        @Html.ActionLink("Télécharger", "DownloadPE", new { Id = item.Id })
+                    }
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Date_Instalation)
+                </td>
+                <td style="  text-align:center">
+                    @if (item.FDEFicheEssai != null)
+                    {
+                        @Html.ActionLink("Télécharger", "DownloadFDEFicheEssai", new { Id = item.Id })
+                    }
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.DateNotation)
+                </td>
+                <td style="  text-align:center">
+                    @if (item.FNNotation != null)
+                    {
+                        @Html.ActionLink("Télécharger", "DownloadFNNotation", new { Id = item.Id })
+                    }
+                </td>
+
+
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Date_Cloture)
+                </td>
+
+                <td>
+                    <div class="row">
+                        <div class="col-12 ">
+                            @Html.ActionLink("Rempliser", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
+                        </div>
+                </td>
+
+
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+

@@ -1,0 +1,252 @@
+﻿@model Agric.Models.Essai
+
+@{
+    ViewBag.Title = "DetailsEssaiJournal";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+<div>
+    <div>
+        <div class="col-lg-12 col-md-12">
+            <div class="card user-card-full">
+                <div class="row m-l-1 m-r-1 m-2">
+                    <div class="col-sm-12">
+                        <h3 class="text-center">Details Essai</h3>
+
+                        <hr />
+                    </div>
+
+                    <hr />
+                    <hr />
+                    <div class="col-sm-12">
+                        <div class="card-block">
+                            <div class="row ">
+
+                                <div class="col-sm-4">
+                                    <p class="m-b-10 f-w-600 font-weight-bold">Nom Client :</p>
+                                    <h6 class="text-muted f-w-400">
+                                        @Html.DisplayFor(model => model.Users.Fullname)
+                                    </h6>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <p class="m-b-10 f-w-600 font-weight-bold">Code Essai :</p>
+                                    <h6 class="text-muted f-w-400">
+                                        @Html.DisplayFor(model => model.Code)
+                                    </h6>
+                                </div>
+                                <div class="col-sm-4">
+                                    <p class="m-b-10 f-w-600 font-weight-bold">Région : </p>
+                                    <h6 class="text-muted f-w-400">   @Html.DisplayFor(model => model.Region)</h6>
+                                </div>
+
+                            </div>
+
+                            <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6><hr /><hr />
+                            <div class="row">
+
+                                <div class="col-sm-4">
+                                    <p class="m-b-10 f-w-600 font-weight-bold">Produit :</p>
+                                    <h6 class="text-muted f-w-400"> @Html.DisplayFor(model => model.Produit)</h6>
+                                </div>
+                                <div class="col-sm-4">
+                                    <p class="m-b-10 f-w-600 font-weight-bold">Culture : </p>
+                                    <h6 class="text-muted f-w-400"> @Html.DisplayFor(model => model.Culture)</h6>
+                                </div>
+                                <div class="col-sm-4">
+                                    <p class="m-b-10 f-w-600 font-weight-bold">Cible :</p>
+                                    <h6 class="text-muted f-w-400">
+                                        @Html.DisplayFor(model => model.Cible)
+                                    </h6>
+                                </div>
+
+
+                            </div>
+
+
+
+
+
+                        </div>
+
+
+
+
+                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6><hr /><hr />
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <p class="m-b-10 f-w-600 font-weight-bold">Date Notation : </p>
+                                <h6 class="text-muted f-w-400"> @Html.DisplayFor(model => model.DateNotation)</h6>
+                            </div>
+                            <div class="col-sm-4">
+
+                                <p class="m-b-10 f-w-600 font-weight-bold">Date Cloture :</p>
+                                <h6 class="text-muted f-w-400">
+                                    @Html.DisplayFor(model => model.Date_Cloture)
+                                </h6>
+                            </div>
+                            <div class="col-sm-4">
+                                <p class="m-b-10 f-w-600 font-weight-bold">Etat d'Essai :</p>
+                                <h6 class="text-muted f-w-400">
+                                    @{ if (Model.EtatEssai == true)
+                                        {
+                                            <p>
+                                                <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
+                                            </p>
+                                        }
+                                        else if (Model.EtatEssai == false)
+                                        {
+                                            <p>
+                                                <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+                                            </p>
+                                        }
+                                        else
+                                        {<p>
+                                                <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+                                            </p> }
+                                    }
+                                </h6>
+                            </div>
+
+
+
+                        </div>
+                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6><hr /><hr />
+                        <div class="row">
+
+
+                            <div class="col-sm-4">
+                                <p class="m-b-10 f-w-600 font-weight-bold">Mode D'action :</p>
+                                <h6 class="text-muted f-w-400"> @Html.DisplayFor(model => model.Devis)</h6>
+                            </div>
+                            <div class="col-sm-4">
+                                <p class="m-b-10 f-w-600 font-weight-bold">Comportement sur la culture :</p>
+                                <h6 class="text-muted f-w-400">
+                                    @Html.DisplayFor(model => model.ComportementCulture)
+                                </h6>
+                            </div>
+
+
+
+                        </div>
+                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6><hr /><hr />
+                        <div class="row">
+
+                            <div class="col-sm-4">
+                                <p class="m-b-10 f-w-600 font-weight-bold">Rapport : </p>
+                                <h6 class="text-muted f-w-400">
+                                    @if (Model.Rapport != null)
+                                    {
+                                        @Html.ActionLink("Télécharger", "DownloadRapport", new { Id = Model.Id })
+                                    }
+                                </h6>
+                            </div>
+                            <div class="col-sm-4">
+                                <p class="m-b-10 f-w-600 font-weight-bold">Rapport Remis :</p>
+                                <h6 class="text-muted f-w-400">
+                                    @{ if (Model.RapportRemis == true)
+                                        {
+                                            <p>
+                                                <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
+                                            </p>
+                                        }
+                                        else if (Model.RapportRemis == false)
+                                        {
+                                            <p>
+                                                <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+                                            </p>
+                                        }
+                                        else
+                                        {<p>
+                                                <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+                                            </p> }
+                                    }
+                                </h6>
+                            </div>
+                            <div class="col-sm-4">
+                                <p class="m-b-10 f-w-600 font-weight-bold">Date Remis de Rapport :</p>
+                                <h6 class="text-muted f-w-400">
+                                    @Html.DisplayFor(model => model.DateRemisRapport)
+                                </h6>
+                            </div>
+
+                        </div>
+
+                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6><hr /><hr />
+                        <div class="row">
+
+
+
+                            @if (Model.Paiment_Regler50 == true)
+                            {
+                                <div class="col-sm-4">
+                                    <p class="m-b-10 f-w-600 font-weight-bold">Paiement réglé : </p>
+                                    <h6 class="text-muted f-w-400">
+
+                                        <p>
+                                            <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
+                                        </p>
+
+                                    </h6>
+                                </div>
+                            }
+                            else if (Model.Paiment_Regler50 == false)
+                            {
+                                <div class="col-sm-4">
+                                    <p class="m-b-10 f-w-600 font-weight-bold">Paiement réglé 50% : </p>
+                                    <h6 class="text-muted f-w-400">
+
+                                        <p>
+                                            <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
+                                        </p>
+
+
+                                    </h6>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-sm-4">
+                                    <p class="m-b-10 f-w-600 font-weight-bold">Paiement non réglé :</p>
+                                    <h6 class="text-muted f-w-400">
+
+                                        <p>
+                                            <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
+                                        </p>
+
+
+                                    </h6>
+                                </div>
+
+
+                            }
+                            <div class="col-sm-4">
+                                <p class="m-b-10 f-w-600 font-weight-bold">Facture: </p>
+                                <h6 class="text-muted f-w-400">
+                                    @if (Model.Facture != null)
+                                    {
+                                        @Html.ActionLink("Télecharger", "DownloadFacture", new { Id = Model.Id })
+                                    }
+                                </h6>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <hr />
+                        <p>
+                            @Html.ActionLink("OK", "Modification", null, new { @class = "btn btn-primary btn-block" })
+
+                        </p>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
