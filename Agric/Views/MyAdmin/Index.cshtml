@@ -5,10 +5,6 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
-<div class="text-center"><h2>ESSAIS </h2></div>
-&nbsp;&nbsp;&nbsp;&nbsp;
-
 <div class="d-xl-flex align-items-center text-md-center">
     <a class="nav-link" href="/MyAdmin/Create">
         <i class="fas fa-fw fa-table"></i>
@@ -69,7 +65,7 @@
         <thead class="bg-primary text-light">
             <tr>
                 <th style="min-width:130px ; text-align:center">
-                    <p> Cette Semaine</p>
+                    @Html.Label("Cette Semaine")
                 </th>
                 <th style="min-width:130px ; text-align:center">
                     @Html.DisplayNameFor(model => model.CodeClient)
@@ -116,7 +112,9 @@
                 <th style="min-width:130px ; text-align:center">
                     Actions
                 </th>
-
+                <th style="min-width:130px ; text-align:center">
+                    
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -131,13 +129,11 @@
                     {
             <td style="  text-align:center">
                 <i class="fa fa-check-circle" style="color:red" aria-hidden="true"></i>
-            </td>
- }
-        else
-        {
+            </td> }
+                            else
+                            {
             <td>
-            </td>
- } }
+            </td> } }
                 <td style="  text-align:center">
                     @Html.DisplayFor(modelItem => item.CodeClient)
                 </td>
@@ -225,6 +221,16 @@
 
                             @Html.ActionLink("Modifier", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
 
+
+                        </div>
+
+                    </div>
+
+                </td>
+                <td>
+                    <div class="row">
+                        <div class="col-12 ">
+                         
                             @Html.ActionLink("Supprimer", "Archive", new { id = item.Id }, new { @class = "btn btn-danger btn-sm btn-block m-1", onclick = "return confirm('Supprimer ???');" })
                             @Html.ActionLink("Notations", "Notations", new { essai_id = item.Id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
 
@@ -232,7 +238,9 @@
                         </div>
 
                     </div>
+
                 </td>
+
             </tr>
                                 
 

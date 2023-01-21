@@ -1,8 +1,7 @@
 ﻿@model  IEnumerable<Agric.Models.Essai>
 
 @{ ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_ClientLayout.cshtml";
-}
+    Layout = "~/Views/Shared/_ClientLayout.cshtml"; }
 
 
 
@@ -17,7 +16,7 @@
         <span>  Demande Essai</span>
     </a>
 
-    
+
     <a class="nav-link" href="/Client/Devis">
         <i class="fas fa-fw fa-table"></i>
         <span>Demande de devis</span>
@@ -49,16 +48,32 @@
 </div>
 
 <hr />
+<style>
+    div.scrollmenu {
+        background-color: #333;
+        overflow: auto;
+        white-space: nowrap;
+    }
 
-<div class="container-fluid" style=" overflow: auto; scrollbar-base-color: #ffeaff ">
+        div.scrollmenu a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px;
+            text-decoration: none;
+        }
+
+            div.scrollmenu a:hover {
+                background-color: #777;
+            }
+</style>
+<div class="container-fluid" style=" overflow:auto">
+
+
     <table class="table table-hover " id="example">
         <thead class="bg-primary text-light">
             <tr>
 
-
-                <th style="min-width:130px ; text-align:center;">
-                    Client
-                </th>
                 <th style="min-width:130px ; text-align:center">
                     @Html.DisplayNameFor(model => model.Code)
                 </th>
@@ -116,188 +131,169 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+<tr>
 
 
-                    <td style="  text-align:center">
-                        @Html.DisplayFor(modelItem => item.Users.Fullname)
-                    </td>
-                    <td style="  text-align:center">
-                        @Html.DisplayFor(modelItem => item.Code)
-                    </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.Code)
+    </td>
 
-                    <td style="  text-align:center">
-                        @Html.DisplayFor(modelItem => item.Produit)
-                    </td>
-                    <td style="  text-align:center">
-                        @Html.DisplayFor(modelItem => item.Culture)
-                    </td>
-                    <td style="  text-align:center">
-                        @Html.DisplayFor(modelItem => item.Cible)
-                    </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.Produit)
+    </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.Culture)
+    </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.Cible)
+    </td>
 
-                    <td style="  text-align:center">
-                        @Html.DisplayFor(modelItem => item.Region)
-                    </td>
-                    <td style="  text-align:center">
-                        @Html.DisplayFor(modelItem => item.Nb)
-                    </td>
-                    <td style="  text-align:center">
-                        @Html.DisplayFor(modelItem => item.Usage)
-                    </td>
-                    <td style="  text-align:center">
-                        @Html.DisplayFor(modelItem => item.Date_Instalation)
-                    </td>
-                    <td style="  text-align:center">
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.Region)
+    </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.Nb)
+    </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.Usage)
+    </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.Date_Instalation)
+    </td>
+    <td style="  text-align:center">
 
-                        @{
-
-                            string s = item.Notation.Where(e => e.D_N_R != null  && e.Essai_Id ==item.Id ).Count().ToString();
-                        }
-                        @*   if (!string.IsNullOrEmpty(s))
-                            {
-                                DateTime dDate;
-                                String[] notations = s.Trim().Split(' ');
-                                List<String> res = new List<string>();
-                                for (int i = 0; i < notations.Length; i++)
-                                {
-                                    if (!string.IsNullOrWhiteSpace(notations[i]) && DateTime.TryParse(notations[i], out dDate))
-                                    {
-                                        res.Add(notations[i]);
-                                    }
-                                }
-                                int nbr_Notations = res.Count;
-
-                                <p>
-                                    @nbr_Notations   Notation valide <i class="fa fa-check-circle" style="color:green" aria-hidden="true"></i>
-                                </p> }
-                            else
-                            {
-
-
-                                <p>
-                                    0 Notation valide <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
-
-                                </p> } }*@
-
-                        @{
-                            if (s == "0")
-                            {
-                                <p>
-                                    0 Notation valide<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
-                                </p>
-                            }
-                            else
-                            {
-                                <p>
-                                    @s   Notation valide <i class="fa fa-check-circle" style="color:green" aria-hidden="true"></i>
-                                </p>
-                            }
-                        }
-
-                      
-
-
-
-                    </td>
-                    <td style="  text-align:center">
-                        @Html.DisplayFor(modelItem => item.Date_Cloture)
-                    </td>
-                    <td style="  text-align:center">
-                        @if (item.Rapport != null)
-                        {
-                            @Html.ActionLink("Télécharger", "DownloadRapport", new { Id = item.Id })}
-                    </td>
-                    <td style="  text-align:center">
-                        @{ if (item.RapportRemis == true)
-                            {
-                                <p>
-                                    <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
-                                </p> }
-                            else if (item.RapportRemis == false)
-                            {
-                                <p>
-                                    <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
-                                </p> }
-                            else
-                            {<p>
-                                    <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
-                                </p> } }
-                    </td>
-                    <td style="  text-align:center">
-                        @Html.DisplayFor(modelItem => item.DateRemisRapport)
-                    </td>
-
-                    <td style="  text-align:center">
-                        @{ if (item.EtatEssai == "Réalisé")
-                            {
-                                <p> <a style="color:green"> Réalisé </a></p> }
-                            else if (item.EtatEssai == "Annulé")
-                            {
-                                <p>
-                                    <a style="color:red">Annulé</a>
-                                </p> }
-                            else if (item.EtatEssai == "Non installer")
-                            {<p>
-                                 <a style="color:red">Non installer</a>
-                                </p> }
-                else
+        @{ string s = item.Notation.Where(e => e.D_N_R != null && e.Essai_Id == item.Id).Count().ToString(); }
+        @*   if (!string.IsNullOrEmpty(s))
+            {
+                DateTime dDate;
+                String[] notations = s.Trim().Split(' ');
+                List<String> res = new List<string>();
+                for (int i = 0; i < notations.Length; i++)
                 {
-                    <p>
-                        <a style="color:blue"> En cours ...</a>
-                    </p>
+                    if (!string.IsNullOrWhiteSpace(notations[i]) && DateTime.TryParse(notations[i], out dDate))
+                    {
+                        res.Add(notations[i]);
+                    }
                 }
-                            }
-                    </td>
-                    <td style="  text-align:center">
-                        @if (item.Facture != null)
-                        {
-                            @Html.ActionLink("Télécharger", "DownloadFacture", new { Id = item.Id })}
-                    </td>
+                int nbr_Notations = res.Count;
+
+                <p>
+                    @nbr_Notations   Notation valide <i class="fa fa-check-circle" style="color:green" aria-hidden="true"></i>
+                </p> }
+            else
+            {
 
 
-                    <td style="  text-align:center">
-                        @if (item.Paiment_Regler50 == true)
-                        {
-                            <div class="col-sm-4">
+                <p>
+                    0 Notation valide <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
 
+                </p> } }*@
 
-                                <p>
-                                    Regler 100% <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
-                                </p>
-
-
-                            </div>
-                        }
-                        else if (item.Paiment_Regler50 == false)
-                        {
-
-
-                            <p>
-
-                                Regler 50%<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
-                            </p>
+        @{ if (s == "0")
+            {
+<p>
+    0 Notation valide<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+</p> }
+else
+{
+<p>
+    @s   Notation valide <i class="fa fa-check-circle" style="color:green" aria-hidden="true"></i>
+</p> } }
 
 
 
-                        }
-                        else
-                        {
-                            <div class="col-sm-4">
 
 
-                                <p>
-                                    Pas Regler
-                                </p>
+    </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.Date_Cloture)
+    </td>
+    <td style="  text-align:center">
+        @if (item.Rapport != null)
+        {
+@Html.ActionLink("Télécharger", "DownloadRapport", new { Id = item.Id })}
+    </td>
+    <td style="  text-align:center">
+        @{ if (item.RapportRemis == true)
+            {
+<p>
+    <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
+</p> }
+else if (item.RapportRemis == false)
+{
+<p>
+    <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+</p> }
+else
+{<p>
+    <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+</p> } }
+    </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.DateRemisRapport)
+    </td>
+
+    <td style="  text-align:center">
+        @{ if (item.EtatEssai == "Réalisé")
+            {
+<p> <a style="color:green"> Réalisé </a></p> }
+else if (item.EtatEssai == "Annulé")
+{
+<p>
+    <a style="color:red">Annulé</a>
+</p> }
+else if (item.EtatEssai == "Non installer")
+{<p>
+    <a style="color:red">Non installer</a>
+</p> }
+else
+{
+<p>
+    <a style="color:blue"> En cours ...</a>
+</p> } }
+    </td>
+    <td style="  text-align:center">
+        @if (item.Facture != null)
+        {
+@Html.ActionLink("Télécharger", "DownloadFacture", new { Id = item.Id })}
+    </td>
+
+
+    <td style="  text-align:center">
+        @if (item.Paiment_Regler50 == true)
+        {
+<div class="col-sm-4">
+
+
+    <p>
+        Regler 100% <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
+    </p>
+
+
+</div> }
+else if (item.Paiment_Regler50 == false)
+{
+
+
+<p>
+
+    Regler 50%<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+</p> }
+else
+{
+<div class="col-sm-4">
+
+
+    <p>
+        Pas Regler
+    </p>
 
 
 
-                            </div>
-
-                        }
-                    </td>
-                </tr>
-            }
+</div>}
+    </td>
+</tr>
+       }
 
         </tbody>
     </table>
@@ -325,12 +321,27 @@
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
+
 <script>
     $(document).ready(function () {
         var table = $('#example').DataTable({
             lengthChange: false,
-            paging: false,
-            buttons: ['excel', 'csv']
+
+            buttons: ['excel', 'copy'],
+            fixedColumns: {
+                leftColumns: 2
+            },
+            columnDefs: [{
+                orderable: false,
+                className: 'select-checkbox',
+                blurable: true,
+                targets: 0
+            }],
+            select: {
+                style: 'os',
+                selector: 'td:first-child'
+            },
+            order: [[1, 'asc']]
         });
 
         table.buttons().container()
@@ -358,4 +369,3 @@
         color: white;
     }
 </style>
-

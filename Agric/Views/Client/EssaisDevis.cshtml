@@ -54,10 +54,6 @@
         <thead class="bg-primary text-light">
             <tr>
 
-
-                <th style="min-width:130px ; text-align:center;">
-                    Client
-                </th>
                 <th style="min-width:130px ; text-align:center">
                     @Html.DisplayNameFor(model => model.Code)
                 </th>
@@ -86,10 +82,6 @@
             {
                 <tr>
 
-
-                    <td style="  text-align:center">
-                        @Html.DisplayFor(modelItem => item.Users.Fullname)
-                    </td>
                     <td style="  text-align:center">
                         @Html.DisplayFor(modelItem => item.Code)
                     </td>
@@ -113,18 +105,22 @@
                    
                     
                     <td style="  text-align:center">
-                        @{ if (item.EtatEssai == true)
+                        @{ if (item.EtatEssai == "Réalisé")
                             {
-                                <p> <a style="color:green"> Réalisé </a></p> }
-                            else if (item.EtatEssai == false)
-                            {
-                                <p>
-                                    <a style="color:red">Annulé</a>
-                                </p> }
-                            else
-                            {<p>
-                                    <a style="color:blue"> En cours ...</a>
-                                </p> } }
+                    <p> <a style="color:green"> Réalisé </a></p> }
+                else if (item.EtatEssai == "Annulé")
+                {
+                    <p>
+                        <a style="color:red">Annulé</a>
+                    </p> }
+                else if (item.EtatEssai == "En cours")
+                {<p>
+                        <a style="color:blue"> En cours ...</a>
+                    </p> }
+                else if (item.EtatEssai == "Non installer")
+                {<p>
+                     <a style="color:blue"> Non installer</a>
+                    </p> } }
                     </td>
                    
                 </tr>

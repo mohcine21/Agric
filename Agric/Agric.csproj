@@ -339,7 +339,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClientController.cs" />
-    <Compile Include="Controllers\DevisController.cs" />
     <Compile Include="Controllers\EssaisController.cs" />
     <Compile Include="Controllers\LaboController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -2501,13 +2500,9 @@
     <Content Include="Views\Essais\Details.cshtml" />
     <Content Include="Views\Essais\Edit.cshtml" />
     <Content Include="Views\Essais\Index.cshtml" />
-    <Content Include="Views\Devis\Create.cshtml" />
-    <Content Include="Views\Devis\Delete.cshtml" />
-    <Content Include="Views\Devis\Details.cshtml" />
-    <Content Include="Views\Devis\Edit.cshtml" />
-    <Content Include="Views\Devis\Index.cshtml" />
     <Content Include="Views\MyAdmin\CreateDevis.cshtml" />
     <Content Include="Views\Tech\Datepicker.cshtml" />
+    <Content Include="Views\MyAdmin\EditEssaisDevisEnvoyer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

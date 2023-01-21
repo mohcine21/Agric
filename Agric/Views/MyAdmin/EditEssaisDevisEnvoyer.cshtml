@@ -1,0 +1,44 @@
+﻿@model Agric.Models.Devis
+
+@{
+    ViewBag.Title = "EditEssaisDevisEnvoyer";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Medifier Devis pour Client</h2>
+
+<form action="EditEssaisDevisEnvoyer" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.date_demande)
+        @Html.HiddenFor(model => model.DemandeDevis)
+        @Html.HiddenFor(model => model.NumDevis)
+
+        @Html.HiddenFor(model => model.id_client)
+        @Html.HiddenFor(model => model.DevisDelete)
+        @Html.HiddenFor(model => model.DevieEnvoyer)
+        @Html.HiddenFor(model => model.DevisAccepter)
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Devis1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="_Devis" value="">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class=" btn btn-primary btn-block"> Envoyer </button>
+            </div>
+        </div>
+    </div>
+</form>
+<div>
+    @Html.ActionLink("Back to List", "ListeDevisEnvoyer")
+</div>
