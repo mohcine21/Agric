@@ -34,7 +34,7 @@ namespace Agric.Controllers
             ViewBag.username = Session["Clientname"];
             var cpt = db.Journal.Where(e => e.VuClient == false && e.Id_User.ToString() == userid).Count();
             ViewBag.nbrnotifclient = cpt;
-            var cpt2 = db.Devis.Where(e =>  e.id_client.ToString()==userid && e.DemandeDevis==true).Count();
+            var cpt2 = db.Devis.Where(e => e.id_client.ToString() == userid && e.DemandeDevis == true).Count();
             ViewBag.nbrdevisclient = cpt2;
             if (option == "Essai réalisé")
             {
@@ -44,23 +44,23 @@ namespace Agric.Controllers
             }
             else if (option == "Essai en cours")
             {
-                var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.EtatEssai!= "Réalisé" && e.EtatEssai != "Annulé" && e.EtatEssai != "Non installer" && e.EtatEssai.ToString() != "False" || search == null && e.EssaiDelets == false);
+                var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.EtatEssai!= "Réalisé" && e.EtatEssai != "Annulé" && e.EtatEssai != "Non installer" && e.EtatEssai.ToString() != "False" || search == null && e.EssaiDelets == false).OrderByDescending(e => e.Date_Modife);
                 return View(essai.ToList());
 
             }
             else if (option == "Essai annulé")
             {
-                var essai1 = db.Essai.Where(e => e.UserId.ToString() == userid && e.EtatEssai== "Annulé" || search == null && e.EssaiDelets == false);
+                var essai1 = db.Essai.Where(e => e.UserId.ToString() == userid && e.EtatEssai== "Annulé" || search == null && e.EssaiDelets == false).OrderByDescending(e => e.Date_Modife);
                 return View(essai1.ToList());
             }
             else if (option == "Non installer")
             {
-                var essai1 = db.Essai.Where(e => e.UserId.ToString() == userid && e.EtatEssai == "Non installer" || search == null && e.EssaiDelets == false);
+                var essai1 = db.Essai.Where(e => e.UserId.ToString() == userid && e.EtatEssai == "Non installer" || search == null && e.EssaiDelets == false).OrderByDescending(e => e.Date_Modife);
                 return View(essai1.ToList());
             }
             else
             {
-                var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.EssaiDelets == false);
+                var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.EssaiDelets == false).OrderByDescending(e=> e.Date_Modife);
                 return View(essai.ToList());
             }
         }
@@ -162,7 +162,7 @@ namespace Agric.Controllers
             var cpt2 = db.Devis.Where(e => e.DemandeDevis==true && e.id_client.ToString() == userid).Count();
             ViewBag.nbrdevisclient = cpt2;
             // var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.DevisDemander == false && e.Devis == null);
-            ViewBag.ListEssai = db.Essai.Where(e => e.UserId.ToString() == userid && e.DevisDemander == false && e.Devis == null&& e.CodeClient==null).ToList();
+            ViewBag.ListEssai = db.Essai.Where(e => e.UserId.ToString() == userid && e.DevisDemander == false  && e.CodeClient==null).ToList().OrderByDescending(e => e.Date_Modife);
             return View();
         }
 
@@ -193,6 +193,7 @@ namespace Agric.Controllers
             userid = (string)Session["userid"];
             username = (string)Session["Clientname"];
             essai.UserId = Guid.Parse(userid);
+            essai.EtatEssai = "Non installer";
 
             if (ModelState.IsValid)
 
@@ -272,7 +273,7 @@ namespace Agric.Controllers
             ViewBag.nbrnotifclient = cpt;
             var cpt2 = db.Devis.Where(e => e.DemandeDevis==true && e.id_client.ToString() == userid).Count();
             ViewBag.nbrdevisclient = cpt2;
-            var devis = db.Devis.Include(e => e.Users).Where(e => e.id_client.ToString() == userid && e.Devis1 != null);
+            var devis = db.Devis.Include(e => e.Users).Where(e => e.id_client.ToString() == userid && e.Devis1 != null).OrderByDescending(d=> d.date_demande);
            
             return View(devis.ToList());
         }
@@ -347,21 +348,6 @@ namespace Agric.Controllers
           
         }
 
-       
-        public ActionResult Modification()
-        {
-            if ((bool)Session["client"] == false)
-            { return Redirect("/"); }
-            userid = (string)Session["userid"];
-            ViewBag.username = Session["Clientname"];
-            var journal = db.Journal.Include(e => e.Users).Where(e => e.VuClient == false && e.Id_User.ToString() == userid);
-            var cpt = db.Journal.Where(e => e.VuClient == false && e.Id_User.ToString() == userid).Count();
-            ViewBag.nbrnotifclient = cpt;
-          
-            var cpt2 = db.Devis.Where(e => e.DemandeDevis==true && e.id_client.ToString() == userid).Count();
-            ViewBag.nbrdevisclient = cpt2;
-            return View(journal.ToList());
-        }
         public ActionResult DetailsEssaiJournal(Guid? id, Guid? id1)
         {
             if ((bool)Session["client"] == false)

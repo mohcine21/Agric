@@ -490,6 +490,7 @@ namespace Agric.Controllers
             {
                 essai.Id = Guid.NewGuid();
                 essai.Date_Modife = DateTime.Now;
+                essai.EtatEssai = "Non installer";
                 db.Essai.Add(essai);
                 db.SaveChanges();
                 return RedirectToAction("Index");

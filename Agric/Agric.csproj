@@ -2476,7 +2476,6 @@
     <Content Include="Views\MyAdmin\Historique.cshtml" />
     <Content Include="Views\MyAdmin\Modification.cshtml" />
     <Content Include="Views\MyAdmin\DetailsEssaiJournal.cshtml" />
-    <Content Include="Views\Client\Modification.cshtml" />
     <Content Include="Views\Client\DetailsEssaiJournal.cshtml" />
     <Content Include="Views\Client\ListeDevisDemander.cshtml" />
     <Content Include="Views\Client\EssaisDevis.cshtml" />
