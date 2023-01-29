@@ -135,7 +135,7 @@ namespace Agric.Controllers
             var cpt2 = db.Devis.Where(e => e.DemandeDevis==true && e.id_client.ToString() == userid).Count();
             ViewBag.nbrdevisclient = cpt2;
             // var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.DevisDemander == false && e.Devis == null);
-            ViewBag.ListEssai = db.Essai.Where(e => e.UserId.ToString() == userid && e.DevisDemander == false  && e.CodeClient==null).ToList().OrderByDescending(e => e.Date_Modife);
+            ViewBag.ListEssai = db.Essai.Where(e => e.UserId.ToString() == userid && e.DevisDemander == false  && e.CodeClient==null && e.EssaiDelets!=true).ToList().OrderByDescending(e => e.Date_Modife);
             return View();
         }
 
@@ -258,7 +258,7 @@ namespace Agric.Controllers
             ViewBag.username = Session["Clientname"];
             var cpt2 = db.Devis.Where(e => e.DemandeDevis==true && e.id_client.ToString() == userid).Count();
             ViewBag.nbrdevisclient = cpt2;
-            var devis = db.Devis.Include(e => e.Users).Where(e=> e.id_client.ToString() == userid  ).OrderByDescending(e => e.date_demande);
+            var devis = db.Devis.Include(e => e.Users).Where(e=> e.id_client.ToString() == userid).OrderByDescending(e => e.date_demande);
             return View(devis.ToList());
         }
 

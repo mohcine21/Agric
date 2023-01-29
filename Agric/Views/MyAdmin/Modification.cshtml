@@ -31,12 +31,6 @@ function myFunction() {
                     @Html.DisplayNameFor(model => model.Users.Fullname)
                 </th>
                 
-                    <div class="row">
-                        <div class="col-12 ">
-                            @Html.ActionLink("Supprimer", "DeleteJournal", new { @class = "btn btn-danger btn-sm btn-block m-1", onclick = "return confirm('Confirmer ???');" })
-                        </div>
-                    </div>
-                
             </tr>
         </thead>
             @foreach (var item in Model)

@@ -734,17 +734,19 @@ namespace Agric.Controllers
             base.Dispose(disposing);
         }
         
-        public ActionResult Archive(Guid Id)
+        public ActionResult Archive(Guid Id , Guid idDevis)
         {
             var essai = db.Essai.Where(x => x.Id == Id).FirstOrDefault();
 
             if (essai != null)
             {
                 essai.EssaiDelets = true;
+                Devis devis = db.Devis.Find(idDevis);
+                db.Devis.Remove(devis);
             }
 
-            db.SaveChanges();
 
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -919,16 +921,13 @@ namespace Agric.Controllers
         public ActionResult DeleteJournal(Guid? id)
         {
             Journal journal = db.Journal.Find(id);
-            if (journal.VuClient!=false)
-            {
-                db.Journal.Remove(journal);
-                db.SaveChanges();
-                return RedirectToAction("Modification");
-            }
-            return Content("<script language='javascript' type='text/javascript'>alert('Pas encore vu par client !!!!!!!!!!');</script>");
-        }
-       
 
+            db.Journal.Remove(journal);
+            db.SaveChanges();
+            return RedirectToAction("Modification");
+
+
+        }
         public ActionResult EssaisDevis(Guid? id)
         {
             if ((bool)Session["admin"] == false)
