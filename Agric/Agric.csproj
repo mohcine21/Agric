@@ -339,7 +339,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClientController.cs" />
-    <Compile Include="Controllers\EssaisController.cs" />
     <Compile Include="Controllers\LaboController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MyAdminController.cs" />
@@ -2495,11 +2494,6 @@
     <Content Include="Views\MyAdmin\EssaiSemaine.cshtml" />
     <Content Include="Views\MyAdmin\Datepicker.cshtml" />
     <Content Include="Views\Tech\EssaiSemaine.cshtml" />
-    <Content Include="Views\Essais\Create.cshtml" />
-    <Content Include="Views\Essais\Delete.cshtml" />
-    <Content Include="Views\Essais\Details.cshtml" />
-    <Content Include="Views\Essais\Edit.cshtml" />
-    <Content Include="Views\Essais\Index.cshtml" />
     <Content Include="Views\MyAdmin\CreateDevis.cshtml" />
     <Content Include="Views\Tech\Datepicker.cshtml" />
     <Content Include="Views\MyAdmin\EditEssaisDevisEnvoyer.cshtml" />

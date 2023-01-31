@@ -259,9 +259,6 @@ namespace Agric.Controllers
 
         // GET: Notations/Delete/5
       
-
-        // POST: Notations/Delete/5
-      
         public ActionResult DeleteNotation(Guid? id, Guid Essai_id)
         {
             Session["id_essai"] = Essai_id;
@@ -292,7 +289,6 @@ namespace Agric.Controllers
             }
             return View(users);
         }
-
         public ActionResult EditProfile(Guid? id)
 
         {
@@ -500,7 +496,7 @@ namespace Agric.Controllers
         }
 
        
-        // GET: MyAdmin/Delete/5
+        // GET: MyAdmin/Delete Essai from database
         public ActionResult Delete(Guid? id, Guid Essai_id)
         {
             Session["id_essai"] = Essai_id;
@@ -734,15 +730,23 @@ namespace Agric.Controllers
             base.Dispose(disposing);
         }
         
-        public ActionResult Archive(Guid Id , Guid idDevis)
+        public ActionResult Archive(Guid Id , Guid? idDevis)
         {
             var essai = db.Essai.Where(x => x.Id == Id).FirstOrDefault();
-
+            var journal1 = db.Journal.Where(x => x.Id_Essai == Id).FirstOrDefault();
+            var notation1 = db.Notation.Where(x => x.Essai_Id == Id).FirstOrDefault();
             if (essai != null)
             {
+                if(essai.id_devis != null)
+                {
+                    Devis devis = db.Devis.Find(idDevis);
+                    db.Devis.Remove(devis);
+                }
                 essai.EssaiDelets = true;
-                Devis devis = db.Devis.Find(idDevis);
-                db.Devis.Remove(devis);
+                
+                db.Journal.Remove(journal1);
+                db.Notation.Remove(notation1);
+                
             }
 
 
