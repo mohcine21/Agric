@@ -28,37 +28,50 @@ namespace Agric.Controllers
         // GET: Client
         public ActionResult Index()
         {
-            if ((bool)Session["client"] == false)
+            if (Session["client"] == null)
             { return Redirect("/"); }
-            userid = (string)Session["userid"];
-            ViewBag.username = Session["Clientname"];
-            var cpt2 = db.Devis.Where(e => e.id_client.ToString() == userid && e.DemandeDevis == true).Count();
-            ViewBag.nbrdevisclient = cpt2;
-            var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.EssaiDelets == false).OrderByDescending(e=> e.Date_Modife);
-            return View(essai.ToList());
-        }
-     
-       
-        public ActionResult EssaisDevis(Guid? id)
-        {
+            else { 
             if ((bool)Session["client"] == false)
-            { return Redirect("/"); }
-            userid = (string)Session["userid"];
-            var cpt = db.Journal.Where(e => e.VuClient == false && e.Id_User.ToString() == userid).Count();
-            ViewBag.nbrnotifclient = cpt;
-            var cpt2 = db.Devis.Where(e => e.DemandeDevis==true && e.id_client.ToString() == userid).Count();
-            ViewBag.nbrdevisclient = cpt2;
-            ViewBag.username = Session["Clientname"];
-
-           
-            var essai = db.Essai.Where(e => e.id_devis==id);
+                { return Redirect("/"); }
+                userid = (string)Session["userid"];
+                ViewBag.username = Session["Clientname"];
+                var cpt2 = db.Devis.Where(e => e.id_client.ToString() == userid && e.DemandeDevis == true).Count();
+                ViewBag.nbrdevisclient = cpt2;
+                var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.EssaiDelets == false).OrderByDescending(e => e.Date_Modife);
                 return View(essai.ToList());
             
+        }
+        }
+
+
+        public ActionResult EssaisDevis(Guid? id)
+        {
+            if (Session["client"] == null)
+            { return Redirect("/"); }
+            else
+            {
+                if ((bool)Session["client"] == false)
+                { return Redirect("/"); }
+                userid = (string)Session["userid"];
+                var cpt = db.Journal.Where(e => e.VuClient == false && e.Id_User.ToString() == userid).Count();
+                ViewBag.nbrnotifclient = cpt;
+                var cpt2 = db.Devis.Where(e => e.DemandeDevis == true && e.id_client.ToString() == userid).Count();
+                ViewBag.nbrdevisclient = cpt2;
+                ViewBag.username = Session["Clientname"];
+
+
+                var essai = db.Essai.Where(e => e.id_devis == id);
+                return View(essai.ToList());
+            }
         }
 
         public ActionResult Details(Guid? id)
         {
-            if ((bool)Session["client"] == false)
+            if (Session["client"] == null)
+            { return Redirect("/"); }
+            else
+            {
+                if ((bool)Session["client"] == false)
             { return Redirect("/"); }
             userid = (string)Session["userid"];
             ViewBag.username = Session["Clientname"];
@@ -77,31 +90,37 @@ namespace Agric.Controllers
                 return HttpNotFound();
             }
             return View(users);
+                }
         }
 
         public ActionResult EditProfile(Guid? id)
 
         {
-            if ((bool)Session["client"] == false)
+            if (Session["client"] == null)
             { return Redirect("/"); }
-            userid = (string)Session["userid"];
-            ViewBag.username = Session["Clientname"];
-            id = Guid.Parse(userid);
-            var cpt = db.Journal.Where(e => e.VuClient == false && e.Id_User.ToString() == userid).Count();
-            ViewBag.nbrnotifclient = cpt;
-            var cpt2 = db.Devis.Where(e => e.id_client.ToString() == userid && e.DemandeDevis == true).Count();
-            ViewBag.nbrdevisclient = cpt2;
-            if (id == null)
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if ((bool)Session["client"] == false)
+                { return Redirect("/"); }
+                userid = (string)Session["userid"];
+                ViewBag.username = Session["Clientname"];
+                id = Guid.Parse(userid);
+                var cpt = db.Journal.Where(e => e.VuClient == false && e.Id_User.ToString() == userid).Count();
+                ViewBag.nbrnotifclient = cpt;
+                var cpt2 = db.Devis.Where(e => e.id_client.ToString() == userid && e.DemandeDevis == true).Count();
+                ViewBag.nbrdevisclient = cpt2;
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Users users = db.Users.Find(id);
+                if (users == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.ProfileId = new SelectList(db.Profile, "Id", "Name", users.ProfileId);
+                return View(users);
             }
-            Users users = db.Users.Find(id);
-            if (users == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ProfileId = new SelectList(db.Profile, "Id", "Name", users.ProfileId);
-            return View(users);
         }
 
         // POST: Users/Edit/5
@@ -126,33 +145,43 @@ namespace Agric.Controllers
         }
         public ActionResult Devis()
         {
-            if ((bool)Session["client"] == false)
+            if (Session["client"] == null)
             { return Redirect("/"); }
-            userid = (string)Session["userid"];
-            ViewBag.username = Session["Clientname"];
-            var cpt = db.Journal.Where(e => e.VuClient == false && e.Id_User.ToString() == userid).Count();
-            ViewBag.nbrnotifclient = cpt;
-            var cpt2 = db.Devis.Where(e => e.DemandeDevis==true && e.id_client.ToString() == userid).Count();
-            ViewBag.nbrdevisclient = cpt2;
-            // var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.DevisDemander == false && e.Devis == null);
-            ViewBag.ListEssai = db.Essai.Where(e => e.UserId.ToString() == userid && e.DevisDemander == false  && e.CodeClient==null && e.EssaiDelets!=true).ToList().OrderByDescending(e => e.Date_Modife);
-            return View();
+            else
+            {
+                if ((bool)Session["client"] == false)
+                { return Redirect("/"); }
+                userid = (string)Session["userid"];
+                ViewBag.username = Session["Clientname"];
+                var cpt = db.Journal.Where(e => e.VuClient == false && e.Id_User.ToString() == userid).Count();
+                ViewBag.nbrnotifclient = cpt;
+                var cpt2 = db.Devis.Where(e => e.DemandeDevis == true && e.id_client.ToString() == userid).Count();
+                ViewBag.nbrdevisclient = cpt2;
+                // var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.DevisDemander == false && e.Devis == null);
+                ViewBag.ListEssai = db.Essai.Where(e => e.UserId.ToString() == userid && e.DevisDemander == false && e.CodeClient == null && e.EssaiDelets != true).ToList().OrderByDescending(e => e.Date_Modife);
+                return View();
+            }
         }
 
 
         // GET: Client/Create
         public ActionResult Create()
         {
-            userid = (string)Session["userid"];
-            username = (string)Session["Clientname"];
-            ViewBag.username = Session["Clientname"];
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Fullname");
-            var cpt = db.Journal.Where(e => e.VuClient == false && e.Id_User.ToString() == userid).Count();
-            ViewBag.nbrnotifclient = cpt;
-            var cpt2 = db.Devis.Where(e => e.DemandeDevis==true && e.id_client.ToString() == userid).Count();
-            ViewBag.nbrdevisclient = cpt2;
+            if (Session["client"] == null)
+            { return Redirect("/"); }
+            else
+            {
+                userid = (string)Session["userid"];
+                username = (string)Session["Clientname"];
+                ViewBag.username = Session["Clientname"];
+                ViewBag.UserId = new SelectList(db.Users, "Id", "Fullname");
+                var cpt = db.Journal.Where(e => e.VuClient == false && e.Id_User.ToString() == userid).Count();
+                ViewBag.nbrnotifclient = cpt;
+                var cpt2 = db.Devis.Where(e => e.DemandeDevis == true && e.id_client.ToString() == userid).Count();
+                ViewBag.nbrdevisclient = cpt2;
 
-            return View();
+                return View();
+            }
         }
 
         // POST: Client/Create
@@ -238,28 +267,38 @@ namespace Agric.Controllers
 
         public ActionResult ListeDevisRecu()
         {
-            if ((bool)Session["client"] == false)
+            if (Session["client"] == null)
             { return Redirect("/"); }
-            userid = (string)Session["userid"];
-            ViewBag.username = Session["Clientname"];
-            var cpt = db.Journal.Where(e => e.VuClient == false && e.Id_User.ToString() == userid).Count();
-            ViewBag.nbrnotifclient = cpt;
-            var cpt2 = db.Devis.Where(e => e.DemandeDevis==true && e.id_client.ToString() == userid).Count();
-            ViewBag.nbrdevisclient = cpt2;
-            var devis = db.Devis.Include(e => e.Users).Where(e => e.id_client.ToString() == userid && e.Devis1 != null).OrderByDescending(d=> d.date_demande);
-           
-            return View(devis.ToList());
+            else
+            {
+                if ((bool)Session["client"] == false)
+                { return Redirect("/"); }
+                userid = (string)Session["userid"];
+                ViewBag.username = Session["Clientname"];
+                var cpt = db.Journal.Where(e => e.VuClient == false && e.Id_User.ToString() == userid).Count();
+                ViewBag.nbrnotifclient = cpt;
+                var cpt2 = db.Devis.Where(e => e.DemandeDevis == true && e.id_client.ToString() == userid).Count();
+                ViewBag.nbrdevisclient = cpt2;
+                var devis = db.Devis.Include(e => e.Users).Where(e => e.id_client.ToString() == userid && e.Devis1 != null).OrderByDescending(d => d.date_demande);
+
+                return View(devis.ToList());
+            }
         }
         public ActionResult ListeDevisDemander()
         {
-            if ((bool)Session["client"] == false)
+            if (Session["client"] == null)
             { return Redirect("/"); }
-            userid = (string)Session["userid"];
-            ViewBag.username = Session["Clientname"];
-            var cpt2 = db.Devis.Where(e => e.DemandeDevis==true && e.id_client.ToString() == userid).Count();
-            ViewBag.nbrdevisclient = cpt2;
-            var devis = db.Devis.Include(e => e.Users).Where(e=> e.id_client.ToString() == userid).OrderByDescending(e => e.date_demande);
-            return View(devis.ToList());
+            else
+            {
+                if ((bool)Session["client"] == false)
+                { return Redirect("/"); }
+                userid = (string)Session["userid"];
+                ViewBag.username = Session["Clientname"];
+                var cpt2 = db.Devis.Where(e => e.DemandeDevis == true && e.id_client.ToString() == userid).Count();
+                ViewBag.nbrdevisclient = cpt2;
+                var devis = db.Devis.Include(e => e.Users).Where(e => e.id_client.ToString() == userid).OrderByDescending(e => e.date_demande);
+                return View(devis.ToList());
+            }
         }
 
         public FileResult DownloadDevis(Guid Id)
@@ -285,7 +324,10 @@ namespace Agric.Controllers
         public string[] ids;
         public ActionResult CreateDevis([Bind(Include = "nbr")] Essai essai, FormCollection formCollection)
         {
-        
+            if (Session["client"] == null)
+            { return Redirect("/"); }
+            else
+            {
                 userid = (string)Session["userid"];
                 Guid nm;
                 var devis = db.Devis.Add(new Models.Devis
@@ -295,63 +337,74 @@ namespace Agric.Controllers
                     id_client = new Guid(userid),
                 });
                 nm = devis.id;
-            ids = formCollection["essaiId"].Split(new char[] { ',' });
+                ids = formCollection["essaiId"].Split(new char[] { ',' });
 
-            if (ids == null)
-            {
-                return RedirectToAction("Devis");
-            }
-            else
-            {
-                
-                foreach (string id in ids)
+                if (ids == null)
                 {
-                    var essai1 = db.Essai.Find(Guid.Parse(id));
-                    essai1.id_devis = nm;
-                    essai1.DevisDemander = true;
-                    db.SaveChanges();
+                    return RedirectToAction("Devis");
                 }
-            }
+                else
+                {
+
+                    foreach (string id in ids)
+                    {
+                        var essai1 = db.Essai.Find(Guid.Parse(id));
+                        essai1.id_devis = nm;
+                        essai1.DevisDemander = true;
+                        db.SaveChanges();
+                    }
+                }
 
 
 
                 return RedirectToAction("Devis");
+            }
           
         }
 
         public ActionResult DetailsEssaiJournal(Guid? id, Guid? id1)
         {
-            if ((bool)Session["client"] == false)
+            if (Session["client"] == null)
             { return Redirect("/"); }
-            if (id == null)
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if ((bool)Session["client"] == false)
+                { return Redirect("/"); }
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Essai essai = db.Essai.Find(id);
+                var journal = db.Journal.Where(x => x.Id == id1 && x.Id_User.ToString() == userid).FirstOrDefault();
+
+                var cpt = db.Journal.Where(e => e.VuClient == false && e.Id_User.ToString() == userid).Count();
+                ViewBag.nbrnotifclient = cpt;
+                if (journal != null)
+                {
+                    journal.VuClient = true;
+                }
+
+                db.SaveChanges();
+
+                if (essai == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(essai);
             }
-            Essai essai = db.Essai.Find(id);
-            var journal = db.Journal.Where(x => x.Id == id1 && x.Id_User.ToString() == userid).FirstOrDefault();
-
-            var cpt = db.Journal.Where(e => e.VuClient == false && e.Id_User.ToString() == userid).Count();
-            ViewBag.nbrnotifclient = cpt;
-            if (journal != null)
-            {
-                journal.VuClient = true;
-            }
-
-            db.SaveChanges();
-
-            if (essai == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(essai);
         }
         public ActionResult DeleteJournal(Guid? id)
         {
-            Journal journal = db.Journal.Find(id);
-            db.Journal.Remove(journal);
-            db.SaveChanges();
-            return RedirectToAction("Modification");
+            if (Session["client"] == null)
+            { return Redirect("/"); }
+            else
+            {
+                Journal journal = db.Journal.Find(id);
+                db.Journal.Remove(journal);
+                db.SaveChanges();
+                return RedirectToAction("Modification");
+            }
         }
 
     }

@@ -68,7 +68,7 @@ namespace Agric.Controllers
         }
 
         [HttpPost]
-
+        [ValidateInput(false)]
         public ActionResult Login(UserModel model)
         {
             var user = db.Users.FirstOrDefault(u => u.Fullname == model.Username && u.Password == model.Password);

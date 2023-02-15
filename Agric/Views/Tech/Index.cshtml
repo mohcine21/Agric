@@ -114,7 +114,7 @@
                 if (item.Date_Cloture == null)
                 {
 
-        <tr style="background-color: #b0f7cc">
+        <tr >
             @{ var s = item.Notation.Where(e => e.Essai_Id == item.Id && e.D_N_P != null && e.D_N_R == null && e.FNotation == null && CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(e.D_N_P, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) == CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday)).Count();
                 if (s != 0)
                 {

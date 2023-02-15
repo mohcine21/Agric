@@ -19,142 +19,176 @@ namespace Agric.Controllers
         // GET: Tech
         public ActionResult Index()
         {
-            if ((bool)Session["tech"] == false)
+            if (Session["tech"] == null)
             { return Redirect("/"); }
-            techname = (string)Session["techname"];
-            ViewBag.username= Session["techname"];
+            else
+            {
+                if ((bool)Session["tech"] == false)
+                { return Redirect("/"); }
+                techname = (string)Session["techname"];
+                ViewBag.username = Session["techname"];
 
-            var essai = db.Essai.Include(e => e.Users).Where(n => n.TechName == techname && n.EssaiDelets == false && n.EtatEssai == "En cours" || n.EtatEssai == "Non installer").OrderByDescending(e => e.Date_Modife);
-            return View(essai.ToList());
+                var essai = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && e.TechName == techname && (e.EtatEssai == "En cours" || e.EtatEssai == "Non installer") && e.Date_Cloture == null).OrderByDescending(e => e.Date_Modife);
+                return View(essai.ToList());
+            }
         }
         public ActionResult EssaiSemaine()
         {
-            if ((bool)Session["tech"] == false)
+            if (Session["tech"] == null)
             { return Redirect("/"); }
-            techname = (string)Session["techname"];
-            ViewBag.username = Session["techname"];
+            else
+            {
+                if ((bool)Session["tech"] == false)
+                { return Redirect("/"); }
+                techname = (string)Session["techname"];
+                ViewBag.username = Session["techname"];
 
-            var essai1 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && e.TechName == techname && e.EtatEssai == "En cours" || e.EtatEssai == "Non installer").OrderByDescending(e => e.Date_Modife);
-            return View(essai1.ToList());
+                var essai1 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && e.TechName == techname && (e.EtatEssai == "En cours" || e.EtatEssai == "Non installer") && e.Date_Cloture == null).OrderByDescending(e => e.Date_Modife);
+                return View(essai1.ToList());
+            }
         }
         public ActionResult Notations(Guid? essai_id)
         {
-            if ((bool)Session["tech"] == false)
+            if (Session["tech"] == null)
             { return Redirect("/"); }
-            var Notation = db.Notation.Where(e => e.Essai_Id == essai_id);
-            Essai essai = db.Essai.Find(essai_id);
-            ViewBag.id_essai = essai_id;
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            techname = (string)Session["techname"];
-            ViewBag.username = Session["techname"];
-            if (essai == null)
+            else
             {
-                return HttpNotFound();
+                if ((bool)Session["tech"] == false)
+                { return Redirect("/"); }
+                var Notation = db.Notation.Where(e => e.Essai_Id == essai_id);
+                Essai essai = db.Essai.Find(essai_id);
+                ViewBag.id_essai = essai_id;
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                techname = (string)Session["techname"];
+                ViewBag.username = Session["techname"];
+                if (essai == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(Notation.ToList());
             }
-            return View(Notation.ToList());
         }
         public ActionResult AddNotation(Guid? essai_id, Guid? id)
         {
-            if ((bool)Session["tech"] == false)
+            if (Session["tech"] == null)
             { return Redirect("/"); }
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            Session["id_essai"] = essai_id;
-            techname = (string)Session["techname"];
-            ViewBag.username = Session["techname"];
-           
-            if (id == null)
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if ((bool)Session["tech"] == false)
+                { return Redirect("/"); }
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                Session["id_essai"] = essai_id;
+                techname = (string)Session["techname"];
+                ViewBag.username = Session["techname"];
+
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Notation notation = db.Notation.Find(id);
+                if (notation == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(notation);
             }
-            Notation notation = db.Notation.Find(id);
-            if (notation == null)
-            {
-                return HttpNotFound();
-            }
-         
-            return View(notation);
-            
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddNotation([Bind(Include = "Id,D_N_P,D_N_R,Essai_Id,Date_Add,FNotation")] Notation notation, HttpPostedFileBase _FNotation)
         {
-            if ((bool)Session["tech"] == false)
+            if (Session["tech"] == null)
             { return Redirect("/"); }
-            var essai_id = (Guid)Session["id_essai"];
-          //  var essai = db.Essai.Where(x => x.Id == essai_id).FirstOrDefault();
-            if (ModelState.IsValid)
+            else
             {
-                userid = (string)Session["userid"];
-                techname = (string)Session["techname"];
-                ViewBag.username = Session["techname"];
-                if (_FNotation != null)
+                if ((bool)Session["tech"] == false)
+                { return Redirect("/"); }
+                var essai_id = (Guid)Session["id_essai"];
+                //  var essai = db.Essai.Where(x => x.Id == essai_id).FirstOrDefault();
+                if (ModelState.IsValid)
                 {
-                    string FileName = Path.GetFileNameWithoutExtension(_FNotation.FileName);
-                    string FileExtension = Path.GetExtension(_FNotation.FileName);
-                    FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss") + FileExtension;
-                    string UploadPath1 = "~/fichiers/";
-                    notation.FNotation = FileName;
-                    _FNotation.SaveAs(Server.MapPath(UploadPath1 + FileName));
-                }
-               
-                notation.Date_Add = DateTime.Now;
-                db.Journal.Add(new Models.Journal
-                {
-                    Id = Guid.NewGuid(),
-                    Operation = "Technicien Ajouter une notation .",
-                    Date_Modification = DateTime.Now,
-                    Id_Essai = essai_id,
-                    Id_User = new Guid(userid),
-                    Name = techname,
-                });
-                db.Entry(notation).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Notations", new { essai_id });
-            }
+                    userid = (string)Session["userid"];
+                    techname = (string)Session["techname"];
+                    ViewBag.username = Session["techname"];
+                    if (_FNotation != null)
+                    {
+                        string FileName = Path.GetFileNameWithoutExtension(_FNotation.FileName);
+                        string FileExtension = Path.GetExtension(_FNotation.FileName);
+                        FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss") + FileExtension;
+                        string UploadPath1 = "~/fichiers/";
+                        notation.FNotation = FileName;
+                        _FNotation.SaveAs(Server.MapPath(UploadPath1 + FileName));
+                    }
 
-            return View(notation);
+                    notation.Date_Add = DateTime.Now;
+                    db.Journal.Add(new Models.Journal
+                    {
+                        Id = Guid.NewGuid(),
+                        Operation = "Technicien Ajouter une notation .",
+                        Date_Modification = DateTime.Now,
+                        Id_Essai = essai_id,
+                        Id_User = new Guid(userid),
+                        Name = techname,
+                    });
+                    db.Entry(notation).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Notations", new { essai_id });
+                }
+
+                return View(notation);
+            }
         }
 
         public ActionResult Details(Guid? id)
         {
-            if ((bool)Session["tech"] == false)
+            if (Session["tech"] == null)
             { return Redirect("/"); }
-            userid = (string)Session["userid"];
-            ViewBag.username = Session["techname"];
-            id = Guid.Parse(userid);
-            if (id == null)
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if ((bool)Session["tech"] == false)
+                { return Redirect("/"); }
+                userid = (string)Session["userid"];
+                ViewBag.username = Session["techname"];
+                id = Guid.Parse(userid);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Users users = db.Users.Find(id);
+                if (users == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(users);
             }
-            Users users = db.Users.Find(id);
-            if (users == null)
-            {
-                return HttpNotFound();
-            }
-            return View(users);
         }
 
         public ActionResult EditProfile(Guid? id)
         {
-            if ((bool)Session["Tech"] == false)
+            if (Session["tech"] == null)
             { return Redirect("/"); }
-            userid = (string)Session["userid"];
-            ViewBag.username = Session["techname"];
-            id = Guid.Parse(userid);
-            if (id == null)
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if ((bool)Session["Tech"] == false)
+                { return Redirect("/"); }
+                userid = (string)Session["userid"];
+                ViewBag.username = Session["techname"];
+                id = Guid.Parse(userid);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Users users = db.Users.Find(id);
+                if (users == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.ProfileId = new SelectList(db.Profile, "Id", "Name", users.ProfileId);
+                return View(users);
             }
-            Users users = db.Users.Find(id);
-            if (users == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ProfileId = new SelectList(db.Profile, "Id", "Name", users.ProfileId);
-            return View(users);
         }
 
         // POST: Users/Edit/5
@@ -164,14 +198,19 @@ namespace Agric.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditProfile([Bind(Include = "Id,Fullname,Email,Address,Phone,IsActive,CreatedOn,ProfileId,Password")] Users users)
         {
-            if (ModelState.IsValid)
+            if (Session["tech"] == null)
+            { return Redirect("/"); }
+            else
             {
-                db.Entry(users).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Details");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(users).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Details");
+                }
+                ViewBag.ProfileId = new SelectList(db.Profile, "Id", "Name", users.ProfileId);
+                return View(users);
             }
-            ViewBag.ProfileId = new SelectList(db.Profile, "Id", "Name", users.ProfileId);
-            return View(users);
         }
 
         // GET: Tech/Create
@@ -207,18 +246,23 @@ namespace Agric.Controllers
       
         public ActionResult Edit(Guid? id)
         {
-            ViewBag.username = Session["techname"];
-            if (id == null)
+            if (Session["tech"] == null)
+            { return Redirect("/"); }
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                ViewBag.username = Session["techname"];
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Essai essai = db.Essai.Find(id);
+                if (essai == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.UserId = new SelectList(db.Users, "Id", "Fullname", essai.UserId);
+                return View(essai);
             }
-            Essai essai = db.Essai.Find(id);
-            if (essai == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Fullname", essai.UserId);
-            return View(essai);
         }
 
         // POST: Tech/Edit/5
@@ -229,70 +273,79 @@ namespace Agric.Controllers
         public ActionResult Edit([Bind(Include = "Id,UserId,CodeClient,TA,Formulation,DP,MA,DateNotation,PE,Usage,PR,Produit,Culture,Cible,Nb,Region,Code,Date_Cloture,Rapport,RapportRemis,DateRemisRapport,ACB,FDS,LaboName,TechName,Date_Instalation,FNNotation,FDEFicheEssai,Devis,DevisDemander,Payer,NonPayer,Payer50,EtatEssai,EtatPaiment,FormulationProduitRéf,DPRéf,MARéf,ComportementCulture,Facture,id_devis")] Essai essai, HttpPostedFileBase _FNNotation,HttpPostedFileBase _FDEFicheEssai , Journal journal,Notation notation)
         {
 
-              
-
-            if (ModelState.IsValid)
+            if (Session["tech"] == null)
+            { return Redirect("/"); }
+            else
             {
-               
-                userid = (string)Session["userid"];
-                techname = (string)Session["techname"];
-                ViewBag.username = Session["techname"];
 
-                if (_FNNotation != null)
+                if (ModelState.IsValid)
                 {
-                    string FileName = Path.GetFileNameWithoutExtension(_FNNotation.FileName);
-                    string FileExtension = Path.GetExtension(_FNNotation.FileName);
 
-                    FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
-                        + FileExtension;
+                    userid = (string)Session["userid"];
+                    techname = (string)Session["techname"];
+                    ViewBag.username = Session["techname"];
 
-                    string UploadPath1 = "~/fichiers/";
+                    if (_FNNotation != null)
+                    {
+                        string FileName = Path.GetFileNameWithoutExtension(_FNNotation.FileName);
+                        string FileExtension = Path.GetExtension(_FNNotation.FileName);
+
+                        FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
+                            + FileExtension;
+
+                        string UploadPath1 = "~/fichiers/";
                         notation.FNotation = FileName;
                         notation.D_N_R = DateTime.Now;
-                
-                     _FNNotation.SaveAs(Server.MapPath(UploadPath1 + FileName));
-                 }
 
-                if (_FDEFicheEssai != null)
-                {
-                    string FileName = Path.GetFileNameWithoutExtension(_FDEFicheEssai.FileName);
-                    string FileExtension = Path.GetExtension(_FDEFicheEssai.FileName);
+                        _FNNotation.SaveAs(Server.MapPath(UploadPath1 + FileName));
+                    }
 
-                    FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
-                        + FileExtension;
+                    if (_FDEFicheEssai != null)
+                    {
+                        string FileName = Path.GetFileNameWithoutExtension(_FDEFicheEssai.FileName);
+                        string FileExtension = Path.GetExtension(_FDEFicheEssai.FileName);
 
-                    string UploadPath1 = "~/fichiers/";
-                    essai.FDEFicheEssai = FileName;
+                        FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
+                            + FileExtension;
 
-
-                    _FDEFicheEssai.SaveAs(Server.MapPath(UploadPath1 + FileName));
-                }
-
-                db.Journal.Add(new Models.Journal {
-                    Id = Guid.NewGuid(),
-                    Operation = "Technicien Ajouter les données",
-                    Date_Modification = DateTime.Now,
-                    Id_Essai=essai.Id,
-                    Id_User = new Guid(userid),
-                    Name = techname,
-                }); 
+                        string UploadPath1 = "~/fichiers/";
+                        essai.FDEFicheEssai = FileName;
 
 
+                        _FDEFicheEssai.SaveAs(Server.MapPath(UploadPath1 + FileName));
+                    }
 
-                db.Entry(essai).State = EntityState.Modified;
+                    db.Journal.Add(new Models.Journal
+                    {
+                        Id = Guid.NewGuid(),
+                        Operation = "Technicien Ajouter les données",
+                        Date_Modification = DateTime.Now,
+                        Id_Essai = essai.Id,
+                        Id_User = new Guid(userid),
+                        Name = techname,
+                    });
+
+
+
+                    db.Entry(essai).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
-              
-            }
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Fullname", essai.UserId);
+
+                }
+                ViewBag.UserId = new SelectList(db.Users, "Id", "Fullname", essai.UserId);
                 return View(essai);
+            }
             }
 
             // GET: Tech/Delete/5
             public ActionResult Delete(Guid? id)
             {
-            ViewBag.username = Session["techname"];
-            if (id == null)
+            if (Session["tech"] == null)
+            { return Redirect("/"); }
+            else
+            {
+                ViewBag.username = Session["techname"];
+                if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
@@ -303,16 +356,22 @@ namespace Agric.Controllers
                 }
                 return View(essai);
             }
+            }
 
             // POST: Tech/Delete/5
             [HttpPost, ActionName("Delete")]
             [ValidateAntiForgeryToken]
             public ActionResult DeleteConfirmed(Guid id)
             {
+            if (Session["tech"] == null)
+            { return Redirect("/"); }
+            else
+            {
                 Essai essai = db.Essai.Find(id);
                 db.Essai.Remove(essai);
                 db.SaveChanges();
                 return RedirectToAction("Index");
+            }
             }
         
         protected override void Dispose(bool disposing)
@@ -367,27 +426,30 @@ namespace Agric.Controllers
         }
         public ActionResult Datepicker(DateTime? search)
         {
-
-            if ((bool)Session["tech"] == false)
+            if (Session["tech"] == null)
             { return Redirect("/"); }
-            techname = (string)Session["techname"];
-            ViewBag.username = Session["techname"];
-            ViewBag.User = new SelectList(db.Users, "Id", "Fullname");
-
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            if (search != null)
-            {
-                var nts = db.Notation.Where(e => e.D_N_P == search).Select(e => e.Essai_Id).ToList();
-                var essai2 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && nts.Contains(e.Id)).ToList();
-                return View(essai2);
-            }
             else
             {
-                var essai2 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && e.Id == null).ToList();
-                return View(essai2);
-            }
+                if ((bool)Session["tech"] == false)
+                { return Redirect("/"); }
+                techname = (string)Session["techname"];
+                ViewBag.username = Session["techname"];
+                ViewBag.User = new SelectList(db.Users, "Id", "Fullname");
 
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                if (search != null)
+                {
+                    var nts = db.Notation.Where(e => e.D_N_P == search).Select(e => e.Essai_Id).ToList();
+                    var essai2 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && e.TechName == techname && (e.EtatEssai == "En cours" || e.EtatEssai == "Non installer") && nts.Contains(e.Id)).ToList();
+                    return View(essai2);
+                }
+                else
+                {
+                    var essai2 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && e.TechName == techname && (e.EtatEssai == "En cours" || e.EtatEssai == "Non installer") && e.Id == null).ToList();
+                    return View(essai2);
+                }
+            }
         }
     }
 

@@ -42,8 +42,14 @@
                     <td style="  text-align:center">
                         @if (item.FNotation != null)
                         {
-                            @Html.ActionLink("Télécharger", "DownloadFNotation", new { Id = item.Id })
+                        <p>
+                            <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
+                        </p>
                         }
+                        else { 
+                    <p>
+                        <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+                    </p>}
                     </td>
                     @if (item.D_N_R == null && item.FNotation == null)
                     {

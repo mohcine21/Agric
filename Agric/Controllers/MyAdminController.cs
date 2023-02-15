@@ -33,201 +33,247 @@ namespace Agric.Controllers
 
         public ActionResult Index()
         {
-
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            ViewBag.Username = Session["adminname"];
-            ViewBag.User = new SelectList(db.Users, "Id", "Fullname");
-
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-          /*  if (search != null)
-            {
-                var nts = db.Notation.Where(e => e.D_N_P == search).Select(e => e.Essai_Id).ToList();
-                var essai2 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && nts.Contains(e.Id)).ToList();
-                return View(essai2);
-            }
             else
-            {*/
+            {
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                ViewBag.Username = Session["adminname"];
+                ViewBag.User = new SelectList(db.Users, "Id", "Fullname");
+
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                /*  if (search != null)
+                  {
+                      var nts = db.Notation.Where(e => e.D_N_P == search).Select(e => e.Essai_Id).ToList();
+                      var essai2 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && nts.Contains(e.Id)).ToList();
+                      return View(essai2);
+                  }
+                  else
+                  {*/
                 var essai1 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false).OrderByDescending(e => e.Date_Modife);
                 return View(essai1.ToList());
-            
-        }
-        public ActionResult Datepicker(DateTime? search )
-        {
-
-            if ((bool)Session["admin"] == false)
-            { return Redirect("/"); }
-            ViewBag.Username = Session["adminname"];
-            ViewBag.User = new SelectList(db.Users, "Id", "Fullname");
-
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            if (search != null)
-            {
-                var nts = db.Notation.Where(e => e.D_N_P == search).Select(e => e.Essai_Id).ToList();
-                var essai2 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && nts.Contains(e.Id)).ToList();
-                return View(essai2);
             }
+
+        }
+        public ActionResult Datepicker(DateTime? search)
+        {
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
             else
             {
-                var essai2 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && e.Id==null).ToList();
-                return View(essai2);
-            }
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                ViewBag.Username = Session["adminname"];
+                ViewBag.User = new SelectList(db.Users, "Id", "Fullname");
 
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                if (search != null)
+                {
+                    var nts = db.Notation.Where(e => e.D_N_P == search).Select(e => e.Essai_Id).ToList();
+                    var essai2 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && nts.Contains(e.Id)).ToList();
+                    return View(essai2);
+                }
+                else
+                {
+                    var essai2 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && e.Id == null).ToList();
+                    return View(essai2);
+                }
+            }
         }
         public ActionResult EssaiSemaine()
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            ViewBag.Username = Session["adminname"];
-            ViewBag.User = new SelectList(db.Users, "Id", "Fullname");
+            else
+            {
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                ViewBag.Username = Session["adminname"];
+                ViewBag.User = new SelectList(db.Users, "Id", "Fullname");
 
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            
-            var essai1 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false).OrderByDescending(e => e.Date_Modife);
-            return View(essai1.ToList());
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+
+                var essai1 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false).OrderByDescending(e => e.Date_Modife);
+                return View(essai1.ToList());
+            }
         }
         public ActionResult Modification()
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            userid = (string)Session["userid"];
-            ViewBag.Username = Session["adminname"];
-            var journal = db.Journal.Include(e => e.Users).OrderByDescending(e => e.Date_Modification);
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            return View(journal.ToList());
+            else
+            {
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                userid = (string)Session["userid"];
+                ViewBag.Username = Session["adminname"];
+                var journal = db.Journal.Include(e => e.Users).OrderByDescending(e => e.Date_Modification);
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                return View(journal.ToList());
+            }
         }
 
         // GET: Essais/Details/5
         public ActionResult DetailsEssai(Guid? id)
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            userid = (string)Session["userid"];
-            ViewBag.Username = Session["adminname"];
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            if (id == null)
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Essai essai = db.Essai.Find(id);
-            if (essai == null)
-            {
-                return HttpNotFound();
-            }
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                userid = (string)Session["userid"];
+                ViewBag.Username = Session["adminname"];
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Essai essai = db.Essai.Find(id);
+                if (essai == null)
+                {
+                    return HttpNotFound();
+                }
 
-            return View(essai);
+                return View(essai);
+            }
         }
 
         // GET: Essais/Details/5
         public ActionResult DetailsEssaiJournal(Guid? id, Guid? id1)
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            userid = (string)Session["userid"];
-            ViewBag.Username = Session["adminname"];
-            if (id == null)
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                userid = (string)Session["userid"];
+                ViewBag.Username = Session["adminname"];
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Essai essai = db.Essai.Find(id);
+                var journal = db.Journal.Where(x => x.Id == id1).FirstOrDefault();
+
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                if (journal != null)
+                {
+                    journal.VuAdmin = true;
+                }
+
+                db.SaveChanges();
+
+                if (essai == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(essai);
             }
-            Essai essai = db.Essai.Find(id);
-            var journal = db.Journal.Where(x => x.Id == id1).FirstOrDefault();
-
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            if (journal != null)
-            {
-                journal.VuAdmin = true;
-            }
-
-            db.SaveChanges();
-
-            if (essai == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(essai);
         }
 
         public ActionResult Notations(Guid? essai_id)
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            var Notation = db.Notation.Where(e => e.Essai_Id == essai_id);
-            Essai essai = db.Essai.Find(essai_id);
-            ViewBag.id_essai = essai_id;
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            ViewBag.Username = Session["adminname"];
-            if (essai == null)
+            else
             {
-                return HttpNotFound();
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                var Notation = db.Notation.Where(e => e.Essai_Id == essai_id);
+                Essai essai = db.Essai.Find(essai_id);
+                ViewBag.id_essai = essai_id;
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                ViewBag.Username = Session["adminname"];
+                if (essai == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(Notation.ToList());
             }
-            return View(Notation.ToList());
         }
         public ActionResult AddNotation(Guid? essai_id)
         {
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            Session["id_essai"] = essai_id;
-            ViewBag.Username = Session["adminname"];
-            return View();
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
+            else
+            {
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                Session["id_essai"] = essai_id;
+                ViewBag.Username = Session["adminname"];
+                return View();
+            }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddNotation([Bind(Include = "Id,D_N_P,D_N_R,essai_Id,FNotation")] Notation notation,HttpPostedFileBase _FNotation)
+        public ActionResult AddNotation([Bind(Include = "Id,D_N_P,D_N_R,essai_Id,FNotation")] Notation notation, HttpPostedFileBase _FNotation)
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            var essai_id = (Guid)Session["id_essai"];
-            var essai = db.Essai.Where(x => x.Id == essai_id).FirstOrDefault();
-            if (ModelState.IsValid)
+            else
             {
-                if (_FNotation != null)
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                var essai_id = (Guid)Session["id_essai"];
+                var essai = db.Essai.Where(x => x.Id == essai_id).FirstOrDefault();
+                if (ModelState.IsValid)
                 {
-                    string FileName = Path.GetFileNameWithoutExtension(_FNotation.FileName);
-                    string FileExtension = Path.GetExtension(_FNotation.FileName);
-                    FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss") + FileExtension;
-                    string UploadPath1 = "~/fichiers/";
-                    notation.FNotation = FileName;
-                    _FNotation.SaveAs(Server.MapPath(UploadPath1 + FileName));
+                    if (_FNotation != null)
+                    {
+                        string FileName = Path.GetFileNameWithoutExtension(_FNotation.FileName);
+                        string FileExtension = Path.GetExtension(_FNotation.FileName);
+                        FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss") + FileExtension;
+                        string UploadPath1 = "~/fichiers/";
+                        notation.FNotation = FileName;
+                        _FNotation.SaveAs(Server.MapPath(UploadPath1 + FileName));
+                    }
+                    notation.Id = Guid.NewGuid();
+
+                    notation.Essai_Id = essai.Id;
+                    db.Notation.Add(notation);
+                    db.SaveChanges();
+                    return RedirectToAction("Notations", new { essai_id });
                 }
-                notation.Id = Guid.NewGuid();
-                
-                notation.Essai_Id = essai.Id;
-                db.Notation.Add(notation);
-                db.SaveChanges();
-                return RedirectToAction("Notations", new { essai_id });
-            }
 
-            return View(notation);
+                return View(notation);
+            }
         }
-        public ActionResult EditNotation(Guid? id,Guid essai_id)
+        public ActionResult EditNotation(Guid? id, Guid essai_id)
         {
-         
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
+            else
+            {
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
 
-            userid = (string)Session["userid"];
-            ViewBag.Username = Session["adminname"];
-            Session["id_essai"] = essai_id;
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                userid = (string)Session["userid"];
+                ViewBag.Username = Session["adminname"];
+                Session["id_essai"] = essai_id;
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Notation notation = db.Notation.Find(id);
+                if (notation == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(notation);
             }
-            Notation notation = db.Notation.Find(id);
-            if (notation == null)
-            {
-                return HttpNotFound();
-            }
-            return View(notation);
         }
 
         // POST: Notations/Edit/5
@@ -235,34 +281,38 @@ namespace Agric.Controllers
         // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditNotation([Bind(Include = "Id,D_N_P,D_N_R,FNotation,Essai_Id,Date_Add")] Notation notation,HttpPostedFileBase _FNotation)
+        public ActionResult EditNotation([Bind(Include = "Id,D_N_P,D_N_R,FNotation,Essai_Id,Date_Add")] Notation notation, HttpPostedFileBase _FNotation)
         {
-            
-            var essai_id = (Guid)Session["id_essai"];
-            if (ModelState.IsValid)
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
+            else
             {
-                if (_FNotation != null)
+                var essai_id = (Guid)Session["id_essai"];
+                if (ModelState.IsValid)
                 {
-                    string FileName = Path.GetFileNameWithoutExtension(_FNotation.FileName);
-                    string FileExtension = Path.GetExtension(_FNotation.FileName);
-                    FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss") + FileExtension;
-                    string UploadPath1 = "~/fichiers/";
-                    notation.FNotation = FileName;
-                    _FNotation.SaveAs(Server.MapPath(UploadPath1 + FileName));
+                    if (_FNotation != null)
+                    {
+                        string FileName = Path.GetFileNameWithoutExtension(_FNotation.FileName);
+                        string FileExtension = Path.GetExtension(_FNotation.FileName);
+                        FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss") + FileExtension;
+                        string UploadPath1 = "~/fichiers/";
+                        notation.FNotation = FileName;
+                        _FNotation.SaveAs(Server.MapPath(UploadPath1 + FileName));
+                    }
+                    db.Entry(notation).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Notations", new { essai_id });
                 }
-                db.Entry(notation).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Notations", new { essai_id });
+                return View(notation);
             }
-            return View(notation);
         }
 
         // GET: Notations/Delete/5
-      
+
         public ActionResult DeleteNotation(Guid? id, Guid Essai_id)
         {
             Session["id_essai"] = Essai_id;
-          
+
             var essai_id = (Guid)Session["id_essai"];
             Notation notation = db.Notation.Find(id);
             db.Notation.Remove(notation);
@@ -271,45 +321,54 @@ namespace Agric.Controllers
         }
         public ActionResult Details(Guid? id)
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            userid = (string)Session["userid"];
-            id = Guid.Parse(userid);
-            ViewBag.Username = Session["adminname"];
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            if (id == null)
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                userid = (string)Session["userid"];
+                id = Guid.Parse(userid);
+                ViewBag.Username = Session["adminname"];
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Users users = db.Users.Find(id);
+                if (users == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(users);
             }
-            Users users = db.Users.Find(id);
-            if (users == null)
-            {
-                return HttpNotFound();
-            }
-            return View(users);
         }
         public ActionResult EditProfile(Guid? id)
-
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            userid = (string)Session["userid"];
-            ViewBag.Username = Session["adminname"];
-            id = Guid.Parse(userid);
-            if (id == null)
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                userid = (string)Session["userid"];
+                ViewBag.Username = Session["adminname"];
+                id = Guid.Parse(userid);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Users users = db.Users.Find(id);
+                if (users == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.ProfileId = new SelectList(db.Profile, "Id", "Name", users.ProfileId);
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                return View(users);
             }
-            Users users = db.Users.Find(id);
-            if (users == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ProfileId = new SelectList(db.Profile, "Id", "Name", users.ProfileId);
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            return View(users);
         }
 
         // POST: Users/Edit/5
@@ -333,7 +392,7 @@ namespace Agric.Controllers
         // GET: MyAdmin/Edit/5
         public ActionResult Edit(Guid? id)
         {
-        ViewBag.Username = Session["adminname"];
+            ViewBag.Username = Session["adminname"];
             var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
             ViewBag.nbrnotif = cpt;
             if (id == null)
@@ -362,117 +421,100 @@ namespace Agric.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,UserId,CodeClient,TA,DateNotation,Formulation,DP,Usage,MA,Date_Instalation,PE,PR,Produit,Culture,ACB,FDS,Cible,Nb,Region,Code,Date_Cloture,Rapport,RapportRemis,DateRemisRapport,EtatEssai,LaboName,TechName,DevisDemander,ACB,FDS,Payer,NonPayer,Paiment_Regler50,Payer50,Devis,FDEFicheEssai,FNNotation,FormulationProduitRéf,DPRéf,Facture,MARéf,ComportementCulture,id_devis,Devis")] Essai essai, HttpPostedFileBase _Rapport, HttpPostedFileBase _PE, HttpPostedFileBase _ACB, HttpPostedFileBase _FDS, HttpPostedFileBase _Facture)
         {
-
-            userid = (string)Session["userid"];
-            if (ModelState.IsValid)
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
+            else
             {
-                DateTime now = DateTime.Now;
-                essai.Date_Modife = now;
-
-
-                if (_Rapport != null)
+                userid = (string)Session["userid"];
+                if (ModelState.IsValid)
                 {
-                    string FileName = Path.GetFileNameWithoutExtension(_Rapport.FileName);
-                    string FileExtension = Path.GetExtension(_Rapport.FileName);
+                    DateTime now = DateTime.Now;
+                    essai.Date_Modife = now;
+                    if (_Rapport != null)
+                    {
+                        string FileName = Path.GetFileNameWithoutExtension(_Rapport.FileName);
+                        string FileExtension = Path.GetExtension(_Rapport.FileName);
+                        FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
+                            + FileExtension;
+                        string UploadPath = "~/fichiers/";
+                        essai.Rapport = FileName;
+                        _Rapport.SaveAs(Server.MapPath(UploadPath + FileName));
+                    }
+                    if (_PE != null)
+                    {
+                        string FileName = Path.GetFileNameWithoutExtension(_PE.FileName);
+                        string FileExtension = Path.GetExtension(_PE.FileName);
+                        FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
+                            + FileExtension;
+                        string UploadPath = "~/fichiers/";
+                        essai.PE = FileName;
+                        _PE.SaveAs(Server.MapPath(UploadPath + FileName));
+                    }
+                    if (_ACB != null)
+                    {
+                        string FileName = Path.GetFileNameWithoutExtension(_ACB.FileName);
+                        string FileExtension = Path.GetExtension(_ACB.FileName);
+                        FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
+                            + FileExtension;
+                        string UploadPath = "~/fichiers/";
+                        essai.ACB = FileName;
+                        _ACB.SaveAs(Server.MapPath(UploadPath + FileName));
+                        essai.Nb = DateTime.Now.ToString();
+                    }
+                    if (_FDS != null)
+                    {
+                        string FileName = Path.GetFileNameWithoutExtension(_FDS.FileName);
+                        string FileExtension = Path.GetExtension(_FDS.FileName);
+                        FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
+                            + FileExtension;
+                        string UploadPath = "~/fichiers/";
+                        essai.FDS = FileName;
+                        _FDS.SaveAs(Server.MapPath(UploadPath + FileName));
+                    }
+                    if (_Facture != null)
+                    {
+                        string FileName = Path.GetFileNameWithoutExtension(_Facture.FileName);
+                        string FileExtension = Path.GetExtension(_Facture.FileName);
+                        FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
+                            + FileExtension;
+                        string UploadPath = "~/fichiers/";
+                        essai.Facture = FileName;
+                        _Facture.SaveAs(Server.MapPath(UploadPath + FileName));
+                    }
 
-                    FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
-                        + FileExtension;
+                    db.Entry(essai).State = EntityState.Modified;
+                    db.Journal.Add(new Models.Journal
+                    {
+                        Id = Guid.NewGuid(),
+                        Operation = "Des données ajouter",
+                        Date_Modification = DateTime.Now,
+                        Id_Essai = essai.Id,
+                        Id_User = essai.UserId,
+                    });
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
 
-                    string UploadPath = "~/fichiers/";
-                    essai.Rapport = FileName;
 
-
-                    _Rapport.SaveAs(Server.MapPath(UploadPath + FileName));
                 }
-                if (_PE != null)
-                {
-                    string FileName = Path.GetFileNameWithoutExtension(_PE.FileName);
-                    string FileExtension = Path.GetExtension(_PE.FileName);
-
-                    FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
-                        + FileExtension;
-
-                    string UploadPath = "~/fichiers/";
-                    essai.PE = FileName;
-
-
-                    _PE.SaveAs(Server.MapPath(UploadPath + FileName));
-                }
-                if (_ACB != null)
-                {
-                    string FileName = Path.GetFileNameWithoutExtension(_ACB.FileName);
-                    string FileExtension = Path.GetExtension(_ACB.FileName);
-
-                    FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
-                        + FileExtension;
-
-                    string UploadPath = "~/fichiers/";
-                    essai.ACB = FileName;
-
-
-                    _ACB.SaveAs(Server.MapPath(UploadPath + FileName));
-                    essai.Nb = DateTime.Now.ToString();
-                }
-                if (_FDS != null)
-                {
-                    string FileName = Path.GetFileNameWithoutExtension(_FDS.FileName);
-                    string FileExtension = Path.GetExtension(_FDS.FileName);
-
-                    FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
-                        + FileExtension;
-
-                    string UploadPath = "~/fichiers/";
-                    essai.FDS = FileName;
-
-
-                    _FDS.SaveAs(Server.MapPath(UploadPath + FileName));
-                }
-                if (_Facture != null)
-                {
-                    string FileName = Path.GetFileNameWithoutExtension(_Facture.FileName);
-                    string FileExtension = Path.GetExtension(_Facture.FileName);
-
-                    FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
-                        + FileExtension;
-
-                    string UploadPath = "~/fichiers/";
-                    essai.Facture = FileName;
-
-
-                    _Facture.SaveAs(Server.MapPath(UploadPath + FileName));
-                }
-
-                db.Entry(essai).State = EntityState.Modified;
-                db.Journal.Add(new Models.Journal
-                {
-                    Id = Guid.NewGuid(),
-                    Operation = "Des données ajouter",
-                    Date_Modification = DateTime.Now,
-                    Id_Essai = essai.Id,
-                    Id_User = essai.UserId,
-
-
-                });
-                db.SaveChanges();
-                return RedirectToAction("Index");
-
-
+                // ViewBag.User = new SelectList(, "Id", "Fullname");
+                //ViewBag.UserId = new SelectList(db.Users, "Id", "Fullname",essai.UserId);
+                return View(essai);
             }
-            // ViewBag.User = new SelectList(, "Id", "Fullname");
-            //ViewBag.UserId = new SelectList(db.Users, "Id", "Fullname",essai.UserId);
-            return View(essai);
-        }
+        } 
 
 
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.Users.Where(g => g.ProfileId.ToString() == ("6bf5738f-852c-4ea9-8d5c-aad7f7e4ac89")), "Id", "Fullname");
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            ViewBag.Username = Session["adminname"];
-            return View();
-
-
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
+            else
+            {
+                ViewBag.UserId = new SelectList(db.Users.Where(g => g.ProfileId.ToString() == ("6bf5738f-852c-4ea9-8d5c-aad7f7e4ac89")), "Id", "Fullname");
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                ViewBag.Username = Session["adminname"];
+                return View();
+            }
         }
 
         // POST: Essais/Create
@@ -499,13 +541,17 @@ namespace Agric.Controllers
         // GET: MyAdmin/Delete Essai from database
         public ActionResult Delete(Guid? id, Guid Essai_id)
         {
-            Session["id_essai"] = Essai_id;
-            var essai_id = (Guid)Session["id_essai"];
-            Essai essai = db.Essai.Find(Essai_id);
-            db.Essai.Remove(essai);
-            db.SaveChanges();
-            return RedirectToAction("EssaisArchiver", new { essai_id });
-          
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
+            else
+            {
+                Session["id_essai"] = Essai_id;
+                var essai_id = (Guid)Session["id_essai"];
+                Essai essai = db.Essai.Find(Essai_id);
+                db.Essai.Remove(essai);
+                db.SaveChanges();
+                return RedirectToAction("EssaisArchiver", new { essai_id });
+            }
         }
 
 
@@ -514,83 +560,118 @@ namespace Agric.Controllers
 
         public ActionResult Historique()
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            ViewBag.Username = Session["adminname"];
-            ViewBag.User = new SelectList(db.Users, "Id", "Fullname");
+            else
+            {
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                ViewBag.Username = Session["adminname"];
+                ViewBag.User = new SelectList(db.Users, "Id", "Fullname");
 
 
-            var essai1 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && DateTime.Now.Year > e.Date_Cloture.Value.Year && e.Rapport != null && e.id_devis != null);
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            return View(essai1.ToList());
+                var essai1 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && DateTime.Now.Year > e.Date_Cloture.Value.Year && e.Rapport != null && e.id_devis != null);
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                return View(essai1.ToList());
+            }
         }
         public ActionResult ListeUsers()
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            ViewBag.Username = Session["adminname"];
+            else
+            {
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                ViewBag.Username = Session["adminname"];
 
-            var users = db.Users.Include(u => u.Profile).OrderByDescending(c => c.CreatedOn);
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            return View(users.ToList());
+                var users = db.Users.Include(u => u.Profile).OrderByDescending(c => c.CreatedOn);
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                return View(users.ToList());
+            }
         }
 
         public ActionResult ListeClients()
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            ViewBag.Username = Session["adminname"];
-            var users = db.Users.Include(u => u.Profile).Where(c => c.ProfileId.ToString() == ("6bf5738f-852c-4ea9-8d5c-aad7f7e4ac89")).OrderByDescending(c=> c.CreatedOn);
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            return View(users.ToList());
+            else
+            {
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                ViewBag.Username = Session["adminname"];
+                var users = db.Users.Include(u => u.Profile).Where(c => c.ProfileId.ToString() == ("6bf5738f-852c-4ea9-8d5c-aad7f7e4ac89")).OrderByDescending(c => c.CreatedOn);
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                return View(users.ToList());
+            }
         }
 
         public ActionResult ListeLabos()
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            ViewBag.Username = Session["adminname"];
-            var users = db.Users.Include(u => u.Profile).Where(c => c.ProfileId.ToString() == ("d762c993-32b3-4519-9f59-35a7cb0b229f"));
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            return View(users.ToList());
+            else
+            {
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                ViewBag.Username = Session["adminname"];
+                var users = db.Users.Include(u => u.Profile).Where(c => c.ProfileId.ToString() == ("d762c993-32b3-4519-9f59-35a7cb0b229f"));
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                return View(users.ToList());
+            }
         }
         //==============================================================================================================
         public ActionResult ListeDevisDemander()
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            ViewBag.Username = Session["adminname"];
+            else
+            {
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                ViewBag.Username = Session["adminname"];
 
-            var devis = db.Devis.Include(e => e.Users).Where(e => e.Devis1 == null).OrderByDescending(e => e.date_demande);
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            return View(devis.ToList());
+                var devis = db.Devis.Include(e => e.Users).Where(e => e.Devis1 == null).OrderByDescending(e => e.date_demande);
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                return View(devis.ToList());
+            }
         }
         public ActionResult ListeDevisEnvoyer()
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            ViewBag.Username = Session["adminname"];
+            else
+            {
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                ViewBag.Username = Session["adminname"];
 
-            var devis = db.Devis.Include(e => e.Users).Where(e => e.Devis1 != null).OrderByDescending(d=> d.date_demande);
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            return View(devis.ToList());
+                var devis = db.Devis.Include(e => e.Users).Where(e => e.Devis1 != null).OrderByDescending(d => d.date_demande);
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                return View(devis.ToList());
+            }
         }
         //=====================================================================================================================
         public ActionResult ListeTechniciens()
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            ViewBag.Username = Session["adminname"];
-            var users = db.Users.Include(u => u.Profile).Where(c => c.ProfileId.ToString() == ("58e6e325-2ebc-4aa1-b652-2a76c3e03a02"));
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            return View(users.ToList());
+            else
+            {
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                ViewBag.Username = Session["adminname"];
+                var users = db.Users.Include(u => u.Profile).Where(c => c.ProfileId.ToString() == ("58e6e325-2ebc-4aa1-b652-2a76c3e03a02"));
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                return View(users.ToList());
+            }
         }
         // GET: Users/Create
 
@@ -639,21 +720,26 @@ namespace Agric.Controllers
         // GET: Users/Edit/5
         public ActionResult EditUser(Guid? id)
         {
-            ViewBag.Username = Session["adminname"];
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            if (id == null)
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Users users = db.Users.Find(id);
-            if (users == null)
-            {
-                return HttpNotFound();
-            }
+                ViewBag.Username = Session["adminname"];
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Users users = db.Users.Find(id);
+                if (users == null)
+                {
+                    return HttpNotFound();
+                }
 
-            ViewBag.ProfileId = new SelectList(db.Profile.Where(g => g.Id.ToString() != ("f20e48e5-8304-4208-93b0-488dc208ed79")), "Id", "Name", users.ProfileId);
-            return View(users);
+                ViewBag.ProfileId = new SelectList(db.Profile.Where(g => g.Id.ToString() != ("f20e48e5-8304-4208-93b0-488dc208ed79")), "Id", "Name", users.ProfileId);
+                return View(users);
+            }
         }
 
         // POST: Users/Edit/5
@@ -683,19 +769,24 @@ namespace Agric.Controllers
         // GET: Users/Delete/5
         public ActionResult DeleteUser(Guid? id)
         {
-            ViewBag.Username = Session["adminname"];
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            if (id == null)
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                ViewBag.Username = Session["adminname"];
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Users users = db.Users.Find(id);
+                if (users == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(users);
             }
-            Users users = db.Users.Find(id);
-            if (users == null)
-            {
-                return HttpNotFound();
-            }
-            return View(users);
         }
 
         // POST: Users/Delete/5
@@ -732,21 +823,25 @@ namespace Agric.Controllers
         
         public ActionResult Archive(Guid Id , Guid? idDevis)
         {
-            var essai = db.Essai.Where(x => x.Id == Id).FirstOrDefault();
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
+            else
+            {
+                var essai = db.Essai.Where(x => x.Id == Id).FirstOrDefault();
             var journal1 = db.Journal.Where(x => x.Id_Essai == Id).FirstOrDefault();
             var notation1 = db.Notation.Where(x => x.Essai_Id == Id).FirstOrDefault();
-            if (essai != null)
-            {
-                if(essai.id_devis != null)
+                if (essai != null)
                 {
-                    Devis devis = db.Devis.Find(idDevis);
-                    db.Devis.Remove(devis);
+                    if (essai.id_devis != null)
+                    {
+                        Devis devis = db.Devis.Find(idDevis);
+                        db.Devis.Remove(devis);
+                    }
+                    essai.EssaiDelets = true;
+
+                    db.Journal.Remove(journal1);
+                    db.Notation.Remove(notation1);
                 }
-                essai.EssaiDelets = true;
-                
-                db.Journal.Remove(journal1);
-                db.Notation.Remove(notation1);
-                
             }
 
 
@@ -756,6 +851,7 @@ namespace Agric.Controllers
 
         public FileResult DownloadFDEFicheEssai(Guid Id)
         {
+
             var essai = db.Essai.Where(x => x.Id == Id).FirstOrDefault();
             string fileName = essai.FDEFicheEssai;
 
@@ -845,43 +941,58 @@ namespace Agric.Controllers
         }
         public ActionResult EssaisArchiver()
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            ViewBag.Username = Session["adminname"];
-            var essai = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == true);
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            return View(essai.ToList());
+            else
+            {
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                ViewBag.Username = Session["adminname"];
+                var essai = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == true);
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                return View(essai.ToList());
+            }
         }
         public ActionResult RécupérerEssai(Guid Id)
         {
-            var essai = db.Essai.Where(x => x.Id == Id).FirstOrDefault();
-
-            if (essai != null)
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
+            else
             {
-                essai.EssaiDelets = false;
+                var essai = db.Essai.Where(x => x.Id == Id).FirstOrDefault();
+
+                if (essai != null)
+                {
+                    essai.EssaiDelets = false;
+                }
+
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
             }
-
-            db.SaveChanges();
-
-            return RedirectToAction("Index");
         }
 
         public ActionResult AddDevis(Guid? id)
         {
-            ViewBag.username = Session["techname"];
-            if (id == null)
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Devis devis = db.Devis.Find(id);
-            if (devis == null)
-            {
-                return HttpNotFound();
-            }
+                ViewBag.username = Session["techname"];
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Devis devis = db.Devis.Find(id);
+                if (devis == null)
+                {
+                    return HttpNotFound();
+                }
 
-            ViewBag.id_client = new SelectList(db.Users, "Id", "Fullname", devis.id_client);
-            return View(devis);
+                ViewBag.id_client = new SelectList(db.Users, "Id", "Fullname", devis.id_client);
+                return View(devis);
+            }
         }
 
 
@@ -889,34 +1000,38 @@ namespace Agric.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddDevis([Bind(Include = "id , id_client , date_demande , DemandeDevis , DevisDelete, DevisAccepter , NumDevis , Devis , DevieEnvoyer")] Devis devis, HttpPostedFileBase _Devis)
         {
-            
-            if (ModelState.IsValid)
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
+            else
             {
-
-                if (_Devis != null)
+                if (ModelState.IsValid)
                 {
-                    string FileName = Path.GetFileNameWithoutExtension(_Devis.FileName);
-                    string FileExtension = Path.GetExtension(_Devis.FileName);
 
-                    FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
-                        + FileExtension;
+                    if (_Devis != null)
+                    {
+                        string FileName = Path.GetFileNameWithoutExtension(_Devis.FileName);
+                        string FileExtension = Path.GetExtension(_Devis.FileName);
 
-                    string UploadPath1 = "~/fichiers/";
-                    devis.Devis1 = FileName;
-                    devis.DemandeDevis = true;
+                        FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
+                            + FileExtension;
 
-                    _Devis.SaveAs(Server.MapPath(UploadPath1 + FileName));
-                    devis.DevieEnvoyer = true;
+                        string UploadPath1 = "~/fichiers/";
+                        devis.Devis1 = FileName;
+                        devis.DemandeDevis = true;
+
+                        _Devis.SaveAs(Server.MapPath(UploadPath1 + FileName));
+                        devis.DevieEnvoyer = true;
+                    }
+
+
+                    db.Entry(devis).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("ListeDevisDemander");
+
                 }
-
-
-                db.Entry(devis).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("ListeDevisDemander");
-
+                ViewBag.id_client = new SelectList(db.Users, "Id", "Fullname", devis.id_client);
+                return View(devis);
             }
-            ViewBag.id_client = new SelectList(db.Users, "Id", "Fullname", devis.id_client);
-            return View(devis);
         }
 
 
@@ -924,27 +1039,33 @@ namespace Agric.Controllers
         // POST: Journals/Delete/5        
         public ActionResult DeleteJournal(Guid? id)
         {
-            Journal journal = db.Journal.Find(id);
-
-            db.Journal.Remove(journal);
-            db.SaveChanges();
-            return RedirectToAction("Modification");
-
-
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
+            else
+            {
+                Journal journal = db.Journal.Find(id);
+                db.Journal.Remove(journal);
+                db.SaveChanges();
+                return RedirectToAction("Modification");
+            }
         }
         public ActionResult EssaisDevis(Guid? id)
         {
-            if ((bool)Session["admin"] == false)
+            if (Session["admin"] == null)
             { return Redirect("/"); }
-            userid = (string)Session["userid"];
+            else
+            {
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                userid = (string)Session["userid"];
 
-            ViewBag.username = Session["Clientname"];
+                ViewBag.username = Session["Clientname"];
 
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            var essai = db.Essai.Where(e => e.id_devis == id);
-            return View(essai.ToList());
-
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                var essai = db.Essai.Where(e => e.id_devis == id);
+                return View(essai.ToList());
+            }
         }
         // GET: Devis/Create
         public ActionResult CreateDevis(Essai essai)
@@ -961,12 +1082,13 @@ namespace Agric.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateDevis([Bind(Include = "id , id_client , date_demande , DemandeDevis , DevisDelete, DevisAccepter , NumDevis , Devis , DevieEnvoyer")] Devis devis, HttpPostedFileBase _Devis)
         {
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
+            else
+            {
+                devis.id = Guid.NewGuid();
+                devis.date_demande = DateTime.Now;
 
-
-
-            devis.id = Guid.NewGuid();
-            devis.date_demande = DateTime.Now;
-                
                 if (_Devis != null)
                 {
                     string FileName = Path.GetFileNameWithoutExtension(_Devis.FileName);
@@ -985,7 +1107,7 @@ namespace Agric.Controllers
                 db.Entry(devis).State = EntityState.Added;
                 db.SaveChanges();
                 return RedirectToAction("ListeDevisDemander");
-
+            }
         }
         // Modifier un essai envoyer
 
@@ -1012,23 +1134,27 @@ namespace Agric.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditEssaisDevisEnvoyer([Bind(Include = " id,id_client , date_demande , DemandeDevis , DevisDelete, DevisAccepter , NumDevis , Devis , DevieEnvoyer")] Devis devis, HttpPostedFileBase _Devis)
         {
-
-            if (_Devis != null)
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
+            else
             {
-                string FileName = Path.GetFileNameWithoutExtension(_Devis.FileName);
-                string FileExtension = Path.GetExtension(_Devis.FileName);
+                if (_Devis != null)
+                {
+                    string FileName = Path.GetFileNameWithoutExtension(_Devis.FileName);
+                    string FileExtension = Path.GetExtension(_Devis.FileName);
 
-                FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
-                    + FileExtension;
+                    FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
+                        + FileExtension;
 
-                string UploadPath1 = "~/fichiers/";
-                devis.Devis1 = FileName;
+                    string UploadPath1 = "~/fichiers/";
+                    devis.Devis1 = FileName;
 
-                _Devis.SaveAs(Server.MapPath(UploadPath1 + FileName));
+                    _Devis.SaveAs(Server.MapPath(UploadPath1 + FileName));
+                }
+                db.Entry(devis).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ListeDevisEnvoyer");
             }
-            db.Entry(devis).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("ListeDevisEnvoyer");
         }
     }
 }

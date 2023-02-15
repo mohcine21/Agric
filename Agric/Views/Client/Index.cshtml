@@ -162,7 +162,7 @@
     </td>
     <td style="  text-align:center">
 
-        @{ string s = item.Notation.Where(e => e.D_N_R != null && e.Essai_Id == item.Id).Count().ToString(); }
+        @{ string s = item.Notation.Where(e => (e.D_N_R != null ||e.FNotation!=null) && e.Essai_Id == item.Id).Count().ToString(); }
         @*   if (!string.IsNullOrEmpty(s))
             {
                 DateTime dDate;
