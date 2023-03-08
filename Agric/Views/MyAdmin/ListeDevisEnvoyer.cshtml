@@ -52,12 +52,10 @@
                             @Html.ActionLink("Télécharger", "DownloadDevis", new { Id = item.id })
                         }
                     </td>
-
-
                     <td>
                         @Html.ActionLink("Details", "EssaisDevis", new { id = item.id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
                         @Html.ActionLink("Modifier", "EditEssaisDevisEnvoyer", new { id = item.id }, new { @class = "btn btn-success btn-sm btn-block m-1" })
-
+                        @Html.ActionLink("Supprimer", "DeleteEssaisDevisEnvoyer", new { id = item.id }, new { @class = "btn btn-danger btn-sm btn-block m-1" })
                     </td>
                 </tr>
             }

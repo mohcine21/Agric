@@ -459,7 +459,7 @@ namespace Agric.Controllers
                         string UploadPath = "~/fichiers/";
                         essai.ACB = FileName;
                         _ACB.SaveAs(Server.MapPath(UploadPath + FileName));
-                        essai.Nb = DateTime.Now.ToString();
+                        
                     }
                     if (_FDS != null)
                     {
@@ -501,7 +501,6 @@ namespace Agric.Controllers
                 return View(essai);
             }
         } 
-
 
         public ActionResult Create()
         {
@@ -1057,10 +1056,8 @@ namespace Agric.Controllers
             {
                 if ((bool)Session["admin"] == false)
                 { return Redirect("/"); }
-                userid = (string)Session["userid"];
-
-                ViewBag.username = Session["Clientname"];
-
+                ViewBag.Username = Session["adminname"];
+                var users = db.Users.Include(u => u.Profile).Where(c => c.ProfileId.ToString() == ("58e6e325-2ebc-4aa1-b652-2a76c3e03a02"));
                 var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
                 ViewBag.nbrnotif = cpt;
                 var essai = db.Essai.Where(e => e.id_devis == id);
@@ -1070,7 +1067,10 @@ namespace Agric.Controllers
         // GET: Devis/Create
         public ActionResult CreateDevis(Essai essai)
         {
-
+            ViewBag.Username = Session["adminname"];
+            var users = db.Users.Include(u => u.Profile).Where(c => c.ProfileId.ToString() == ("58e6e325-2ebc-4aa1-b652-2a76c3e03a02"));
+            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+            ViewBag.nbrnotif = cpt;
             ViewBag.id_client = new SelectList(db.Users.Where(g => g.ProfileId.ToString() == ("6BF5738F-852C-4EA9-8D5C-AAD7F7E4AC89")), "Id", "Fullname", essai.UserId);
             return View();
         }
@@ -1155,6 +1155,22 @@ namespace Agric.Controllers
                 db.SaveChanges();
                 return RedirectToAction("ListeDevisEnvoyer");
             }
+        }
+
+        // POST: Devis/Delete/5
+        public ActionResult DeleteEssaisDevisEnvoyer(Guid id)
+        {
+            Devis devis = db.Devis.Find(id);
+            db.Devis.Remove(devis);
+            db.SaveChanges();
+            return RedirectToAction("ListeDevisEnvoyer");
+        }
+        public ActionResult DeleteEssaisDevisDemander(Guid id)
+        {
+            Devis devis = db.Devis.Find(id);
+            db.Devis.Remove(devis);
+            db.SaveChanges();
+            return RedirectToAction("ListeDevisDemander");
         }
     }
 }

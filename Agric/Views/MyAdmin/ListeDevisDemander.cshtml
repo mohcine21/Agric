@@ -46,6 +46,7 @@
                     <td>
                         @Html.ActionLink("Details", "EssaisDevis", new { id = item.id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
                         @Html.ActionLink("Envoyer", "AddDevis", new { id = item.id }, new { @class = "btn btn-success btn-sm btn-block m-1" })
+                        @Html.ActionLink("Supprimer", "DeleteEssaisDevisDemander", new { id = item.id }, new { @class = "btn btn-danger btn-sm btn-block m-1" })
 
                     </td>
                 </tr>

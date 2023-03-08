@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -9,9 +11,11 @@ using System.Web;
 using System.Web.Mvc;
 using System.Windows;
 using Agric.Models;
+using Agric.Models.ViewModel;
 
 namespace Agric.Controllers
 {
+    [HandleError]
     public class TechController : Controller
     {
         private AgricEntities db = new AgricEntities();

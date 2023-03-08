@@ -158,11 +158,10 @@ namespace Agric.Controllers
                 var cpt2 = db.Devis.Where(e => e.DemandeDevis == true && e.id_client.ToString() == userid).Count();
                 ViewBag.nbrdevisclient = cpt2;
                 // var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.DevisDemander == false && e.Devis == null);
-                ViewBag.ListEssai = db.Essai.Where(e => e.UserId.ToString() == userid && e.DevisDemander == false && e.CodeClient == null && e.EssaiDelets != true).ToList().OrderByDescending(e => e.Date_Modife);
+                ViewBag.ListEssai = db.Essai.Where(e => e.UserId.ToString() == userid && e.DevisDemander == false && e.CodeClient == null && e.EssaiDelets != true && (e.EtatEssai== "Non installer" || e.EtatEssai == null)).ToList().OrderByDescending(e => e.Date_Modife);
                 return View();
             }
         }
-
 
         // GET: Client/Create
         public ActionResult Create()
