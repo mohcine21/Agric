@@ -834,12 +834,23 @@ namespace Agric.Controllers
                     if (essai.id_devis != null)
                     {
                         Devis devis = db.Devis.Find(idDevis);
-                        db.Devis.Remove(devis);
+                        if (devis != null)
+                        {
+                            db.Devis.Remove(devis);
+                        }
+                        
                     }
                     essai.EssaiDelets = true;
-
-                    db.Journal.Remove(journal1);
-                    db.Notation.Remove(notation1);
+                    if (journal1 != null)
+                    {
+                        db.Journal.Remove(journal1);
+                    }
+                    
+                    if (notation1 != null)
+                    {
+                        db.Notation.Remove(notation1);
+                    }
+                    
                 }
             }
 
