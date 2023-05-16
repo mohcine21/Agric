@@ -50,6 +50,7 @@ namespace Agric.Models
         public string Region { get; set; }
         [Display(Name = "Code Essai")]
         public string Code { get; set; }
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> Date_Cloture { get; set; }
         public string Rapport { get; set; }
         [Display(Name = "Rapport Remis")]
@@ -95,6 +96,7 @@ namespace Agric.Models
         public int nbr { get; set; }
         [Display(Name = "Epoque d'application ")]
         public string ComportementCulture { get; set; }
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> Date_Instalation { get; set; }
 
         public virtual Users Users { get; set; }

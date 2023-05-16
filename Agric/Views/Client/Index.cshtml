@@ -106,9 +106,6 @@
                     @Html.DisplayNameFor(model => model.Date_Cloture)
                 </th>
                 <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.Rapport)
-                </th>
-                <th style="min-width:130px ; text-align:center">
                     @Html.DisplayNameFor(model => model.RapportRemis)
                 </th>
                 <th style="min-width:130px ; text-align:center">
@@ -129,7 +126,7 @@
         <tbody>
             @foreach (var item in Model)
             {
-   <tr>
+<tr>
 
 
     <td style="  text-align:center">
@@ -160,7 +157,7 @@
     </td>
     <td style="  text-align:center">
 
-        @{ string s = item.Notation.Where(e => (e.D_N_R != null ||e.FNotation!=null) && e.Essai_Id == item.Id).Count().ToString(); }
+        @{ string s = item.Notation.Where(e => (e.D_N_R != null || e.FNotation != null) && e.Essai_Id == item.Id).Count().ToString(); }
         @*   if (!string.IsNullOrEmpty(s))
             {
                 DateTime dDate;
@@ -189,14 +186,16 @@
 
         @{ if (s == "0")
             {
-<p>
-    0 Notation valide<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
-</p> }
+                <p>
+                    @*0 Notation valide<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>*@
+                    <a style="color:red">0 Notation valide</a>
+                </p> }
 else
 {
-<p>
-    @s   Notation valide <i class="fa fa-check-circle" style="color:green" aria-hidden="true"></i>
-</p> } }
+    <p>
+        @*@s   Notation valide <i class="fa fa-check-circle" style="color:green" aria-hidden="true"></i>*@
+        <a style="color:green"> @s Notation valide</a>
+    </p> } }
 
 
 
@@ -206,25 +205,26 @@ else
     <td style="  text-align:center">
         @Html.DisplayFor(modelItem => item.Date_Cloture)
     </td>
+   
     <td style="  text-align:center">
-        @if (item.Rapport != null)
-        {
-@Html.ActionLink("Télécharger", "DownloadRapport", new { Id = item.Id })}
-    </td>
-    <td style="  text-align:center">
+
         @{ if (item.RapportRemis == true)
             {
-<p>
-    <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
-</p> }
+                <p>
+                    @*<i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>*@
+
+                    <a style="color:green">Oui</a>
+                </p> }
 else if (item.RapportRemis == false)
 {
-<p>
-    <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
-</p> }
+    <p>
+        @*<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>*@
+        <a style="color:red">Non</a>
+    </p> }
 else
 {<p>
-    <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+    @*<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>*@
+    <a style="color:red">Non</a>
 </p> } }
     </td>
     <td style="  text-align:center">
@@ -264,7 +264,8 @@ else
 
 
     <p>
-        Regler 100% <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
+       @* Regler 100% <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>*@
+<a style="color:green">Regler 100%</a>
     </p>
 
 
@@ -273,25 +274,26 @@ else if (item.Paiment_Regler50 == false)
 {
 
 
-<p>
+    <p>
 
-    Regler 50%<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
-</p> }
+        @*Regler 50%<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>*@
+        <a style="color:green">Regler 50%</a>
+    </p> }
 else
 {
 <div class="col-sm-4">
 
 
     <p>
-        Pas Regler
+        
+        <a style="color:red">Pas Regler</a>
     </p>
 
 
 
 </div>}
     </td>
-</tr>
-       }
+</tr>}
 
         </tbody>
     </table>

@@ -37,8 +37,8 @@ namespace Agric.Controllers
                 ViewBag.username = Session["Clientname"];
                 var cpt2 = db.Devis.Where(e => e.id_client.ToString() == userid && e.DemandeDevis == true).Count();
                 ViewBag.nbrdevisclient = cpt2;
-                var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.EssaiDelets == false).OrderByDescending(e => e.Date_Modife);
-                return View(essai.ToList());
+                var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.EssaiDelets == false).OrderBy(x => x.EtatEssai == "Non installer" ? 0 : 1).ThenBy(x => x.EtatEssai).ToList();
+                return View(essai);
             
         }
         }
