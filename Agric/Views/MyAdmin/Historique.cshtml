@@ -237,8 +237,11 @@
     $(document).ready(function () {
         var table = $('#example').DataTable({
             lengthChange: false,
-
-            buttons: [ 'excel','copy']
+            buttons: ['excel', 'copy'],
+            "oLanguage": {
+                "sSearch": "Recherche"
+            },
+            scrollX: true
         });
 
         table.buttons().container()

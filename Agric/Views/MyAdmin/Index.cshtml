@@ -60,7 +60,7 @@
 <div class="container-fluid" style=" overflow:auto">
 
 
-    <table class="table table-hover " id="example">
+    <table class="table table-hover " id="example" style="width:98% !important; table-layout:fixed">
         <thead class="bg-primary text-light">
             <tr>
                 <th style="min-width:130px ; text-align:center">
@@ -273,23 +273,14 @@
 <script>
     $(document).ready(function () {
         var table = $('#example').DataTable({
-            lengthChange: false,
-
             buttons: ['excel', 'copy'],
-            fixedColumns: {
-                leftColumns: 2
+            "oLanguage": {
+                "sSearch": "Recherche"
             },
-            columnDefs: [{
-                orderable: false,
-                className: 'select-checkbox',
-                blurable: true,
-                targets: 0
-            }],
-            select: {
-                style: 'os',
-                selector: 'td:first-child'
-            },
-            order: [[1, 'asc']]
+            bInfo: false,
+            Paginate: true,
+            scrollX: true,
+            lengthChange: false
         });
 
         table.buttons().container()
@@ -298,10 +289,14 @@
 </script>
 
 <style>
+    .dataTables_scrollBody {
+        overflow-x: visible !important;
+        overflow-y: auto !important;
+    }
     .dataTables_filter {
         white-space: nowrap;
     }
-
+    
         .dataTables_filter label, .dataTables_filter input {
             display: inline-block;
             color: dimgrey;

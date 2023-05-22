@@ -52,8 +52,8 @@ namespace Agric.Controllers
                   }
                   else
                   {*/
-                var essai1 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false).OrderByDescending(e => e.Date_Modife);
-                return View(essai1.ToList());
+                var essai1 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false).OrderByDescending(e => e.Date_Modife).OrderBy(x => x.EtatEssai == "Non installer" ? 0 : 1).ThenBy(x => x.EtatEssai).ToList();
+                return View(essai1);
             }
 
         }
