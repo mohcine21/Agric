@@ -28,9 +28,6 @@ namespace Agric.Controllers
         private AgricEntities db = new AgricEntities();
         public string userid;
 
-
-        // ======================================Essais=====================================
-
         public ActionResult Index()
         {
             if (Session["admin"] == null)
@@ -44,15 +41,8 @@ namespace Agric.Controllers
 
                 var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
                 ViewBag.nbrnotif = cpt;
-                /*  if (search != null)
-                  {
-                      var nts = db.Notation.Where(e => e.D_N_P == search).Select(e => e.Essai_Id).ToList();
-                      var essai2 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false && nts.Contains(e.Id)).ToList();
-                      return View(essai2);
-                  }
-                  else
-                  {*/
-                var essai1 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false).OrderByDescending(e => e.Date_Modife).OrderBy(x => x.EtatEssai == "Non installer" ? 0 : 1).ThenBy(x => x.EtatEssai).ToList();
+                var essai1 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false)
+                   .OrderBy(x => x.EtatEssai == "Non installer" ? 0 : 1).ThenBy(x => x.EtatEssai == "En cours" ? 0 : 1).ThenBy(x => x.EtatEssai == "Réalisé" ? 0 : 1).ThenByDescending(x => x.Date_Instalation).ToList();
                 return View(essai1);
             }
 
@@ -225,18 +215,18 @@ namespace Agric.Controllers
             {
                 if ((bool)Session["admin"] == false)
                 { return Redirect("/"); }
-                var essai_id = (Guid)Session["id_essai"];
-                var essai = db.Essai.Where(x => x.Id == essai_id).FirstOrDefault();
+                    var essai_id = (Guid)Session["id_essai"];
+                    var essai = db.Essai.Where(x => x.Id == essai_id).FirstOrDefault();
                 if (ModelState.IsValid)
                 {
                     if (_FNotation != null)
                     {
-                        string FileName = Path.GetFileNameWithoutExtension(_FNotation.FileName);
-                        string FileExtension = Path.GetExtension(_FNotation.FileName);
-                        FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss") + FileExtension;
-                        string UploadPath1 = "~/fichiers/";
-                        notation.FNotation = FileName;
-                        _FNotation.SaveAs(Server.MapPath(UploadPath1 + FileName));
+                    string FileName = Path.GetFileNameWithoutExtension(_FNotation.FileName);
+                    string FileExtension = Path.GetExtension(_FNotation.FileName);
+                    FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss") + FileExtension;
+                    string UploadPath1 = "~/fichiers/";
+                    notation.FNotation = FileName;
+                    _FNotation.SaveAs(Server.MapPath(UploadPath1 + FileName));
                     }
                     notation.Id = Guid.NewGuid();
 
@@ -292,12 +282,12 @@ namespace Agric.Controllers
                 {
                     if (_FNotation != null)
                     {
-                        string FileName = Path.GetFileNameWithoutExtension(_FNotation.FileName);
-                        string FileExtension = Path.GetExtension(_FNotation.FileName);
-                        FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss") + FileExtension;
-                        string UploadPath1 = "~/fichiers/";
-                        notation.FNotation = FileName;
-                        _FNotation.SaveAs(Server.MapPath(UploadPath1 + FileName));
+                    string FileName = Path.GetFileNameWithoutExtension(_FNotation.FileName);
+                    string FileExtension = Path.GetExtension(_FNotation.FileName);
+                    FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss") + FileExtension;
+                    string UploadPath1 = "~/fichiers/";
+                    notation.FNotation = FileName;
+                    _FNotation.SaveAs(Server.MapPath(UploadPath1 + FileName));
                     }
                     db.Entry(notation).State = EntityState.Modified;
                     db.SaveChanges();
@@ -528,6 +518,7 @@ namespace Agric.Controllers
                 essai.Id = Guid.NewGuid();
                 essai.Date_Modife = DateTime.Now;
                 essai.EtatEssai = "Non installer";
+                essai.CodeClient = db.Users.FirstOrDefault( u => u.Id == essai.UserId)?.Code_Client;
                 db.Essai.Add(essai);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -695,13 +686,21 @@ namespace Agric.Controllers
         {
             DateTime now = DateTime.Now;
             users.CreatedOn = now;
+            var code = db.Users.Max(user => user.Code_Client);
+            // Extraire le numéro de séquence
+            string numeroSequence = code.ToString().Substring(1);
+            int numero = int.Parse(numeroSequence);
+            // Incrémenter le numéro de séquence
+            numero++;
+            // Formater le nouveau code avec le numéro incrémenté
+            string nouveauCode = code.ToString().Substring(0, 1) + numero.ToString("D4");
 
             if (ModelState.IsValid)
             {
                 try
                 {
                     users.Id = Guid.NewGuid();
-
+                    users.Code_Client = nouveauCode;
                     db.Users.Add(users);
                     db.SaveChanges();
                     return RedirectToAction("ListeUsers");
@@ -764,7 +763,6 @@ namespace Agric.Controllers
             ViewBag.ProfileId = new SelectList(db.Profile, "Id", "Name", users.ProfileId);
             return View(users);
         }
-
         // GET: Users/Delete/5
         public ActionResult DeleteUser(Guid? id)
         {
@@ -787,7 +785,6 @@ namespace Agric.Controllers
                 return View(users);
             }
         }
-
         // POST: Users/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -809,8 +806,6 @@ namespace Agric.Controllers
             }
          
         }
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -819,7 +814,6 @@ namespace Agric.Controllers
             }
             base.Dispose(disposing);
         }
-        
         public ActionResult Archive(Guid Id , Guid? idDevis)
         {
             if (Session["admin"] == null)
@@ -827,8 +821,8 @@ namespace Agric.Controllers
             else
             {
                 var essai = db.Essai.Where(x => x.Id == Id).FirstOrDefault();
-            var journal1 = db.Journal.Where(x => x.Id_Essai == Id).FirstOrDefault();
-            var notation1 = db.Notation.Where(x => x.Essai_Id == Id).FirstOrDefault();
+                var journal1 = db.Journal.Where(x => x.Id_Essai == Id).FirstOrDefault();
+                var notation1 = db.Notation.Where(x => x.Essai_Id == Id).FirstOrDefault();
                 if (essai != null)
                 {
                     if (essai.id_devis != null)
@@ -838,40 +832,28 @@ namespace Agric.Controllers
                         {
                             db.Devis.Remove(devis);
                         }
-                        
                     }
                     essai.EssaiDelets = true;
                     if (journal1 != null)
                     {
                         db.Journal.Remove(journal1);
                     }
-                    
                     if (notation1 != null)
                     {
                         db.Notation.Remove(notation1);
                     }
-                    
                 }
             }
-
-
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         public FileResult DownloadFDEFicheEssai(Guid Id)
         {
-
             var essai = db.Essai.Where(x => x.Id == Id).FirstOrDefault();
             string fileName = essai.FDEFicheEssai;
-
             string path = Server.MapPath("~/fichiers/") + fileName;
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
-
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
-
-
-
         }
         public FileResult DownloadFNotation(Guid Id)
         {
@@ -879,18 +861,14 @@ namespace Agric.Controllers
             string fileName = notation.FNotation;
             string path = Server.MapPath("~/fichiers/") + fileName;
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
-
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
         public FileResult DownloadFDS(Guid Id)
         {
             var essai = db.Essai.Where(x => x.Id == Id).FirstOrDefault();
             string fileName = essai.FDS;
-
             string path = Server.MapPath("~/fichiers/") + fileName;
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
-
-
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
 
 
@@ -900,16 +878,9 @@ namespace Agric.Controllers
         {
             var essai = db.Essai.Where(x => x.Id == Id).FirstOrDefault();
             string fileName = essai.PE;
-
             string path = Server.MapPath("~/fichiers/") + fileName;
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
-
-
-
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
-
-
-
         }
         public FileResult DownloadACB(Guid Id)
         {
@@ -917,7 +888,6 @@ namespace Agric.Controllers
             string fileName = essai.ACB;
             string path = Server.MapPath("~/fichiers/") + fileName;
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
-
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
         public FileResult DownloadRapport(Guid Id)
@@ -926,7 +896,6 @@ namespace Agric.Controllers
             string fileName = essai.Rapport;
             string path = Server.MapPath("~/fichiers/") + fileName;
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
-
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
         public FileResult DownloadDevis(Guid Id)
@@ -935,8 +904,6 @@ namespace Agric.Controllers
             string fileName = devis.Devis1;
             string path = Server.MapPath("~/fichiers/") + fileName;
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
-
-
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
         public FileResult DownloadFacture(Guid Id)
@@ -945,8 +912,6 @@ namespace Agric.Controllers
             string fileName = essai.Facture;
             string path = Server.MapPath("~/fichiers/") + fileName;
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
-
-
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
         public ActionResult EssaisArchiver()
@@ -955,13 +920,13 @@ namespace Agric.Controllers
             { return Redirect("/"); }
             else
             {
-                if ((bool)Session["admin"] == false)
-                { return Redirect("/"); }
-                ViewBag.Username = Session["adminname"];
-                var essai = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == true);
-                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-                ViewBag.nbrnotif = cpt;
-                return View(essai.ToList());
+            if ((bool)Session["admin"] == false)
+            { return Redirect("/"); }
+            ViewBag.Username = Session["adminname"];
+            var essai = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == true);
+            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+            ViewBag.nbrnotif = cpt;
+            return View(essai.ToList());
             }
         }
         public ActionResult RécupérerEssai(Guid Id)
@@ -970,42 +935,35 @@ namespace Agric.Controllers
             { return Redirect("/"); }
             else
             {
-                var essai = db.Essai.Where(x => x.Id == Id).FirstOrDefault();
-
-                if (essai != null)
-                {
-                    essai.EssaiDelets = false;
-                }
-
-                db.SaveChanges();
-
-                return RedirectToAction("Index");
+            var essai = db.Essai.Where(x => x.Id == Id).FirstOrDefault();
+            if (essai != null)
+            {
+                essai.EssaiDelets = false;
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
             }
         }
-
         public ActionResult AddDevis(Guid? id)
         {
             if (Session["admin"] == null)
             { return Redirect("/"); }
             else
             {
-                ViewBag.username = Session["techname"];
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Devis devis = db.Devis.Find(id);
-                if (devis == null)
-                {
-                    return HttpNotFound();
-                }
-
-                ViewBag.id_client = new SelectList(db.Users, "Id", "Fullname", devis.id_client);
-                return View(devis);
+            ViewBag.username = Session["techname"];
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Devis devis = db.Devis.Find(id);
+            if (devis == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.id_client = new SelectList(db.Users, "Id", "Fullname", devis.id_client);
+            return View(devis);
             }
         }
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddDevis([Bind(Include = "id , id_client , date_demande , DemandeDevis , DevisDelete, DevisAccepter , NumDevis , Devis , DevieEnvoyer")] Devis devis, HttpPostedFileBase _Devis)
@@ -1016,36 +974,27 @@ namespace Agric.Controllers
             {
                 if (ModelState.IsValid)
                 {
-
                     if (_Devis != null)
                     {
                         string FileName = Path.GetFileNameWithoutExtension(_Devis.FileName);
                         string FileExtension = Path.GetExtension(_Devis.FileName);
-
                         FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
                             + FileExtension;
-
                         string UploadPath1 = "~/fichiers/";
                         devis.Devis1 = FileName;
                         devis.DemandeDevis = true;
-
                         _Devis.SaveAs(Server.MapPath(UploadPath1 + FileName));
                         devis.DevieEnvoyer = true;
+                        }
+                        db.Entry(devis).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("ListeDevisDemander");
+
                     }
-
-
-                    db.Entry(devis).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("ListeDevisDemander");
-
-                }
                 ViewBag.id_client = new SelectList(db.Users, "Id", "Fullname", devis.id_client);
                 return View(devis);
             }
         }
-
-
-
         // POST: Journals/Delete/5        
         public ActionResult DeleteJournal(Guid? id)
         {
@@ -1078,14 +1027,13 @@ namespace Agric.Controllers
         // GET: Devis/Create
         public ActionResult CreateDevis(Essai essai)
         {
-            ViewBag.Username = Session["adminname"];
-            var users = db.Users.Include(u => u.Profile).Where(c => c.ProfileId.ToString() == ("58e6e325-2ebc-4aa1-b652-2a76c3e03a02"));
-            var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
-            ViewBag.nbrnotif = cpt;
-            ViewBag.id_client = new SelectList(db.Users.Where(g => g.ProfileId.ToString() == ("6BF5738F-852C-4EA9-8D5C-AAD7F7E4AC89")), "Id", "Fullname", essai.UserId);
-            return View();
+                ViewBag.Username = Session["adminname"];
+                var users = db.Users.Include(u => u.Profile).Where(c => c.ProfileId.ToString() == ("58e6e325-2ebc-4aa1-b652-2a76c3e03a02"));
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                ViewBag.id_client = new SelectList(db.Users.Where(g => g.ProfileId.ToString() == ("6BF5738F-852C-4EA9-8D5C-AAD7F7E4AC89")), "Id", "Fullname", essai.UserId);
+                return View();
         }
-
         // POST: Devis/Create
         // Pour vous protéger des attaques par survalidation, activez les propriétés spécifiques auxquelles vous souhaitez vous lier. Pour 
         // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -1093,51 +1041,50 @@ namespace Agric.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateDevis([Bind(Include = "id , id_client , date_demande , DemandeDevis , DevisDelete, DevisAccepter , NumDevis , Devis , DevieEnvoyer")] Devis devis, HttpPostedFileBase _Devis)
         {
-            if (Session["admin"] == null)
-            { return Redirect("/"); }
-            else
-            {
-                devis.id = Guid.NewGuid();
-                devis.date_demande = DateTime.Now;
-
-                if (_Devis != null)
+                if (Session["admin"] == null)
+                { return Redirect("/"); }
+                else
                 {
-                    string FileName = Path.GetFileNameWithoutExtension(_Devis.FileName);
-                    string FileExtension = Path.GetExtension(_Devis.FileName);
+                    devis.id = Guid.NewGuid();
+                    devis.date_demande = DateTime.Now;
 
-                    FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
-                        + FileExtension;
+                    if (_Devis != null)
+                    {
+                        string FileName = Path.GetFileNameWithoutExtension(_Devis.FileName);
+                        string FileExtension = Path.GetExtension(_Devis.FileName);
 
-                    string UploadPath1 = "~/fichiers/";
-                    devis.Devis1 = FileName;
-                    devis.DemandeDevis = true;
+                        FileName = FileName.Trim() + "_" + DateTime.Now.ToString("dd-mm-ss")
+                            + FileExtension;
 
-                    _Devis.SaveAs(Server.MapPath(UploadPath1 + FileName));
-                    devis.DevieEnvoyer = true;
+                        string UploadPath1 = "~/fichiers/";
+                        devis.Devis1 = FileName;
+                        devis.DemandeDevis = true;
+
+                        _Devis.SaveAs(Server.MapPath(UploadPath1 + FileName));
+                        devis.DevieEnvoyer = true;
+                    }
+                    db.Entry(devis).State = EntityState.Added;
+                    db.SaveChanges();
+                    return RedirectToAction("ListeDevisDemander");
                 }
-                db.Entry(devis).State = EntityState.Added;
-                db.SaveChanges();
-                return RedirectToAction("ListeDevisDemander");
-            }
         }
         // Modifier un essai envoyer
 
         // GET: Devis/Edit/5
         public ActionResult EditEssaisDevisEnvoyer(Guid? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Devis devis = db.Devis.Find(id);
-            if (devis == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.id_client = new SelectList(db.Users, "Id", "Fullname", devis.id_client);
-            return View(devis);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Devis devis = db.Devis.Find(id);
+                if (devis == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.id_client = new SelectList(db.Users, "Id", "Fullname", devis.id_client);
+                return View(devis);
         }
-
         // POST: Devis/Edit/5
         // Pour vous protéger des attaques par survalidation, activez les propriétés spécifiques auxquelles vous souhaitez vous lier. Pour 
         // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -1167,7 +1114,6 @@ namespace Agric.Controllers
                 return RedirectToAction("ListeDevisEnvoyer");
             }
         }
-
         // POST: Devis/Delete/5
         public ActionResult DeleteEssaisDevisEnvoyer(Guid id)
         {

@@ -39,7 +39,7 @@
     </a>
     <a class="nav-link" href="/Client/ListeDevisDemander">
         <i class="fas fa-fw fa-table"></i>
-        <span>Devis Envoyer </span>
+        <span>Devis Envoyé </span>
 
     </a>
 
@@ -96,10 +96,10 @@
                     @Html.DisplayNameFor(model => model.Usage)
                 </th>
                 <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.Date_Instalation)
+                    @Html.Label("Date d'installation")
                 </th>
                 <th style="min-width:130px ; text-align:center">
-                    Notation
+                    @Html.DisplayNameFor(model => model.Notation)
                 </th>
 
                 <th style="min-width:130px ; text-align:center">
@@ -121,184 +121,141 @@
                 <th style="min-width:130px ; text-align:center">
                     @Html.DisplayNameFor(model => model.Paiment_Regler50)
                 </th>
+               
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-<tr>
+            <tr>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
 
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Produit)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Culture)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Cible)
+                </td>
 
-    <td style="  text-align:center">
-        @Html.DisplayFor(modelItem => item.Code)
-    </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Region)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Nb)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Usage)
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Date_Instalation)
+                </td>
+                <td style="  text-align:center">
 
-    <td style="  text-align:center">
-        @Html.DisplayFor(modelItem => item.Produit)
-    </td>
-    <td style="  text-align:center">
-        @Html.DisplayFor(modelItem => item.Culture)
-    </td>
-    <td style="  text-align:center">
-        @Html.DisplayFor(modelItem => item.Cible)
-    </td>
+                    @{ string s = item.Notation.Where(e => (e.D_N_R != null || e.FNotation != null) && e.Essai_Id == item.Id).Count().ToString(); }
+                  
 
-    <td style="  text-align:center">
-        @Html.DisplayFor(modelItem => item.Region)
-    </td>
-    <td style="  text-align:center">
-        @Html.DisplayFor(modelItem => item.Nb)
-    </td>
-    <td style="  text-align:center">
-        @Html.DisplayFor(modelItem => item.Usage)
-    </td>
-    <td style="  text-align:center">
-        @Html.DisplayFor(modelItem => item.Date_Instalation)
-    </td>
-    <td style="  text-align:center">
-
-        @{ string s = item.Notation.Where(e => (e.D_N_R != null || e.FNotation != null) && e.Essai_Id == item.Id).Count().ToString(); }
-        @*   if (!string.IsNullOrEmpty(s))
-            {
-                DateTime dDate;
-                String[] notations = s.Trim().Split(' ');
-                List<String> res = new List<string>();
-                for (int i = 0; i < notations.Length; i++)
-                {
-                    if (!string.IsNullOrWhiteSpace(notations[i]) && DateTime.TryParse(notations[i], out dDate))
-                    {
-                        res.Add(notations[i]);
-                    }
-                }
-                int nbr_Notations = res.Count;
-
+                    @{ if (s == "0")
+                        {
                 <p>
-                    @nbr_Notations   Notation valide <i class="fa fa-check-circle" style="color:green" aria-hidden="true"></i>
+                    <a style="color:red">0 Notation valide</a>
+                </p> }
+                            else
+                            {
+                <p>
+                    <a style="color:green"> @s Notation valide</a>
+                </p> } }
+
+
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.Date_Cloture)
+                </td>
+
+                <td style="  text-align:center">
+
+                    @{ if (item.RapportRemis == true)
+                        {
+            <p>
+
+                <a style="color:green">Oui</a>
+            </p> }
+            else if (item.RapportRemis == false)
+            {
+                <p>
+                    <a style="color:red">Non</a>
+                </p> }
+            else
+            {<p>
+                <a style="color:red">Non</a>
+            </p> } }
+                </td>
+                <td style="  text-align:center">
+                    @Html.DisplayFor(modelItem => item.DateRemisRapport)
+                </td>
+
+                <td style="  text-align:center">
+                    @{ if (item.EtatEssai == "Réalisé")
+                        {
+            <p> <a style="color:green"> Réalisé </a></p> }
+            else if (item.EtatEssai == "Annulé")
+            {
+                <p>
+                    <a style="color:red">Annulé</a>
+                </p> }
+            else if (item.EtatEssai == "Non installer")
+            {<p>
+                    <a style="color:red">Non installer</a>
                 </p> }
             else
             {
+            <p>
+                <a style="color:blue"> En cours ...</a>
+            </p> } }
+                </td>
+                <td style="text-align:center">
+                    @if (item.Facture != null)
+                    {
+            @Html.ActionLink("Télécharger", "DownloadFacture", new { Id = item.Id })}
+                </td>
+                <td style="  text-align:center">
+                    @if (item.Paiment_Regler50 == true)
+                    {
+                        <div class="col-sm-4">
 
 
                 <p>
-                    0 Notation valide <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
-
-                </p> } }*@
-
-        @{ if (s == "0")
-            {
-                <p>
-                    @*0 Notation valide<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>*@
-                    <a style="color:red">0 Notation valide</a>
-                </p> }
-else
-{
-    <p>
-        @*@s   Notation valide <i class="fa fa-check-circle" style="color:green" aria-hidden="true"></i>*@
-        <a style="color:green"> @s Notation valide</a>
-    </p> } }
+                    @* Regler 100% <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>*@
+                    <a style="color:green">Regler 100%</a>
+                </p>
 
 
-
-
-
-    </td>
-    <td style="  text-align:center">
-        @Html.DisplayFor(modelItem => item.Date_Cloture)
-    </td>
-   
-    <td style="  text-align:center">
-
-        @{ if (item.RapportRemis == true)
-            {
-                <p>
-                    @*<i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>*@
-
-                    <a style="color:green">Oui</a>
-                </p> }
-else if (item.RapportRemis == false)
-{
-    <p>
-        @*<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>*@
-        <a style="color:red">Non</a>
-    </p> }
-else
-{<p>
-    @*<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>*@
-    <a style="color:red">Non</a>
-</p> } }
-    </td>
-    <td style="  text-align:center">
-        @Html.DisplayFor(modelItem => item.DateRemisRapport)
-    </td>
-
-    <td style="  text-align:center">
-        @{ if (item.EtatEssai == "Réalisé")
-            {
-<p> <a style="color:green"> Réalisé </a></p> }
-else if (item.EtatEssai == "Annulé")
-{
-<p>
-    <a style="color:red">Annulé</a>
-</p> }
-else if (item.EtatEssai == "Non installer")
-{<p>
-    <a style="color:red">Non installer</a>
-</p> }
-else
-{
-<p>
-    <a style="color:blue"> En cours ...</a>
-</p> } }
-    </td>
-    <td style="  text-align:center">
-        @if (item.Facture != null)
+            </div> }
+        else if (item.Paiment_Regler50 == false)
         {
-@Html.ActionLink("Télécharger", "DownloadFacture", new { Id = item.Id })}
-    </td>
 
 
-    <td style="  text-align:center">
-        @if (item.Paiment_Regler50 == true)
+            <p>@*Regler 50%<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>*@</p> }
+        else
         {
-<div class="col-sm-4">
+            <div class="col-sm-4">
+                <p><a style="color:red">Pas Regler</a></p>
+            </div>}
+                </td>
+                
 
-
-    <p>
-       @* Regler 100% <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>*@
-<a style="color:green">Regler 100%</a>
-    </p>
-
-
-</div> }
-else if (item.Paiment_Regler50 == false)
-{
-
-
-    <p>
-
-        @*Regler 50%<i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>*@
-        <a style="color:green">Regler 50%</a>
-    </p> }
-else
-{
-<div class="col-sm-4">
-
-
-    <p>
-        
-        <a style="color:red">Pas Regler</a>
-    </p>
-
-
-
-</div>}
-    </td>
-</tr>}
+            </tr>
+   }
 
         </tbody>
     </table>
 
 </div>
+
 
 
 
@@ -323,23 +280,27 @@ else
 <script>
     $(document).ready(function () {
         var table = $('#example').DataTable({
-            lengthChange: false,
             buttons: ['excel', 'copy'],
+
             "oLanguage": {
                 "sSearch": "Recherche"
             },
-            scrollX: true
-          
+            bInfo: false,
+            Paginate: true,
+            scrollX: true,
+            lengthChange: false,
+            order: []
         });
-        
         table.buttons().container()
             .appendTo('#example_wrapper .col-md-6:eq(0)');
     });
 </script>
 
 <style>
-
-   
+    .dataTables_scrollBody {
+        overflow-x: visible !important;
+        overflow-y: auto !important;
+    }
 
     .dataTables_filter {
         white-space: nowrap;

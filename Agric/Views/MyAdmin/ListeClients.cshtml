@@ -14,6 +14,9 @@
         <thead class="bg-primary text-light">
             <tr>
                 <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Code_Client)
+                </th>
+                <th style="min-width:130px ; text-align:center">
                     @Html.DisplayNameFor(model => model.Fullname)
                 </th>
                 <th style="min-width:130px ; text-align:center">
@@ -46,46 +49,49 @@
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Fullname)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Phone)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsActive)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedOn)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Password)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Profile.Name)
-                    </td>
-                    <td>
-                      
-                            <div class="row">
-                                <div class="col-12 ">
-                                    @Html.ActionLink("Modifier", "EditUser", new { id = item.Id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
+            <tr>
+                <td  style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.Code_Client)
+                </td>
+                <td  style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.Fullname)
+                </td>
+                <td  style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td  style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td  style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td  style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td  style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                </td>
+                <td  style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td  style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.Profile.Name)
+                </td>
+                <td>
 
-                                    @Html.ActionLink("Supprimer", "DeleteUser", new { id = item.Id }, new { @class = "btn btn-danger btn-sm btn-block m-1" })
+                    <div class="row">
+                        <div class="col-12 ">
+                            @Html.ActionLink("Modifier", "EditUser", new { id = item.Id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
 
-                                 
+                            @Html.ActionLink("Supprimer", "DeleteUser", new { id = item.Id }, new { @class = "btn btn-danger btn-sm btn-block m-1" })
 
-                                </div>
-                            </div>
-                      
-                    </td>
-                </tr>
+
+
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
             }
         </tbody>
 

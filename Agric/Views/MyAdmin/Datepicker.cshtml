@@ -1,13 +1,8 @@
 ﻿@model IEnumerable<Agric.Models.Essai>
 @using System.Globalization;
-@{
-    ViewBag.Title = "Datepicker";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+@{ ViewBag.Title = "Datepicker";
+                Layout = "~/Views/Shared/_AdminLayout.cshtml"; }
 
-
-<div class="text-center"><h2>ESSAIS </h2></div>
-&nbsp;&nbsp;&nbsp;&nbsp;
 
 <div class="d-xl-flex align-items-center text-md-center">
     <a class="nav-link" href="/MyAdmin/Create">
@@ -22,36 +17,53 @@
                 <button class="btn " type="submit" value="Search" style="background-color: #779523; color: white">
                     <i class="fas fa-search fa-sm"></i>
                 </button>
-
             </div>
         </div>
     </form>
 </div>
 <script>
-            $(document).ready(function () {
-                $(".datepicker").datepicker({
-                    dateFormat: "dd-mm-yy",
-                    changemonth: true,
-                    changeyear: true
-                });
-            });
+    $(document).ready(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd-mm-yy",
+            changemonth: true,
+            changeyear: true
+        });
+    });
 </script>
 
 <script>
-            function myFunction() {
-                confirm("Press a button!");
-            }
+    function myFunction() {
+        confirm("Press a button!");
+    }
 </script>
 <hr />
+<style>
+    div.scrollmenu {
+        background-color: #333;
+        overflow: auto;
+        white-space: nowrap;
+    }
 
-<div class="container-fluid" style="width: auto; overflow: auto; scrollbar-base-color: #ffeaff">
+        div.scrollmenu a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px;
+            text-decoration: none;
+        }
+
+            div.scrollmenu a:hover {
+                background-color: #777;
+            }
+</style>
+<div class="container-fluid" style=" overflow:auto">
 
 
     <table class="table table-hover " id="example">
         <thead class="bg-primary text-light">
             <tr>
                 <th style="min-width:130px ; text-align:center">
-                    <p> Cette Semaine</p>
+                    @Html.Label("Cette Semaine")
                 </th>
                 <th style="min-width:130px ; text-align:center">
                     @Html.DisplayNameFor(model => model.CodeClient)
@@ -80,140 +92,158 @@
                 <th style="min-width:130px ; text-align:center">
                     @Html.DisplayNameFor(model => model.PR)
                 </th>
-
+                <th style="min-width:130px ; text-align:center">
+                    @Html.DisplayNameFor(model => model.Date_Instalation)
+                </th>
                 <th style="min-width:130px ; text-align:center">
                     @Html.DisplayNameFor(model => model.Date_Cloture)
                 </th>
-                <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.Rapport)
-                </th>
+
                 <th style="min-width:130px ; text-align:center">
                     @Html.DisplayNameFor(model => model.RapportRemis)
                 </th>
 
                 <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.DateNotation)
+                    @Html.DisplayNameFor(model => model.EtatEssai)
                 </th>
 
                 <th style="min-width:130px ; text-align:center">
                     Actions
                 </th>
+                <th style="min-width:130px ; text-align:center">
 
+                </th>
             </tr>
         </thead>
         <tbody>
 
             @foreach (var item in Model)
             {
-                if (item.Date_Cloture == null)
-                {
-        <tr style="background-color: #b0f7cc" onclick="location.href = '@(Url.Action("DetailsEssai", new { id = item.Id })) '">
 
-            @{ var s = item.Notation.Where(e => e.Essai_Id == item.Id && e.D_N_P != null && e.D_N_R == null && e.FNotation == null && CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(e.D_N_P, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) == CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday)).Count();
-                if (s != 0)
-                {
-                <td style="  text-align:center">
-                    <i class="fa fa-check-circle" style="color:red" aria-hidden="true"></i>
-                </td> }
-                else
-                {
-                <td>
-                </td> } }
-            <td style="  text-align:center">
-                @Html.DisplayFor(modelItem => item.CodeClient)
-            </td>
-            <td style="  text-align:center">
-                @Html.DisplayFor(modelItem => item.Users.Fullname)
-            </td>
-            <td style="  text-align:center">
-                @Html.DisplayFor(modelItem => item.Code)
-            </td>
+<tr onclick="location.href = '@(Url.Action("DetailsEssai", new { id = item.Id })) '">
 
-            <td style="  text-align:center">
-                @Html.DisplayFor(modelItem => item.Produit)
-            </td>
-            <td style="  text-align:center">
-                @Html.DisplayFor(modelItem => item.MA)
-            </td>
-            <td style="  text-align:center">
-                @Html.DisplayFor(modelItem => item.Culture)
-            </td>
-            <td style="  text-align:center">
-                @Html.DisplayFor(modelItem => item.Cible)
-            </td>
+    @{ var s = item.Notation.Where(e => e.Essai_Id == item.Id && e.D_N_P != null && e.D_N_R == null && e.FNotation == null && CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(e.D_N_P, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) == CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday)).Count();
+        if (s != 0)
+        {
+<td style="  text-align:center">
+    <i class="fa fa-check-circle" style="color:red" aria-hidden="true"></i>
+</td>
+ }
+else
+{
+<td>
+</td>
+ } }
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.CodeClient)
+    </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.Users.Fullname)
+    </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.Code)
+    </td>
 
-            <td style="  text-align:center">
-                @Html.DisplayFor(modelItem => item.Region)
-            </td>
-            <td style="  text-align:center">
-                @Html.DisplayFor(modelItem => item.PR)
-            </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.Produit)
+    </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.MA)
+    </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.Culture)
+    </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.Cible)
+    </td>
 
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.Region)
+    </td>
+    <td style="  text-align:center">
+        @Html.DisplayFor(modelItem => item.PR)
+    </td>
 
-            <td style="  text-align:center ; color:yellow">
-                @Html.DisplayFor(modelItem => item.Date_Cloture)
-            </td>
-
-
-
-
-
-            <td style="  text-align:center ">
-                @if (item.Rapport != null)
-                {
-        @Html.ActionLink("Télécharger", "DownloadRapport", new { Id = item.Id })}
-            </td>
-            <td style="  text-align:center">
-                @{ if (item.RapportRemis == true)
-                    {
-        <p>
-            <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
-        </p> }
-                            else if (item.RapportRemis == false)
-                            {
-        <p>
-            <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
-        </p> }
-                            else
-                            {<p>
-                                    <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
-                                </p> } }
-            </td>
+    <td style="  text-align:center ; color:black">
+        @Html.DisplayFor(modelItem => item.Date_Instalation)
+    </td>
+    <td style="  text-align:center ; color:black">
+        @Html.DisplayFor(modelItem => item.Date_Cloture)
+    </td>
 
 
 
-            @if (CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) == CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday))
+
+
+
+    <td style="  text-align:center">
+        @{ if (item.RapportRemis == true)
             {
-        <td style="  text-align:center ; color:yellow">
-            @Html.DisplayFor(modelItem => item.DateNotation)
-        </td> }
-                            else
-                            {
-        <td style="  text-align:center ; color:blue">
-            @Html.DisplayFor(modelItem => item.DateNotation)
-        </td>                    }
+<p>
+    <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
+</p> }
+else if (item.RapportRemis == false)
+{
+<p>
+    <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+</p> }
+else
+{<p>
+    <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+</p> } }
+    </td>
 
 
 
-
-
-            <td>
-                <div class="row">
-                    <div class="col-12 ">
-                        @Html.ActionLink("Détails", "DetailsEssai", new { id = item.Id }, new { @class = "btn btn-success btn-sm btn-block m-1" })
-
-                        @Html.ActionLink("Modifier", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
-
-                        @Html.ActionLink("Supprimer", "Archive", new { id = item.Id }, new { @class = "btn btn-danger btn-sm btn-block m-1", onclick = "return confirm('Supprimer ???');" })
-                        @Html.ActionLink("Notations", "Notations", new { essai_id = item.Id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
-
-
-                    </div>
-
-                </div>
+    @*   @if (CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) == CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday))
+        {
+            <td style="  text-align:center ; color:yellow">
+                @Html.DisplayFor(modelItem => item.DateNotation)
             </td>
-        </tr> }
-                    }
+        }
+        else
+        {
+            <td style="  text-align:center ; color:blue">
+                @Html.DisplayFor(modelItem => item.DateNotation)
+            </td>
+        }*@
+
+    <td style="  text-align:center ; color:black ">
+        @Html.DisplayFor(modelItem => item.EtatEssai)
+    </td>
+
+
+
+    <td>
+        <div class="row">
+            <div class="col-12 ">
+                @Html.ActionLink("Détails", "DetailsEssai", new { id = item.Id }, new { @class = "btn btn-success btn-sm btn-block m-1" })
+
+                @Html.ActionLink("Modifier", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
+
+
+            </div>
+
+        </div>
+
+    </td>
+    <td>
+        <div class="row">
+            <div class="col-12 ">
+
+                @Html.ActionLink("Supprimer", "Archive", new { id = item.Id, idDevis = item.id_devis }, new { @class = "btn btn-danger btn-sm btn-block m-1", onclick = "return confirm('Supprimer ???');" })
+                @Html.ActionLink("Notations", "Notations", new { essai_id = item.Id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
+
+
+            </div>
+
+        </div>
+
+    </td>
+
+</tr>
+
+            }
         </tbody>
 
     </table>
@@ -241,35 +271,29 @@
 
 
 <script>
-            $(document).ready(function () {
-                var table = $('#example').DataTable({
-                    lengthChange: false,
-                    "oLanguage": {
-                        "sSearch": "Recherche"
-                    },
-                    buttons: ['excel', 'copy'],
-                    fixedColumns: {
-                        leftColumns: 2
-                    },
-                    columnDefs: [{
-                        orderable: false,
-                        className: 'select-checkbox',
-                        blurable: true,
-                        targets: 0
-                    }],
-                    select: {
-                        style: 'os',
-                        selector: 'td:first-child'
-                    },
-                    order: [[1, 'asc']]
-                });
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+            buttons: ['excel', 'copy'],
+            "oLanguage": {
+                "sSearch": "Recherche"
+            },
+            bInfo: false,
+            Paginate: true,
+            scrollX: true,
+            lengthChange: false
+        });
 
-                table.buttons().container()
-                    .appendTo('#example_wrapper .col-md-6:eq(0)');
-            });
+        table.buttons().container()
+            .appendTo('#example_wrapper .col-md-6:eq(0)');
+    });
 </script>
 
 <style>
+    .dataTables_scrollBody {
+        overflow-x: visible !important;
+        overflow-y: auto !important;
+    }
+
     .dataTables_filter {
         white-space: nowrap;
     }

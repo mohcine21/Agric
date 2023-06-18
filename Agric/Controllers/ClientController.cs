@@ -7,6 +7,7 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Windows;
@@ -15,7 +16,7 @@ using Agric.Models.ViewModel;
 
 namespace Agric.Controllers
 {
-    [HandleError]
+   
     public class ClientController : Controller
     {
         #region Properties
@@ -30,20 +31,21 @@ namespace Agric.Controllers
         {
             if (Session["client"] == null)
             { return Redirect("/"); }
-            else { 
-            if ((bool)Session["client"] == false)
+            else
+            {
+                if ((bool)Session["client"] == false)
                 { return Redirect("/"); }
                 userid = (string)Session["userid"];
                 ViewBag.username = Session["Clientname"];
                 var cpt2 = db.Devis.Where(e => e.id_client.ToString() == userid && e.DemandeDevis == true).Count();
                 ViewBag.nbrdevisclient = cpt2;
-                var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.EssaiDelets == false).
-                    OrderBy(x => x.EtatEssai == "Non installer" ? 0 : 1).ThenBy(x => x.EtatEssai).ToList();
-                return View(essai);
-            
-        }
-        }
+                var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.EssaiDelets == false)
+                .OrderBy(x => x.EtatEssai == "Non installer" ? 0 : 1).ThenBy(x => x.EtatEssai == "En cours" ? 0 : 1).ThenBy(x => x.EtatEssai == "Réalisé" ? 0 : 1).ThenByDescending(x => x.Date_Instalation).ToList();
 
+                return View(essai);
+
+            }
+        }
 
         public ActionResult EssaisDevis(Guid? id)
         {
@@ -196,10 +198,12 @@ namespace Agric.Controllers
             username = (string)Session["Clientname"];
             essai.UserId = Guid.Parse(userid);
             essai.EtatEssai = "Non installer";
-
             if (ModelState.IsValid)
 
-            { essai.Date_Modife = DateTime.Now;
+            { 
+                essai.Date_Modife = DateTime.Now;
+                string codeclient = db.Users.FirstOrDefault(w => w.Id.ToString() == userid)?.Code_Client;
+                essai.CodeClient = codeclient;
                 if (_ACB != null)
                 {
                     string FileName = Path.GetFileNameWithoutExtension(_ACB.FileName);
@@ -211,9 +215,10 @@ namespace Agric.Controllers
                     string UploadPath = "~/fichiers/";
                     essai.ACB = FileName;
 
-
+                   
                     _ACB.SaveAs(Server.MapPath(UploadPath + FileName));
                     essai.Nb = DateTime.Now.ToString();
+                  
                 }
 
                 if (_FDS != null)
