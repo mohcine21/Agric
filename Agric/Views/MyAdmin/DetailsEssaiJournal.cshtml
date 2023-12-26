@@ -121,13 +121,13 @@
                                 <div class="col-sm-4">
                                     <p class="m-b-10 f-w-600 font-weight-bold">Mesure Réalisé !!! :</p>
                                     <h6 class="text-muted f-w-400">
-                                        @{ if (Model.EtatPaiment == true)
+                                        @{ if (Model.Etat_Mesure == true)
                                             {
                                                 <p>
                                                     <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
                                                 </p>
                                             }
-                                            else if (Model.EtatPaiment == false)
+                                            else if (Model.Etat_Mesure == false)
                                             {
                                                 <p>
                                                     <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
@@ -147,7 +147,7 @@
                                 <div class="col-sm-4">
                                     <p class="m-b-10 f-w-600 font-weight-bold">Date d'instalation :</p>
                                     <h6 class="text-muted f-w-400">
-                                        @Html.DisplayFor(model => model.TE)
+                                        @Html.DisplayFor(model => model.Date_Instalation)
                                     </h6>
                                 </div>
                                 <div class="col-sm-4">
@@ -227,13 +227,13 @@
                                 <div class="col-sm-4">
                                     <p class="m-b-10 f-w-600 font-weight-bold">Date Récéption ACB :</p>
                                     <h6 class="text-muted f-w-400">
-                                        @Html.DisplayFor(model => model.Nb)
+                                        @Html.DisplayFor(model => model.Date_Reception_ACB)
                                     </h6>
                                 </div>
                                 <div class="col-sm-4">
                                     <p class="m-b-10 f-w-600 font-weight-bold">Date Réception Produit :</p>
                                     <h6 class="text-muted f-w-400">
-                                        @Html.DisplayFor(model => model.Usage)
+                                        @Html.DisplayFor(model => model.Date_Reception_Produit)
                                     </h6>
                                 </div>
                                 <div class="col-sm-4">
@@ -359,7 +359,7 @@
                             <div class="col-sm-4">
                                 <p class="m-b-10 f-w-600 font-weight-bold">Devis :</p>
                                 <h6 class="text-muted f-w-400">
-                                    @if (Model.Devis != null)
+                                    @if (Model.Mode_action != null)
                                     {
                                         @Html.ActionLink("Télecharger", "DownloadDevis", new { Id = Model.Id })
                                     }

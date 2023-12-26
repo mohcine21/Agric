@@ -19,7 +19,7 @@ using MongoDB.Driver;
 using OfficeOpenXml;
 using System.Web.Mvc.Html;
 using MessageBox = System.Windows.MessageBox;
-
+using System.Globalization;
 
 namespace Agric.Controllers
 {
@@ -29,6 +29,25 @@ namespace Agric.Controllers
         public string userid;
 
         public ActionResult Index()
+        {
+            if (Session["admin"] == null)
+            { return Redirect("/"); }
+            else
+            {
+                if ((bool)Session["admin"] == false)
+                { return Redirect("/"); }
+                ViewBag.Username = Session["adminname"];
+                ViewBag.User = new SelectList(db.Users, "Id", "Fullname");
+
+                var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
+                ViewBag.nbrnotif = cpt;
+                var essai1 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false)
+                   .OrderBy(x => x.EtatEssai == "Non installer" ? 0 : 1).ThenBy(x => x.EtatEssai == "En cours" ? 0 : 1).ThenBy(x => x.EtatEssai == "Réalisé" ? 0 : 1).ThenByDescending(x => x.Date_Instalation).ToList();
+                return View(essai1);
+            }
+
+        }
+        public ActionResult EssaisExporter()
         {
             if (Session["admin"] == null)
             { return Redirect("/"); }
@@ -87,8 +106,19 @@ namespace Agric.Controllers
                 var cpt = db.Journal.Where(e => e.VuAdmin == false).Count();
                 ViewBag.nbrnotif = cpt;
 
-                var essai1 = db.Essai.Include(e => e.Users).Where(e => e.EssaiDelets == false).OrderByDescending(e => e.Date_Modife);
-                return View(essai1.ToList());
+                var currentWeek = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday);
+
+                var essai1 = db.Essai
+                    .Include(e => e.Users)
+                    .Where(e => e.EssaiDelets == false)
+                    .ToList() // Convertit la partie de la requête en mémoire
+                    .Where(e => e.Notation.Any(d =>
+                        d.D_N_P != null && d.D_N_R == null && d.FNotation == null &&
+                        CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(d.D_N_P, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) == currentWeek)).OrderByDescending(e=> e.Date_Modife);
+
+                return View(essai1);
+
+
             }
         }
         public ActionResult Modification()
@@ -409,7 +439,7 @@ namespace Agric.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,CodeClient,TA,DateNotation,Formulation,DP,Usage,MA,Date_Instalation,PE,PR,Produit,Culture,ACB,FDS,Cible,Nb,Region,Code,Date_Cloture,Rapport,RapportRemis,DateRemisRapport,EtatEssai,LaboName,TechName,DevisDemander,ACB,FDS,Payer,NonPayer,Paiment_Regler50,Payer50,Devis,FDEFicheEssai,FNNotation,FormulationProduitRéf,DPRéf,Facture,MARéf,ComportementCulture,id_devis,Devis")] Essai essai, HttpPostedFileBase _Rapport, HttpPostedFileBase _PE, HttpPostedFileBase _ACB, HttpPostedFileBase _FDS, HttpPostedFileBase _Facture)
+        public ActionResult Edit([Bind(Include = "Id,UserId,CodeClient,TA,DateNotation,Formulation,DP,Date_Reception_Produit,MA,Date_Instalation,PE,PR,Produit,Culture,ACB,FDS,Cible,Date_Reception_ACB,Region,Code,Date_Cloture,Rapport,RapportRemis,DateRemisRapport,EtatEssai,LaboName,TechName,DevisDemander,ACB,FDS,Payer,NonPayer,Paiment_Regler50,Payer50,Mode_action,FDEFicheEssai,FNNotation,FormulationProduitRéf,DPRéf,Facture,MARéf,Epoque_application,id_devis,Devis")] Essai essai, HttpPostedFileBase _Rapport, HttpPostedFileBase _PE, HttpPostedFileBase _ACB, HttpPostedFileBase _FDS, HttpPostedFileBase _Facture)
         {
             if (Session["admin"] == null)
             { return Redirect("/"); }

@@ -90,20 +90,21 @@ namespace Agric.Controllers
                     Session["adminname"] = user.Fullname;
                         return RedirectToAction("Index", "MyAdmin");
                     }
-                    if (user.Profile.Name == "Technicien")
+                    if (user.Profile.Name == "Technicien" && user.IsActive == true)
                     {
                     
                     Session["tech"] = true;
                     Session["techname"] = user.Fullname;
+
                         return RedirectToAction("Index", "Tech");
                     }
-                    if (user.Profile.Name == "Labo")
+                    if (user.Profile.Name == "Labo" && user.IsActive == true)
                     {
                     Session["labo"] = true;
                     Session["laboname"] = user.Fullname;
                         return RedirectToAction("Index", "Labo");
                     }
-                    if (user.Profile.Name == "Client")
+                    if (user.Profile.Name == "Client" && user.IsActive == true)
                     {
                     Session["client"] = true;
                     Session["Clientname"] = user.Fullname;

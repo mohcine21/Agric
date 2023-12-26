@@ -125,7 +125,7 @@
                     @Html.DisplayNameFor(model => model.Date_Cloture)
                 </th>
                 <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.EtatPaiment)
+                    @Html.DisplayNameFor(model => model.Etat_Mesure)
                 </th>
                 <th style="min-width:130px ; text-align:center">
                     <p>Actions</p>
@@ -214,12 +214,12 @@
                 <td style="  text-align:center">
 
                     <h6 class="text-muted f-w-400">
-                        @{ if (item.EtatPaiment == true)
+                        @{ if (item.Etat_Mesure == true)
                             {
             <p>
                 <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
             </p> }
-        else if (item.EtatPaiment == false)
+        else if (item.Etat_Mesure == false)
         {
             <p>
                 <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>

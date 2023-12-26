@@ -160,7 +160,6 @@ namespace Agric.Controllers
                 ViewBag.nbrnotifclient = cpt;
                 var cpt2 = db.Devis.Where(e => e.DemandeDevis == true && e.id_client.ToString() == userid).Count();
                 ViewBag.nbrdevisclient = cpt2;
-                // var essai = db.Essai.Where(e => e.UserId.ToString() == userid && e.DevisDemander == false && e.Devis == null);
                 ViewBag.ListEssai = db.Essai.Where(e => e.UserId.ToString() == userid && e.DevisDemander == false && e.CodeClient == null && e.EssaiDelets != true && (e.EtatEssai== "Non installer" || e.EtatEssai == null)).ToList().OrderByDescending(e => e.Date_Modife);
                 return View();
             }
@@ -191,7 +190,7 @@ namespace Agric.Controllers
         // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,Produit,Culture,Cible, Devis,ComportementCulture,ACB,FDS")] Essai essai, HttpPostedFileBase _ACB, HttpPostedFileBase _FDS)
+        public ActionResult Create([Bind(Include = "UserId,Produit,Culture,Cible,Mode_action,Epoque_application,ACB,FDS")] Essai essai, HttpPostedFileBase _ACB, HttpPostedFileBase _FDS)
         {
             essai.Id = Guid.NewGuid();
             userid = (string)Session["userid"];
@@ -217,7 +216,7 @@ namespace Agric.Controllers
 
                    
                     _ACB.SaveAs(Server.MapPath(UploadPath + FileName));
-                    essai.Nb = DateTime.Now.ToString();
+                    essai.Date_Reception_ACB = DateTime.Now;
                   
                 }
 

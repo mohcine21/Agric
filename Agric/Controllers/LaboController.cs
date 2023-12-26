@@ -106,7 +106,7 @@ namespace Agric.Controllers
         // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserId,CodeClient,TA,Formulation,DP,MA,TE,PE,Usage,PR,Produit,Culture,Cible,Nb,Region,Code,Date_Cloture,Rapport,RapportRemis,DateRemisRapport,ACB,FDS")] Essai essai)
+        public ActionResult Create([Bind(Include = "Id,UserId,CodeClient,TA,Formulation,DP,MA,TE,PE,Date_Reception_Produit,PR,Produit,Culture,Cible,Date_Reception_ACB,Region,Code,Date_Cloture,Rapport,RapportRemis,DateRemisRapport,ACB,FDS")] Essai essai)
         {
             if (ModelState.IsValid)
             {
@@ -149,7 +149,7 @@ namespace Agric.Controllers
         // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,CodeClient,TA,Formulation,DP,MA,DateNotation,PE,Usage,PR,Produit,Culture,Cible,Nb,Region,Code,Date_Cloture,Rapport,RapportRemis,DateRemisRapport,ACB,FDS,LaboName,TechName,TE,FNNotation,FDEFicheEssai,Devis,DevisDemander,Payer,NonPayer,Payer50,EtatEssai,FormulationProduitRéf,DPRéf,MARéf,EtatPaiment,ModeAction,ComportementCulture,Facture,id_devis")] Essai essai, HttpPostedFileBase _FNNotation, HttpPostedFileBase _FDEFicheEssai)
+        public ActionResult Edit([Bind(Include = "Id,UserId,CodeClient,TA,Formulation,DP,MA,DateNotation,PE,Date_Reception_Produit,PR,Produit,Culture,Cible,Date_Reception_ACB,Region,Code,Date_Cloture,Rapport,RapportRemis,DateRemisRapport,ACB,FDS,LaboName,TechName,TE,FNNotation,FDEFicheEssai,Mode_action,DevisDemander,Payer,NonPayer,Payer50,EtatEssai,FormulationProduitRéf,DPRéf,MARéf,Etat_Mesure,ModeAction,Epoque_application,Facture,id_devis")] Essai essai, HttpPostedFileBase _FNNotation, HttpPostedFileBase _FDEFicheEssai)
         {
 
 

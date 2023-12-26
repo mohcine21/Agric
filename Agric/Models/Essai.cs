@@ -36,7 +36,8 @@ namespace Agric.Models
         [Display(Name = "Protocole Expérimental")]
         public string PE { get; set; }
         [Display(Name = "Date Réception Produit")]
-        public string Usage { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        public Nullable<System.DateTime> Date_Reception_Produit { get; set; }
         [Display(Name = "Produit Réf")]
         public string PR { get; set; }
         [Required(ErrorMessage = "Veuillez ajouter le produit")]
@@ -46,17 +47,19 @@ namespace Agric.Models
         [Required(ErrorMessage = "Veuillez ajouter la cible")]
         public string Cible { get; set; }
         [Display(Name = "Date Réception ACB")]
-        public string Nb { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        public Nullable<System.DateTime> Date_Reception_ACB { get; set; }
         public string Region { get; set; }
         [Display(Name = "Code Essai")]
         public string Code { get; set; }
         //[DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> Date_Cloture { get; set; }
         public string Rapport { get; set; }
         [Display(Name = "Rapport Remis")]
         public Nullable<bool> RapportRemis { get; set; }
         [Display(Name = "Date de Remise du Rapport")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> DateRemisRapport { get; set; }
         public string ACB { get; set; }
         public string FDS { get; set; }
@@ -76,14 +79,14 @@ namespace Agric.Models
         [Display(Name = "Formulation du produit réf")]
         public string FormulationProduitRéf { get; set; }
         [Display(Name = "Mode d'action ")]
-        public string Devis { get; set; }
+        public string Mode_action { get; set; }
         [Display(Name = "Etat d'essai")]
         public string EtatEssai { get; set; }
         public bool DevisDemander { get; set; }
         [Display(Name = "Etat de Mesure")]
-        public Nullable<bool> EtatPaiment { get; set; }
+        public Nullable<bool> Etat_Mesure { get; set; }
         public Nullable<bool> Paiment_Regler100 { get; set; }
-        [Display(Name = "Paiement  ")]
+        [Display(Name = "Paiement")]
         public Nullable<bool> Paiment_Regler50 { get; set; }
         public bool Payer { get; set; }
         public bool NonPayer { get; set; }
@@ -96,9 +99,10 @@ namespace Agric.Models
         public int Numdevie { get; set; }
         public int nbr { get; set; }
         [Display(Name = "Epoque d'application ")]
-        public string ComportementCulture { get; set; }
+        public string Epoque_application { get; set; }
         // [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> Date_Instalation { get; set; }
 
         public virtual Users Users { get; set; }

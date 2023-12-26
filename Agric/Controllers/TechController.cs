@@ -274,7 +274,7 @@ namespace Agric.Controllers
         // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
             [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,CodeClient,TA,Formulation,DP,MA,DateNotation,PE,Usage,PR,Produit,Culture,Cible,Nb,Region,Code,Date_Cloture,Rapport,RapportRemis,DateRemisRapport,ACB,FDS,LaboName,TechName,Date_Instalation,FNNotation,FDEFicheEssai,Devis,DevisDemander,Payer,NonPayer,Payer50,EtatEssai,EtatPaiment,FormulationProduitRéf,DPRéf,MARéf,ComportementCulture,Facture,id_devis")] Essai essai, HttpPostedFileBase _FNNotation,HttpPostedFileBase _FDEFicheEssai , Journal journal,Notation notation)
+        public ActionResult Edit([Bind(Include = "Id,UserId,CodeClient,TA,Formulation,DP,MA,DateNotation,PE,Date_Reception_Produit,PR,Produit,Culture,Cible,Date_Reception_ACB,Region,Code,Date_Cloture,Rapport,RapportRemis,DateRemisRapport,ACB,FDS,LaboName,TechName,Date_Instalation,FNNotation,FDEFicheEssai,Mode_action,DevisDemander,Payer,NonPayer,Payer50,EtatEssai,Etat_Mesure,FormulationProduitRéf,DPRéf,MARéf,Epoque_application,Facture,id_devis")] Essai essai, HttpPostedFileBase _FNNotation,HttpPostedFileBase _FDEFicheEssai , Journal journal,Notation notation)
         {
 
             if (Session["tech"] == null)

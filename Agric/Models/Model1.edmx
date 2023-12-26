@@ -32,12 +32,12 @@
           <Property Name="MA" Type="nvarchar" MaxLength="50" />
           <Property Name="DateNotation" Type="text" />
           <Property Name="PE" Type="nvarchar" MaxLength="100" />
-          <Property Name="Usage" Type="nvarchar" MaxLength="100" />
+          <Property Name="Date_Reception_Produit" Type="datetime" />
           <Property Name="PR" Type="nvarchar" MaxLength="50" />
           <Property Name="Produit" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Culture" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Cible" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Nb" Type="varchar" MaxLength="100" />
+          <Property Name="Date_Reception_ACB" Type="datetime" />
           <Property Name="Region" Type="nvarchar" MaxLength="100" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
           <Property Name="Date_Cloture" Type="datetime" />
@@ -53,10 +53,10 @@
           <Property Name="EssaiDelets" Type="bit" Nullable="false" />
           <Property Name="DPRéf" Type="nvarchar" MaxLength="50" />
           <Property Name="FormulationProduitRéf" Type="nvarchar" MaxLength="50" />
-          <Property Name="Devis" Type="varchar" MaxLength="100" />
+          <Property Name="Mode_action" Type="varchar" MaxLength="100" />
           <Property Name="EtatEssai" Type="nvarchar" MaxLength="50" />
           <Property Name="DevisDemander" Type="bit" Nullable="false" />
-          <Property Name="EtatPaiment" Type="bit" />
+          <Property Name="Etat_Mesure" Type="bit" />
           <Property Name="Paiment_Regler100" Type="bit" />
           <Property Name="Paiment_Regler50" Type="bit" />
           <Property Name="Payer" Type="bit" Nullable="false" />
@@ -68,7 +68,7 @@
           <Property Name="id_devis" Type="uniqueidentifier" />
           <Property Name="Numdevie" Type="int" Nullable="false" />
           <Property Name="nbr" Type="int" Nullable="false" />
-          <Property Name="ComportementCulture" Type="varchar" MaxLength="50" />
+          <Property Name="Epoque_application" Type="varchar" MaxLength="50" />
           <Property Name="Date_Instalation" Type="datetime" />
         </EntityType>
         <EntityType Name="Journal">
@@ -116,7 +116,6 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ProfileId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Code_Client" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_Devis_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
@@ -239,12 +238,12 @@
           <Property Name="MA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DateNotation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="PE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Usage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Date_Reception_Produit" Type="DateTime" Precision="3" />
           <Property Name="PR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Produit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Culture" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Cible" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Nb" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Date_Reception_ACB" Type="DateTime" Precision="3" />
           <Property Name="Region" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Date_Cloture" Type="DateTime" Precision="3" />
@@ -260,10 +259,10 @@
           <Property Name="EssaiDelets" Type="Boolean" Nullable="false" />
           <Property Name="DPRéf" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FormulationProduitRéf" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Devis" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Mode_action" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="EtatEssai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DevisDemander" Type="Boolean" Nullable="false" />
-          <Property Name="EtatPaiment" Type="Boolean" />
+          <Property Name="Etat_Mesure" Type="Boolean" />
           <Property Name="Paiment_Regler100" Type="Boolean" />
           <Property Name="Paiment_Regler50" Type="Boolean" />
           <Property Name="Payer" Type="Boolean" Nullable="false" />
@@ -275,7 +274,7 @@
           <Property Name="id_devis" Type="Guid" />
           <Property Name="Numdevie" Type="Int32" Nullable="false" />
           <Property Name="nbr" Type="Int32" Nullable="false" />
-          <Property Name="ComportementCulture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Epoque_application" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Date_Instalation" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Essai_Users" FromRole="Essai" ToRole="Users" />
           <NavigationProperty Name="Notation" Relationship="Self.FK_Notation_Essai" FromRole="Essai" ToRole="Notation" />
@@ -328,7 +327,6 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ProfileId" Type="Guid" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Code_Client" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Devis" Relationship="Self.FK_Devis_Users" FromRole="Users" ToRole="Devis" />
           <NavigationProperty Name="Essai" Relationship="Self.FK_Essai_Users" FromRole="Users" ToRole="Essai" />
           <NavigationProperty Name="Journal" Relationship="Self.FK_Journal_Users" FromRole="Users" ToRole="Journal" />
@@ -455,12 +453,12 @@
                 <ScalarProperty Name="MA" ColumnName="MA" />
                 <ScalarProperty Name="DateNotation" ColumnName="DateNotation" />
                 <ScalarProperty Name="PE" ColumnName="PE" />
-                <ScalarProperty Name="Usage" ColumnName="Usage" />
+                <ScalarProperty Name="Date_Reception_Produit" ColumnName="Date_Reception_Produit" />
                 <ScalarProperty Name="PR" ColumnName="PR" />
                 <ScalarProperty Name="Produit" ColumnName="Produit" />
                 <ScalarProperty Name="Culture" ColumnName="Culture" />
                 <ScalarProperty Name="Cible" ColumnName="Cible" />
-                <ScalarProperty Name="Nb" ColumnName="Nb" />
+                <ScalarProperty Name="Date_Reception_ACB" ColumnName="Date_Reception_ACB" />
                 <ScalarProperty Name="Region" ColumnName="Region" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Date_Cloture" ColumnName="Date_Cloture" />
@@ -476,10 +474,10 @@
                 <ScalarProperty Name="EssaiDelets" ColumnName="EssaiDelets" />
                 <ScalarProperty Name="DPRéf" ColumnName="DPRéf" />
                 <ScalarProperty Name="FormulationProduitRéf" ColumnName="FormulationProduitRéf" />
-                <ScalarProperty Name="Devis" ColumnName="Devis" />
+                <ScalarProperty Name="Mode_action" ColumnName="Mode_action" />
                 <ScalarProperty Name="EtatEssai" ColumnName="EtatEssai" />
                 <ScalarProperty Name="DevisDemander" ColumnName="DevisDemander" />
-                <ScalarProperty Name="EtatPaiment" ColumnName="EtatPaiment" />
+                <ScalarProperty Name="Etat_Mesure" ColumnName="Etat_Mesure" />
                 <ScalarProperty Name="Paiment_Regler100" ColumnName="Paiment_Regler100" />
                 <ScalarProperty Name="Paiment_Regler50" ColumnName="Paiment_Regler50" />
                 <ScalarProperty Name="Payer" ColumnName="Payer" />
@@ -491,7 +489,7 @@
                 <ScalarProperty Name="id_devis" ColumnName="id_devis" />
                 <ScalarProperty Name="Numdevie" ColumnName="Numdevie" />
                 <ScalarProperty Name="nbr" ColumnName="nbr" />
-                <ScalarProperty Name="ComportementCulture" ColumnName="ComportementCulture" />
+                <ScalarProperty Name="Epoque_application" ColumnName="Epoque_application" />
                 <ScalarProperty Name="Date_Instalation" ColumnName="Date_Instalation" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -543,7 +541,6 @@
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Code_Client" ColumnName="Code_Client" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,13 +1,102 @@
 ﻿@model Agric.Models.Essai
 
-@{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+@{ ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml"; }
 
 <div class="text-center"><h2> ESSAI </h2></div>
 
+
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+
+
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script>
+    $(function () {
+        $("#datepicker1").datepicker({
+            altField: "#datepicker",
+            closeText: 'Fermer',
+            prevText: 'Précédent',
+            nextText: 'Suivant',
+            currentText: 'Aujourd\'hui',
+            monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+            monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+            dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+            dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+            dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+            weekHeader: 'Sem.',
+            dateFormat: 'yy-mm-dd'
+
+          
+        });
+
+        $("#datepicker2").datepicker({
+            altField: "#datepicker",
+            closeText: 'Fermer',
+            prevText: 'Précédent',
+            nextText: 'Suivant',
+            currentText: 'Aujourd\'hui',
+            monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+            monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+            dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+            dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+            dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+            weekHeader: 'Sem.',
+            dateFormat: 'yy-mm-dd'
+        });
+
+        $("#datepicker3").datepicker({
+            altField: "#datepicker",
+            closeText: 'Fermer',
+            prevText: 'Précédent',
+            nextText: 'Suivant',
+            currentText: 'Aujourd\'hui',
+            monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+            monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+            dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+            dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+            dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+            weekHeader: 'Sem.',
+            dateFormat: 'yy-mm-dd'
+        });
+
+        $("#datepicker4").datepicker({
+            altField: "#datepicker",
+            closeText: 'Fermer',
+            prevText: 'Précédent',
+            nextText: 'Suivant',
+            currentText: 'Aujourd\'hui',
+            monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+            monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+            dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+            dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+            dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+            weekHeader: 'Sem.',
+            dateFormat: 'yy-mm-dd'
+        });
+
+        $("#datepicker5").datepicker({
+            altField: "#datepicker",
+            closeText: 'Fermer',
+            prevText: 'Précédent',
+            nextText: 'Suivant',
+            currentText: 'Aujourd\'hui',
+            monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+            monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+            dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+            dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+            dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+            weekHeader: 'Sem.',
+            dateFormat: 'yy-mm-dd'
+        });
+    });
+</script>
+
+
 
 <form action="Edit" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
@@ -18,6 +107,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
+        @Html.HiddenFor(model => model.UserId)
         @Html.HiddenFor(model => model.DevisDemander)
         @Html.HiddenFor(model => model.ACB)
         @Html.HiddenFor(model => model.FDS)
@@ -32,7 +122,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.UserId, "Client", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+
                 @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -40,7 +131,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CodeClient, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CodeClient, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.CodeClient, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.CodeClient, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -49,8 +140,8 @@
             @Html.LabelFor(model => model.Paiment_Regler50, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Paiment_Regler50, new List<SelectListItem>
-                         ()
-                        {
+                                                            ()
+                                                        {
                     new SelectListItem() { Text = "Payer", Value = "True" },
                     new SelectListItem() { Text = "Payer 50%", Value = "False"}
                     }, "Non Payer", new { @id = "flag", @class = "form-control" })
@@ -97,7 +188,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Date_Instalation, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Date_Instalation, new { htmlAttributes = new { @class = "form-control" }, Type = "date" })
+                @Html.EditorFor(model => model.Date_Instalation, new { htmlAttributes = new { @class = "form-control", id = "datepicker1", placeholder = "Date d'instalation"} })
+             
                 @Html.ValidationMessageFor(model => model.Date_Instalation, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -115,8 +207,8 @@
             @Html.LabelFor(model => model.EtatEssai, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.EtatEssai, new List<SelectListItem>
-                         ()
-                        {
+                                                            ()
+                                                        {
                     new SelectListItem() { Text = "Réalisé", Value = "Réalisé" },
                     new SelectListItem() { Text = "Annulé", Value = "Annulé"},
                      new SelectListItem() { Text = "Non installer", Value = "Non installer"},
@@ -154,10 +246,11 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Usage, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Date_Reception_Produit, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Usage, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Usage, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Date_Reception_Produit, new { htmlAttributes = new { @class = "form-control", id = "datepicker4" ,placeholder = "Date Réception Produit" } })
+
+                @Html.ValidationMessageFor(model => model.Date_Reception_Produit, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
@@ -201,10 +294,11 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Nb, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Date_Reception_ACB, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Nb, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nb, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Date_Reception_ACB, new { htmlAttributes = new { @class = "form-control", id = "datepicker5", placeholder = "Date Réception ACB" } })
+
+                @Html.ValidationMessageFor(model => model.Date_Reception_ACB, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
@@ -224,7 +318,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Date_Cloture, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Date_Cloture, new { htmlAttributes = new { @class = "form-control" }, Type = "date" })
+                @*@Html.EditorFor(model => model.Date_Cloture, new { htmlAttributes = new { @class = "form-control" }, Type = "date" })*@
+                @Html.EditorFor(model => model.Date_Cloture, new { htmlAttributes = new { @class = "form-control", id = "datepicker2", placeholder = "Date cloture"} })
+
                 @Html.ValidationMessageFor(model => model.Date_Cloture, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -236,17 +332,17 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Devis, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Mode_action, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Devis, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Devis, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Mode_action, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Mode_action, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.ComportementCulture, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Epoque_application, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ComportementCulture, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ComportementCulture, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Epoque_application, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Epoque_application, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -254,8 +350,8 @@
             @Html.LabelFor(model => model.RapportRemis, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.RapportRemis, new List<SelectListItem>
-                         ()
-                        {
+                                                            ()
+                                                        {
                     new SelectListItem() { Text = "Yes", Value = "True" },
                     new SelectListItem() { Text = "No", Value = "False"}
                     }, "Select.....", new { @id = "flag", @class = "form-control" })
@@ -266,7 +362,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateRemisRapport, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateRemisRapport, new { htmlAttributes = new { @class = "form-control" }, Type = "date" })
+                @*@Html.EditorFor(model => model.DateRemisRapport, new { htmlAttributes = new { @class = "form-control" }, Type = "date" })*@
+                @Html.EditorFor(model => model.DateRemisRapport, new { htmlAttributes = new { @class = "form-control", id = "datepicker3", placeholder = "Date de Remise du Rapport"} })
+
                 @Html.ValidationMessageFor(model => model.DateRemisRapport, "", new { @class = "text-danger" })
             </div>
         </div>

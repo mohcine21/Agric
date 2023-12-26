@@ -29,13 +29,13 @@
         @Html.HiddenFor(model => model.DP)
         @Html.HiddenFor(model => model.MA)
         @Html.HiddenFor(model => model.PE)
-        @Html.HiddenFor(model => model.Usage)
+        @Html.HiddenFor(model => model.Date_Reception_Produit)
         @Html.HiddenFor(model => model.Formulation)
         @Html.HiddenFor(model => model.PR)
         @Html.HiddenFor(model => model.Produit)
         @Html.HiddenFor(model => model.Culture)
         @Html.HiddenFor(model => model.Cible)
-        @Html.HiddenFor(model => model.Nb)
+        @Html.HiddenFor(model => model.Date_Reception_ACB)
         @Html.HiddenFor(model => model.Region)
         @Html.HiddenFor(model => model.Code)
         @Html.HiddenFor(model => model.id_devis)
@@ -45,7 +45,7 @@
         @Html.HiddenFor(model => model.TechName)
         @Html.HiddenFor(model => model.DateRemisRapport)
         @Html.HiddenFor(model => model.DevisDemander)
-        @Html.HiddenFor(model => model.Devis)
+        @Html.HiddenFor(model => model.Mode_action)
         @Html.HiddenFor(model => model.Payer50)
         @Html.HiddenFor(model => model.NonPayer)
         @Html.HiddenFor(model => model.Payer)
@@ -59,7 +59,7 @@
         @Html.HiddenFor(model => model.FormulationProduitRéf)
 
         @Html.HiddenFor(model => model.MARéf)
-        @Html.HiddenFor(model => model.ComportementCulture)
+        @Html.HiddenFor(model => model.Epoque_application)
 
         @Html.HiddenFor(model => model.id_devis)
 
@@ -101,15 +101,15 @@
         {
 
             <div class="form-group">
-                @Html.LabelFor(model => model.EtatPaiment, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Etat_Mesure, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.EtatPaiment, new List<SelectListItem>
+                    @Html.DropDownListFor(model => model.Etat_Mesure, new List<SelectListItem>
                         ()
                         {
                         new SelectListItem() { Text = "Réalisé", Value = "True" },
                         new SelectListItem() { Text = "Non Réalisé", Value = "False"}
                         }, "En cours.....", new { @id = "flag", @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.EtatPaiment)
+                    @Html.ValidationMessageFor(model => model.Etat_Mesure)
                 </div>
             </div>
 
@@ -117,7 +117,7 @@
         else
         {
 
-            @Html.HiddenFor(model => model.EtatPaiment)
+            @Html.HiddenFor(model => model.Etat_Mesure)
 
         }
 

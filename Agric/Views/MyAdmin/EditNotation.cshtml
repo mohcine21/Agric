@@ -1,51 +1,88 @@
 ﻿@model Agric.Models.Notation
 
-@{
-    ViewBag.Title = "EditNotation";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+@{ ViewBag.Title = "EditNotation";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml"; }
 <div class="text-center"><h2> Notation </h2></div>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script>
+    $(function () {
+        $("#datepicker1").datepicker({
+            altField: "#datepicker",
+            closeText: 'Fermer',
+            prevText: 'Précédent',
+            nextText: 'Suivant',
+            currentText: 'Aujourd\'hui',
+            monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+            monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+            dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+            dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+            dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+            weekHeader: 'Sem.',
+            dateFormat: 'yy-mm-dd'
+        });
+
+        $("#datepicker2").datepicker({
+            altField: "#datepicker",
+            closeText: 'Fermer',
+            prevText: 'Précédent',
+            nextText: 'Suivant',
+            currentText: 'Aujourd\'hui',
+            monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+            monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+            dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+            dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+            dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+            weekHeader: 'Sem.',
+            dateFormat: 'yy-mm-dd'
+        });
+    });
+</script>
+
 @using (Html.BeginForm("EditNotation", "MyAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
-<div class="form-horizontal">
+                <div class="form-horizontal">
 
-    @Html.HiddenFor(model => model.Id)
-    @Html.HiddenFor(model => model.Essai_Id)
-    @Html.HiddenFor(model => model.FNotation)
-    @Html.HiddenFor(model => model.Date_Add)
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.Essai_Id)
+                    @Html.HiddenFor(model => model.FNotation)
+                    @Html.HiddenFor(model => model.Date_Add)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.D_N_P, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.D_N_P, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.D_N_P, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.D_N_P, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @*@Html.EditorFor(model => model.D_N_P, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.EditorFor(model => model.D_N_P, new { htmlAttributes = new { @class = "form-control", id = "datepicker1", placeholder = "date prévisionnelle" } })
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.D_N_R, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.D_N_R, new { htmlAttributes = new { @class = "form-control " } })
-            @Html.ValidationMessageFor(model => model.D_N_R, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                            @Html.ValidationMessageFor(model => model.D_N_P, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.D_N_R, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @*@Html.EditorFor(model => model.D_N_R, new { htmlAttributes = new { @class = "form-control " } })*@
+                            @Html.EditorFor(model => model.D_N_R, new { htmlAttributes = new { @class = "form-control", id = "datepicker2", placeholder = "Date réelle" } })
+
+                            @Html.ValidationMessageFor(model => model.D_N_R, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.FNotation, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="file" name="_FNotation" value="">
-        </div>
-    </div>
-</div>
-    <div class="row">
-        <div class="col-12">
-            <input type="submit" class="btn btn-primary btn-sm btn-block m-1" />
-        </div>
-    </div>
-
-}
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FNotation, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input type="file" name="_FNotation" value="">
+                        </div>
+                    </div>
+                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <input type="submit" class="btn btn-primary btn-sm btn-block m-1" />
+                                    </div>
+                                </div>}

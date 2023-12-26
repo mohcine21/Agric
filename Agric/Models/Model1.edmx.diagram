@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6a7bd66916474e69b5ed164b5a232743" Name="Diagram1">
+      <Diagram DiagramId="914c91cdaf4b4a67b9d14e6bcff5058e" Name="Diagram1">
         <EntityTypeShape EntityType="AgricModel.Devis" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AgricModel.Essai" Width="1.5" PointX="5.25" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AgricModel.Journal" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="AgricModel.Notation" Width="1.5" PointX="7.5" PointY="12.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AgricModel.Profile" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgricModel.Users" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgricModel.Users" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
         <AssociationConnector Association="AgricModel.FK_Devis_Users" ManuallyRouted="false" />
         <AssociationConnector Association="AgricModel.FK_Essai_Users" ManuallyRouted="false" />
         <AssociationConnector Association="AgricModel.FK_Notation_Essai" ManuallyRouted="false" />

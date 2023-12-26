@@ -1,186 +1,139 @@
 ﻿@model IEnumerable<Agric.Models.Essai>
 @using System.Globalization;
-@{
-    ViewBag.Title = "EssaiSemaine";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+@{ ViewBag.Title = "EssaiSemaine";
+Layout = "~/Views/Shared/_AdminLayout.cshtml"; }
 
 
 <div class="text-center"><h2>ESSAIS </h2></div>
 &nbsp;&nbsp;&nbsp;&nbsp;
 
-<div class="d-xl-flex align-items-center text-md-center">
-
-
-    <a class="nav-link" href="/MyAdmin/Create">
-        <i class="fas fa-fw fa-table"></i>
-        <span>Demande Essai</span>
-    </a>
-
-
-</div>
-<script>
-    function myFunction() {
-        confirm("Press a button!");
-    }
-</script>
-<hr />
 
 <div class="container-fluid" style="width: auto; overflow: auto; scrollbar-base-color: #ffeaff">
-    <table class="table table-hover " id="example">
-        <thead class="bg-primary text-light">
-            <tr>
-                <th style="min-width:130px ; text-align:center">
-                    <p> Cette Semaine</p>
-                </th>
-                <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.CodeClient)
-                </th>
-                <th style="min-width:130px ; text-align:center">
-                    Nom de Client
-                </th>
-                <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.Code)
-                </th>
-                <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.Produit)
-                </th>
-                <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.MA)
-                </th>
-                <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.Culture)
-                </th>
-                <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.Cible)
-                </th>
-                <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.Region)
-                </th>
-                <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.PR)
-                </th>
+<table class="table table-hover " id="example">
+<thead class="bg-primary text-light">
+<tr>
+<th style="min-width:130px ; text-align:center">
+<p> Date de Notation</p>
+</th>
+<th style="min-width:130px ; text-align:center">
+Nom de Client
+</th>
+<th style="min-width:130px ; text-align:center">
+@Html.DisplayNameFor(model => model.Code)
+</th>
+<th style="min-width:130px ; text-align:center">
+@Html.DisplayNameFor(model => model.Produit)
+</th>
+<th style="min-width:130px ; text-align:center">
+@Html.DisplayNameFor(model => model.MA)
+</th>
+<th style="min-width:130px ; text-align:center">
+@Html.DisplayNameFor(model => model.Culture)
+</th>
+<th style="min-width:130px ; text-align:center">
+@Html.DisplayNameFor(model => model.Cible)
+</th>
+<th style="min-width:130px ; text-align:center">
+@Html.DisplayNameFor(model => model.Region)
+</th>
+<th style="min-width:130px ; text-align:center">
+@Html.DisplayNameFor(model => model.PR)
+</th>
 
-                <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.Date_Cloture)
-                </th>
-                <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.Rapport)
-                </th>
-                <th style="min-width:130px ; text-align:center">
-                    @Html.DisplayNameFor(model => model.RapportRemis)
-                </th>
+<th style="min-width:130px ; text-align:center">
+@Html.DisplayNameFor(model => model.Date_Cloture)
+</th>
+<th style="min-width:130px ; text-align:center">
+@Html.DisplayNameFor(model => model.TechName)
+</th>
+<th style="min-width:130px ; text-align:center">
+@Html.DisplayNameFor(model => model.RapportRemis)
+</th>
 
-                <th style="min-width:130px ; text-align:center">
-                    Actions
-                </th>
+</tr>
+</thead>
+<tbody>
 
-            </tr>
-        </thead>
-        <tbody>
+@foreach (var item in Model)
+{
+if (item.Date_Cloture == null)
+{
+    <tr style="background-color: white" onclick="location.href = '@(Url.Action("DetailsEssai", new { id = item.Id })) '">
 
-            @foreach (var item in Model)
-            {
-                if (item.Date_Cloture == null)
+        @{ 
+            var maDate = item.Notation.Select(d => d.D_N_P).Where(d =>  CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(d, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) == CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday));
+            
+
+
+        <td style="text-align:center">
+        @foreach (var date in maDate)
+        {
+
+            string nomJour = date.ToString("dd/MM/yyyy");
+        @nomJour <br /> }
+        </td>
+        <td style="  text-align:center">
+            @Html.DisplayFor(modelItem => item.Users.Fullname)
+        </td>
+        <td style="  text-align:center">
+            @Html.DisplayFor(modelItem => item.Code)
+        </td>
+
+        <td style="  text-align:center">
+            @Html.DisplayFor(modelItem => item.Produit)
+        </td>
+        <td style="  text-align:center">
+            @Html.DisplayFor(modelItem => item.MA)
+        </td>
+        <td style="  text-align:center">
+            @Html.DisplayFor(modelItem => item.Culture)
+        </td>
+        <td style="  text-align:center">
+            @Html.DisplayFor(modelItem => item.Cible)
+        </td>
+
+        <td style="  text-align:center">
+            @Html.DisplayFor(modelItem => item.Region)
+        </td>
+        <td style="  text-align:center">
+            @Html.DisplayFor(modelItem => item.PR)
+        </td>
+
+
+        <td style="  text-align:center ; color:yellow">
+            @Html.DisplayFor(modelItem => item.Date_Cloture)
+        </td>
+        <td style="  text-align:center ">
+            @Html.DisplayFor(modelItem => item.TechName)
+        </td>
+        <td style="  text-align:center">
+            @{ if (item.RapportRemis == true)
                 {
-        <tr style="background-color: white" onclick="location.href = '@(Url.Action("DetailsEssai", new { id = item.Id })) '">
-
-            @{ var s = item.Notation.Where(e => e.Essai_Id == item.Id && e.D_N_P != null && e.D_N_R == null && e.FNotation == null && CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(e.D_N_P, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday) == CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday)).Count();
-                if (s != 0)
+    <p>
+        <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
+    </p> }
+                else if (item.RapportRemis == false)
                 {
+    <p>
+        <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+    </p> }
+                else
+                {<p>
+        <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
+    </p> } }
+        </td>
+                    }
+                
 
 
-                <td style="  text-align:center">
-                    <i class="fa fa-check-circle" style="color:red" aria-hidden="true"></i>
-                </td>
+    </tr>
+}
+}
+</tbody>
 
-                                        <td style="  text-align:center">
-                                            @Html.DisplayFor(modelItem => item.CodeClient)
-                                        </td>
-                                                                <td style="  text-align:center">
-                                                                    @Html.DisplayFor(modelItem => item.Users.Fullname)
-                                                                </td>
-                                                                                        <td style="  text-align:center">
-                                                                                            @Html.DisplayFor(modelItem => item.Code)
-                                                                                        </td>
-
-                                                                                                                <td style="  text-align:center">
-                                                                                                                    @Html.DisplayFor(modelItem => item.Produit)
-                                                                                                                </td>
-                                                                                                                                        <td style="  text-align:center">
-                                                                                                                                            @Html.DisplayFor(modelItem => item.MA)
-                                                                                                                                        </td>
-                                                                                                                                                                <td style="  text-align:center">
-                                                                                                                                                                    @Html.DisplayFor(modelItem => item.Culture)
-                                                                                                                                                                </td>
-                                                                                                                                                                                        <td style="  text-align:center">
-                                                                                                                                                                                            @Html.DisplayFor(modelItem => item.Cible)
-                                                                                                                                                                                        </td>
-
-                                                                                                                                                                                                                <td style="  text-align:center">
-                                                                                                                                                                                                                    @Html.DisplayFor(modelItem => item.Region)
-                                                                                                                                                                                                                </td>
-                                                                                                                                                                                                                                        <td style="  text-align:center">
-                                                                                                                                                                                                                                            @Html.DisplayFor(modelItem => item.PR)
-                                                                                                                                                                                                                                        </td>
-
-
-                                                                                                                                                                                                                                                                <td style="  text-align:center ; color:yellow">
-                                                                                                                                                                                                                                                                    @Html.DisplayFor(modelItem => item.Date_Cloture)
-                                                                                                                                                                                                                                                                </td>
-
-
-
-
-
-                                                                                                                                                                                                                                                                                        <td style="  text-align:center ">
-                                                                                                                                                                                                                                                                                            @if (item.Rapport != null)
-                                                                                                                                                                                                                                                                                            {
-                                                                                                                                                                                                                                                                    @Html.ActionLink("Télécharger", "DownloadRapport", new { Id = item.Id })}
-                                                                                                                                                                                                                                                                                        </td>
-                                                                                                                                                                                                                                                                                                                <td style="  text-align:center">
-                                                                                                                                                                                                                                                                                                                    @{ if (item.RapportRemis == true)
-                                                                                                                                                                                                                                                                                                                        {
-                                                                                                                                                                                                                                                                                                <p>
-                                                                                                                                                                                                                                                                                                    <i class="fa fa-window-close fa-circle" style="color:green" aria-hidden="true"></i>
-                                                                                                                                                                                                                                                                                                </p> }
-                                                                                                                                                                                                                                                                                                                        else if (item.RapportRemis == false)
-                                                                                                                                                                                                                                                                                                                        {
-                                                                                                                                                                                                                                                                                                <p>
-                                                                                                                                                                                                                                                                                                    <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
-                                                                                                                                                                                                                                                                                                </p> }
-                                                                                                                                                                                                                                                                                                                        else
-                                                                                                                                                                                                                                                                                                                        {<p>
-                                                                                                                                                                                                                                                                                                                                <i class="fa fa-window-close fa-circle" style="color:red" aria-hidden="true"></i>
-                                                                                                                                                                                                                                                                                                                            </p> } }
-                                                                                                                                                                                                                                                                                                                </td>
-                                                                                                                                                                                                                                                                                                                                        <td>
-                                                                                                                                                                                                                                                                                                                                            <div class="row">
-                                                                                                                                                                                                                                                                                                                                                <div class="col-12 ">
-                                                                                                                                                                                                                                                                                                                                                    @Html.ActionLink("Détails", "DetailsEssai", new { id = item.Id }, new { @class = "btn btn-success btn-sm btn-block m-1" })
-
-                                                                                                                                                                                                                                                                                                                                                    @Html.ActionLink("Modifier", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
-
-                                                                                                                                                                                                                                                                                                                                                    @Html.ActionLink("Supprimer", "Archive", new { id = item.Id }, new { @class = "btn btn-danger btn-sm btn-block m-1", onclick = "return confirm('Supprimer ???');" })
-                                                                                                                                                                                                                                                                                                                                                    @Html.ActionLink("Notations", "Notations", new { essai_id = item.Id }, new { @class = "btn btn-primary btn-sm btn-block m-1" })
-
-
-                                                                                                                                                                                                                                                                                                                                                </div>
-
-                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                        </td> } }
-
-
-
-
-
-
-        </tr> }
-                                                                                                                                                                                                                                                                                                                        }
-        </tbody>
-
-    </table>
+</table>
 </div>
+
 
 
 
@@ -204,49 +157,41 @@
 
 
 <script>
-    $(document).ready(function () {
-        var table = $('#example').DataTable({
-            lengthChange: false,
+$(document).ready(function () {
+var table = $('#example').DataTable({
+buttons: ['excel',],
+"oLanguage": {
+"sSearch": "Recherche"
+},
+bInfo: false,
+Paginate: true,
+scrollX: true,
+lengthChange: false
+});
 
-            buttons: ['excel', 'copy'],
-            fixedColumns: {
-                leftColumns: 2
-            },
-            columnDefs: [{
-                orderable: false,
-                className: 'select-checkbox',
-                blurable: true,
-                targets: 0
-            }],
-            select: {
-                style: 'os',
-                selector: 'td:first-child'
-            },
-            order: [[1, 'asc']]
-        });
-
-        table.buttons().container()
-            .appendTo('#example_wrapper .col-md-6:eq(0)');
-    });
+table.buttons().container()
+.appendTo('#example_wrapper .col-md-6:eq(0)');
+});
 </script>
 
 <style>
-    .dataTables_filter {
-        white-space: nowrap;
-    }
+.dataTables_scrollBody {
+overflow-x: visible !important;
+overflow-y: auto !important;
+}
 
-        .dataTables_filter label, .dataTables_filter input {
-            display: inline-block;
-            color: dimgrey;
-        }
+.dataTables_filter {
+white-space: nowrap;
+}
 
-    .buttons-excel {
-        background-color: green;
-        color: white;
-    }
+.dataTables_filter label, .dataTables_filter input {
+display: inline-block;
+color: dimgrey;
+}
 
-    .buttons-copy {
-        background-color: blue;
-        color: white;
-    }
+.buttons-excel {
+background-color: green;
+color: white;
+}
+
 </style>

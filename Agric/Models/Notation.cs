@@ -17,13 +17,16 @@ namespace Agric.Models
     {
         public System.Guid Id { get; set; }
         [Display(Name = "date prévisionnelle")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public System.DateTime D_N_P { get; set; }
         [Display(Name = "Date réelle")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> D_N_R { get; set; }
         [Display(Name = "Fiche de notation")]
         public string FNotation { get; set; }
         public System.Guid Essai_Id { get; set; }
         [Display(Name = "Date d'ajoute")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> Date_Add { get; set; }
 
         public virtual Essai Essai { get; set; }
